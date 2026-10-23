@@ -69,6 +69,9 @@ def main():
     wanalyze = sub.add_parser("westeros-analyze", help="Analyze saved Westeros ixmp variables without a new GAMS solve")
     wanalyze.add_argument("--manifest", required=True, help="Original successful local manifest.private.json")
     wanalyze.add_argument("--output", default="results/westeros_analysis")
+    capcheck = sub.add_parser("westeros-cap-check", help="Reconcile stored CO2 emissions with duration-weighted bound without a new solve")
+    capcheck.add_argument("--manifest", required=True, help="Successful private manifest from saved two-scenario run")
+    capcheck.add_argument("--output", default="results/westeros_cap_check")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -106,6 +109,15 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "westeros-cap-check":
+        from .westeros_cap_audit import audit_saved_run
+        result = audit_saved_run(args.manifest, args.output)
+        print("Emissions cap:", result["status"])
+        print("Average annual:", result["computed_average_annual"])
+        print("Bound:", result["bound_value"])
+        print("Period durations:", result["period_durations"])
+        print("Shadow price:", result["shadow_price_status"])
+        print("No GAMS solve performed.")
     elif args.command == "westeros-analyze":
         from .westeros_analysis import analyze_run
         summary, manifest = analyze_run(args.manifest, args.output)
