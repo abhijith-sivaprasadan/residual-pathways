@@ -50,6 +50,7 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('results/ar6-teaching-pilot/variable_coverage_2050.json'))
+          print('Teaching source SHA-256:',d['source_sha256'])
           print('Teaching-source model-scenario pairs:',d['world_model_scenario_pairs'])
           print('Teaching-source series rows:',d['csv_series_rows'])
           print('Matched 2050 candidates:')
@@ -101,13 +102,16 @@ jobs:
                     'World source+metadata matched',d['matched_model_scenarios'],
                     'source without metadata',d['unmatched_source_model_scenarios_count'],
                     'metadata without source',d['unmatched_metadata_model_scenarios_count'])
+              print('SOURCE SHA256',d['source_sha256'],'METADATA SHA256',d['metadata_sha256'])
               for cat,x in sorted(d['strata'].items()):
                   co=x['candidate_co_reporting']
                   print('CATEGORY',cat,'denominator',x['model_scenarios_in_source_and_metadata'],
                         'CO2',x['variable_coverage']['Emissions|CO2']['observed_model_scenarios'],
                         'DAC',x['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios'],
                         'CO2_DAC_CO_REPORTED',co['co2_and_dac']['model_scenarios'],
-                        'ALL_SIX_CO_REPORTED',co['co2_energy_land_ccs_dac']['model_scenarios'])
+                        'ALL_SIX_CO_REPORTED',co['co2_energy_land_ccs_dac']['model_scenarios'],
+                        'NET_EIP_AFOLU_LAND_BIOMASS_DAC',co['eip_afolu_land_beccs_dac']['model_scenarios'],
+                        'PLUS_FOSSIL_CCS',co['eip_afolu_land_beccs_dac_fossilccs']['model_scenarios'])
           print('STRICT INTERPRETATION: co-reporting presence only; zero verified I3 classifications.')
           PY
       - name: Assert all previously audited counts and metadata joins against committed reference
