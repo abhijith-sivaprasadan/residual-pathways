@@ -29,3 +29,12 @@ For each case, locate source model/version-specific documentation and variable d
 ## Scientific acceptance
 
 Only after the source-specific semantic gates are satisfied should a case be classified I1 (verified net only) or I2 (partial/unreconciled). I3 requires a verified exhaustive non-overlapping positive-emissions/removal partition and separate numerical/materiality tests. The present source preflight proves none of these for any case.
+
+## Primary standards and interpretive controls
+
+- IPCC AR6 WGIII Annex III (Scenarios and modelling methods): https://www.ipcc.ch/report/ar6/wg3/downloads/report/IPCC_AR6_WGIII_Annex-III.pdf — describes the submission template, quality-control process and climate-scenario categorisation. It documents historical CO2 EIP+AFOLU validation but does not independently establish a complete positive-gross/CDR partition for each model.
+- IIASA IAMC variable format guide: https://docs.ece.iiasa.ac.at/standards/variables.html — the hierarchy is semi-hierarchical and additivity is not guaranteed. A matching prefix is not proof that any particular components are disjoint or sum to an aggregate.
+- IIASA IAMC emissions variable conventions: https://data.ene.iiasa.ac.at/database/emissions.html — explains sector emissions and CDR-related variable structures. Specific model-scenario reporting scope still requires model documentation.
+- IPCC AR6 WGIII Chapter 3: https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-3/ — separates energy, industry, AFOLU and other CDR categories conceptually.
+
+Case reviewers must cite original model papers, source reporting protocols and compatible units/precision; the four general references above are context, not case-specific I3 evidence.
