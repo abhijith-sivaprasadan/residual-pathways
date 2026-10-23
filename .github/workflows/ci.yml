@@ -14,7 +14,7 @@ jobs:
           python-version: '3.11'
           cache: pip
       - name: Install scientific dependencies and tests
-        run: python -m pip install -e ".[dev]"
+        run: python -m pip install -e ".[dev,pyomo]"
       - name: Unit tests
         run: python -m pytest -q
       - name: Fetch official revision-pinned IAMC tutorial data
@@ -57,6 +57,18 @@ jobs:
           assert r["results"][0]["status"] == "OPTIMAL"
           assert r["results"][-1]["status"] == "INFEASIBLE_OR_UNSOLVED"
           PY
+      - name: Verify independent Pyomo/HiGHS formulations
+        run: |
+          python -m residual_pathways validate-pyomo --output results/pyomo_validation.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('results/pyomo_validation.json').read_text())
+          assert len(x['cases'])==6
+          assert all(z['agreement'] for z in x['cases'])
+          assert x['cases'][-1]['pyomo']['status']=='INFEASIBLE_OR_UNSOLVED'
+          assert 'NOT_MESSAGEIX' in x['scientific_status']
+          PY
       - name: Verify signed, decadal source reporting and no gross assumption
         run: |
           python - <<'PY'
@@ -81,5 +93,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: published-iamc-baseline
-          path: results/tutorial/
+          path: |
+            results/tutorial/
+            results/model_sensitivity/
+            results/pyomo_validation.json
+            results/gams_preflight.json
           retention-days: 30

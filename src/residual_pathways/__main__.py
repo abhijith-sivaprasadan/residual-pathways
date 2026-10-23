@@ -55,6 +55,8 @@ def main():
     gases.add_argument("--metadata-sheet", default="meta_Ch3vetted_withclimate")
     gases.add_argument("--output", default="results/ar6-teaching-pilot/nonco2_2050.json")
     gases.add_argument("--year", type=int, default=2050)
+    pyomo = sub.add_parser("validate-pyomo", help="Run independent Pyomo formulation; synthetic HiGHS not MESSAGEix")
+    pyomo.add_argument("--output", default="results/pyomo_validation.json")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -65,6 +67,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "validate-pyomo":
+        from .pyomo_validation import verify_all
+        r=verify_all(args.output)
+        print("Independent Pyomo/SciPy algebra crosscheck:",len(r["cases"]),"agreements")
     elif args.command == "nonco2-pilot":
         from .nonco2_pilot import run_nonco2
         r=run_nonco2(args.input,args.metadata,args.output,year=args.year,sheet=args.metadata_sheet)
