@@ -22,3 +22,8 @@ These are **GWP100** rather than GTP or alternative horizon metrics. Aggregation
 4. Uncertainty in the reported GWP assessment values and separation of emissions uncertainty versus metric uncertainty.
 
 The existence of a conversion function is not evidence of a verified emissions-accounting partition.
+
+
+## Actual 2050 AR6 teaching data unit observation
+
+The public IIASA-labelled 2026 teaching release (Zenodo 20056332, MD5 274ed494a024744052df67611c7322e7) reports unaggregated N2O as kt N2O/yr, whereas raw CH4 is Mt CH4/yr. The code now explicitly converts kt N2O to Mt N2O (divide by 1,000) *before* applying the chosen GWP100 factor. Unit tests prevent a thousandfold discrepancy. The unit is sourced from an actual streamed variable-presence audit, but no raw CH4/N2O emissions decomposition or scenario-specific CO2e inference is performed.
