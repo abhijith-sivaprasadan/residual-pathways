@@ -27,7 +27,7 @@ def compute(input_csv, metadata, candidate_names, *,
         if not {"Model","Scenario","Category"} <= row.keys():
             raise CohortError("Missing source-identification metadata")
         key=(row["Model"],row["Scenario"])
-        if key in cohort or not row["Category"].startswith("C") or row["Category"][1:] not in "12345678":
+        if key in cohort or not row["Category"].startswith("C") or row["Category"] not in tuple(f"C{i}" for i in range(1,9)):
             raise CohortError("Duplicate or out-of-cohort scenario metadata")
         cohort[key]=row["Category"]
     if not cohort:
@@ -59,7 +59,7 @@ def compute(input_csv, metadata, candidate_names, *,
                 if marker in present:
                     raise CohortError("Duplicate model-scenario-variable-year source record")
                 present[marker].add(row["Unit"])
-                units[(name,year)].add(row["Unit"])
+                units[(cohort[key],name,year)].add(row["Unit"])
     def fraction(num,den):return num/den if den else None
     categories=sorted(set(cohort.values()))
     result=[]
@@ -78,7 +78,7 @@ def compute(input_csv, metadata, candidate_names, *,
                                "eligible_scenarios":len(keys),"unique_model_labels":len(unique_models),
                                "reporting_scenarios":n,"scenario_weighted_fraction":fraction(n,len(keys)),
                                "model_label_balanced_fraction":model_balanced,
-                               "units_seen":sorted(units[(name,year)])})
+                               "units_seen":sorted(units[(cat,name,year)])})
     return {
         "schema_version":"reported-presence-robustness.v1",
         "source_sha256":sha_file(input_csv),"metadata_sha256":sha_file(metadata),
