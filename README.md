@@ -1,62 +1,57 @@
 # ResidualPathways
 
-Independent, open-source research on the coverage and comparability of integrated assessment model (IAM) scenario data, with an eventual focus on residual gross CO2 emissions, atmospheric removal, CCS, and controlled mitigation-technology sensitivities.
+Independent open-source research on IAM scenario reporting, residual-emissions identifiability and controlled optimisation experiments.
 
-**Status:** Executable IAMC tutorial-data research baseline. **Not yet:** an AR6 ensemble study, a residual-gross-emissions estimate, or a MESSAGEix model implementation. No affiliation with or endorsement by IIASA or its Exploring Real Zero project is implied.
+[![IAMC baseline](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ci.yml/badge.svg)](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ci.yml)
+[![AR6 source pilot](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ar6-public-source-pilot.yml/badge.svg)](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ar6-public-source-pilot.yml)
 
-## Reproduce the first empirical exercise
+**Independent project, not affiliated with or endorsed by IIASA or IPCC.** Variable availability is not the same thing as an exhaustive, verified gross/net/removal accounting identity.
 
-The first release works with the official pyam tutorial dataset, which contains real CD-LINKS scenario submissions; this is a teaching dataset, not a curated cohort supporting gross-emissions accounting.
+## Verified empirical research to date
 
-1. Install Python >=3.10 and run: python -m pip install -e ".[dev]"
-2. Download the exact upstream file: python -m residual_pathways fetch-tutorial --output data/tutorial_data.csv
-3. Run: python -m residual_pathways analyze --input data/tutorial_data.csv --output results/tutorial --pyam-check
-4. Test: python -m pytest -q
+- Publicly published IIASA-labelled AR6 World **teaching release** (Zenodo 20056332): 693,299 source IAMC series; 2,298 World model-scenario pairs; 1,202 match the separately republished v1.1 climate-vetted metadata; 422 vetted scenarios report a 2050 direct-air-capture variable and 330 simultaneously report the first six CO2/CCS/DAC candidate names. **No gross emissions have been reconstructed.**
+- Historical real CD-LINKS tutorial series: 18 exactly matched 2050 source-reported CO2 observations from three historical model versions and six shared scenarios; 180 signed observations across 2010–2100. Nine of 18 observations in 2100 are negative. **These are not gross residual emissions.**
+- Six real SciPy/HiGHS optimisation runs with hypothetical renewable limits, fossil CCS, DAC and net caps. This is a separate synthetic exercise, **not** an IAM or MESSAGEix/GAMS solve.
 
-Outputs: coverage.json, model_comparison.csv, results.json, report.md, co2_2050.svg, and release/manifest.json. See docs/initial_findings.md for the first source-derived results. No downloaded source CSV is committed. The source is revision-pinned; hashes and sample counts are generated for each local run.
+**Results:** [AR6 2050 empirical findings](docs/ar6_teaching_2050_findings.md), [reproducible aggregate counts](data/derived/ar6_teaching_2050_summary.json), [first CD-LINKS findings](docs/initial_findings.md), [Research Note 01](docs/research_note_01.md).
 
-The scenario-comparison script selects an explicit three-model, six-scenario cohort (MESSAGEix-GLOBIOM 1.0, REMIND-MAgPIE 1.7-3.0, IMAGE 3.0.1) in the World region and records reported Emissions|CO2 trajectories. These are **not** gross residual emissions. CD-LINKS is historical scenario research and does not describe present-day model configurations.
+### Source and scientific limitations
 
-## Research questions
+The public [2026 teaching release](https://zenodo.org/records/20056332) has **not been hash-matched to the authenticated official AR6 World v1.1 assessment download**. The v1.1 metadata workbook was independently redistributed by a third-party GitHub repository, not obtained directly from the official IIASA endpoint. Findings are properly described as an exploratory teaching-source audit, not a finished AR6 ensemble study.
 
-- How much IAMC reporting is available across model/scenario/variable/year combinations?
-- Which comparison sets remain after explicit matching of scenario, region, variable, unit, and year?
-- Which observations support a verified gross/net/removal decomposition, and which lack necessary accounting detail?
-- In later work, how do controlled changes to technology growth, CO2 storage and removal assumptions alter stylised MESSAGEix solutions?
+All current real-source cases remain at I0 (no independently source-verified exhaustive partition). This does **not** prove no real scenarios can ever qualify for I3; it means we have not established them. Land-use CO2 can be net, and fossil point-source CCS is avoided emissions rather than atmospheric carbon removal. Consult the [source-referenced preliminary semantic dictionary](config/variable_semantics_preliminary.json).
 
-See docs/protocol.md and docs/roadmap.md. A deliberately conservative I0-I3 decision routine never infers gross from aggregate reported CO2 alone.
+## Reproduce the published IAMC tutorial results
 
-## Boundaries and reproducibility
+Requires Python 3.10+.
 
-- Real upstream source: https://github.com/IAMconsortium/pyam/blob/88706bd70051ff630b73096c050e3697364e2302/docs/tutorials/tutorial_data.csv
-- A successful data-processing run is **not** external physical validation or IAM calibration.
-- Source-provided IAMC scenario units and definitions are preserved. Missing values are not zero.
-- A claimed I3 reconciliation requires compatible, exhaustive, non-overlapping positive-emission/removal components, documented source precision and numerical/materiality tests.
-- No confidential/scenario-license-restricted database or simulated gross-emissions dataset is republished.
-- Project B (PathwaysHub) consumes a versioned release contract; it cannot modify this repository's scientific outputs.
+    python -m pip install -e ".[dev]"
+    python -m pytest -q
+    python -m residual_pathways fetch-tutorial --output data/tutorial_data.csv
+    python -m residual_pathways analyze --input data/tutorial_data.csv --output results/tutorial --pyam-check
 
-## Next scientific gates
+This downloads and parses the pinned public pyam/CD-LINKS tutorial dataset, produces JSON, CSV, charts, decadal signed observations and a hash-bound release manifest. It checks source observations with pyam. No raw data are committed.
 
-AR6 access/license assessment; real variable-coverage pilot; source precision pilot; accounting dictionary; cross-model stratification; a successful logged MESSAGEix/GAMS Westeros solve before any MESSAGEix expertise claim; independent review and report.
+## Run the empirical AR6 coverage audit
 
-License: MIT for original repository code, upstream datasets retain their own terms.
+The [public teaching-source GitHub workflow](.github/workflows/ar6-public-source-pilot.yml) downloads the legally public source and a content-verified but independently redistributed v1.1 metadata workbook, runs the streaming source audit and tests climate-vetted vs broader metadata populations. Only small aggregate JSON reports are uploaded as artifacts.
 
-## AR6 World variable-availability audit (implemented; requires authorized source download)
+For research on **canonical** AR6 v1.1, obtain the source through the [IIASA Scenario Explorer](https://data.ece.iiasa.ac.at/ar6/#/downloads) under its terms and keep large files out of Git. Follow [AR6 source access instructions](docs/ar6_access.md) and the [metadata protocol](docs/ar6_metadata_protocol.md).
 
-The streaming `audit-ar6` command audits a locally downloaded AR6 v1.1 World CSV and exports model-scenario counts, variable-coverage denominators and source SHA-256 without publishing underlying scenario values. It does **not** claim gross-emissions identifiability from variable names. Instructions: [docs/ar6_access.md](docs/ar6_access.md).
+    python -m residual_pathways audit-ar6 --input data/AR6_Scenarios_Database_World_v1.1.csv --candidates config/ar6_variable_candidates.json --output results/ar6/coverage_2050.json
+    python -m residual_pathways audit-ar6-strata --input data/AR6_Scenarios_Database_World_v1.1.csv --metadata data/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx --metadata-sheet meta_Ch3vetted_withclimate --category-column Category --candidates config/ar6_variable_candidates.json --output results/ar6/vetted_2050.json
 
-## Controlled synthetic HiGHS experiments
+The metadata sheet choice is compulsory for multi-sheet XLSX and ensures the 1,202 climate-vetted cases are not conflated with the 2,304-row broader metadata source. The sources are hashed and user-provided variable names must match exactly. Missing values are never filled with zero. Neither an aggregate emission series nor nested components are treated as a verified physical gross identity.
 
-The model-sensitivity command solves six hypothetical electricity/CO2 cases with SciPy/HiGHS. This is a real mathematical solve, but not an empirical IAM study or MESSAGEix execution. See docs/controlled_experiments.md for full methodology.
+## Controlled modelling and methods
 
-## Full decadal comparison
+    python -m residual_pathways model-sensitivity --output results/model_sensitivity
+    python -m residual_pathways gams-preflight --output results/gams_preflight.json
 
-The tutorial run also generates a sign-aware 2010–2100 (10-year step) comparison and a decadal report. Negative published aggregate CO2 is not positive gross emissions, but does not by itself establish removal categories. See generated decadal_report.md in GitHub Actions artifacts.
+The first command executes the **actual SciPy/HiGHS** synthetic experiments. The second documents tooling readiness while explicitly declaring that no MESSAGEix/GAMS Westeros solve has occurred. See [controlled experiment limitations](docs/controlled_experiments.md).
 
-## AR6 metadata-stratified coverage
+The evidence ladder is I0 (no reviewed identity), I1 (reviewed net only), I2 (partial or unreconciled components), I3 (exhaustive nonoverlapping physically compatible components, source precision, dual reconciliation). No current empirical output is assigned I3.
 
-The audit-ar6-strata command joins user-downloaded AR6 World observations to the associated official metadata via exact model-scenario identities and emits class-level variable-presence counts, denominators and hashes. Requires the original data under applicable access terms and a chosen actual metadata category header. See docs/ar6_metadata_protocol.md.
+Read the [scientific protocol](docs/protocol.md), [v3 execution runbook](docs/v3_execution_runbook.md), [open research tasks](https://github.com/abhijith-sivaprasadan/residual-pathways/issues), and companion [PathwaysHub](https://github.com/abhijith-sivaprasadan/pathways-hub).
 
-## Execute the V3 gates
-
-See docs/v3_execution_runbook.md for the reproducible full workflow, licensed local AR6 source instructions, scientific identifiability criteria and the MESSAGEix/GAMS solve prerequisite. The gams-preflight command records tooling readiness without falsely claiming a solver run.
+MIT license applies to original code. Upstream data have separate access and redistribution terms.

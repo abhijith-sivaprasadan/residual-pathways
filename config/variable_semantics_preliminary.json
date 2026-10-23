@@ -1,0 +1,99 @@
+{
+  "schema_version": "candidate-semantics.v0.1",
+  "purpose": "PRELIMINARY_SOURCE_REFERENCED_NOT_MODEL_SCENARIO_VERIFICATION",
+  "review_policy": "Never award I1-I3 from names alone; prove scope, accounting partition, precision and reconciliation per case.",
+  "references": {
+    "PRUTZ2025": "https://doi.org/10.5194/essd-17-221-2025",
+    "SR15_NZ": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8528892/",
+    "GRANT2023": "https://www.nature.com/articles/s41467-023-41105-z",
+    "IPCC": "https://www.ipcc.ch/report/ar6/syr/annexes-and-index/"
+  },
+  "variables": [
+    {
+      "exact": "Emissions|CO2",
+      "concept": "aggregate signed reported CO2",
+      "evidence": [],
+      "caution": "Cannot identify gross/atmospheric removals from aggregate alone.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Emissions|CO2|AFOLU",
+      "concept": "net AFOLU source/sink flux",
+      "evidence": [
+        "PRUTZ2025"
+      ],
+      "caution": "Negative AFOLU is not gross land CDR.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Carbon Sequestration|Land Use",
+      "concept": "reported gross land sequestration proxy",
+      "evidence": [
+        "PRUTZ2025"
+      ],
+      "caution": "May be incomplete and not interchangeable with net AFOLU.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Emissions|CO2|Energy and Industrial Processes",
+      "concept": "net energy-industrial CO2",
+      "evidence": [
+        "SR15_NZ"
+      ],
+      "caution": "Do not add components without model-specific source review.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Emissions|CO2|Energy",
+      "concept": "energy-sector CO2",
+      "evidence": [],
+      "caution": "Potentially nested within EIP and aggregate total.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Carbon Sequestration|CCS|Fossil",
+      "concept": "fossil point-source CCS",
+      "evidence": [
+        "IPCC"
+      ],
+      "caution": "Avoided fossil atmospheric emissions, not atmospheric removal.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Carbon Sequestration|CCS|Biomass",
+      "concept": "biomass CCS/BECCS proxy",
+      "evidence": [
+        "GRANT2023"
+      ],
+      "caution": "Captured amount not automatically net durable atmospheric removal.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Carbon Sequestration|Direct Air Capture",
+      "concept": "direct air capture",
+      "evidence": [
+        "IPCC"
+      ],
+      "caution": "Presence does not prove permanent storage or nonzero activity.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    },
+    {
+      "exact": "Carbon Sequestration|Enhanced Weathering",
+      "concept": "enhanced weathering",
+      "evidence": [],
+      "caution": "Presence not equivalent to deployment or source-reviewed removal accounting.",
+      "model_boundary_status": "UNREVIEWED",
+      "admissible_for_i3_without_case_review": false
+    }
+  ],
+  "scientific_status": "I3_NOT_VERIFIED",
+  "i3_claims": []
+}
