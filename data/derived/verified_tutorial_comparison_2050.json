@@ -1,7 +1,7 @@
 {
   "source_revision": "88706bd70051ff630b73096c050e3697364e2302",
   "source_git_blob_sha": "34886a95402d1be3e38f7218925680d5b59344a1",
-  "description": "Verified directly against public pyam tutorial data; 2050 reported CO2 only, NOT gross or residual emissions",
+  "description": "Checked against pyam tutorial source header by named 2050 column; reported CO2, NOT residual gross emissions",
   "common_scenarios": [
     "CD-LINKS_INDCi",
     "CD-LINKS_NPi",
@@ -23,7 +23,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 44642.91669,
+      "value": 49784.94281,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -33,7 +33,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 43758.0831,
+      "value": 46292.8512,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -43,7 +43,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 42441.66667,
+      "value": 43695.40886,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -53,7 +53,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 48326.74212,
+      "value": 53595.16479,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -63,7 +63,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 50722.0565,
+      "value": 56121.0939,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -73,7 +73,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 47276.78972,
+      "value": 49334.01172,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -83,7 +83,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 23754.91708,
+      "value": 12753.84243,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -93,7 +93,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 18793.0676,
+      "value": 10289.4231,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -103,7 +103,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 18357.99203,
+      "value": 10528.94344,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -113,7 +113,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 33271.92656,
+      "value": 25181.95619,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -123,7 +123,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 26907.3445,
+      "value": 18635.6956,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -133,7 +133,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 24293.52149,
+      "value": 16377.43522,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -143,7 +143,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 12039.05505,
+      "value": 2737.839477,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -153,7 +153,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 10060.4881,
+      "value": 94.5885,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -163,7 +163,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 7860.049643,
+      "value": 127.7481359,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -173,7 +173,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 50476.05394,
+      "value": 55919.642,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -183,7 +183,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 57830.7904,
+      "value": 65153.2663,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     },
     {
@@ -193,7 +193,7 @@
       "variable": "Emissions|CO2",
       "unit": "Mt CO2/yr",
       "year": 2050,
-      "value": 51456.46029,
+      "value": 54471.30176,
       "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
     }
   ]

@@ -1,26 +1,30 @@
-# Empirical pilot: CO2 comparison across three published IAMC model series
+# Empirical pilot: reported 2050 CO2 across three IAMC model families
 
-**Status:** verified descriptive research exercise, not residual gross-emissions inference. Source: official pyam IAMC tutorial file from historical CD-LINKS pathways, [fixed upstream revision](https://github.com/IAMconsortium/pyam/blob/88706bd70051ff630b73096c050e3697364e2302/docs/tutorials/tutorial_data.csv), Git blob `34886a95402d1be3e38f7218925680d5b59344a1`.
+Source: official [pyam CD-LINKS tutorial data](https://github.com/IAMconsortium/pyam/blob/88706bd70051ff630b73096c050e3697364e2302/docs/tutorials/tutorial_data.csv), upstream Git blob `34886a95402d1be3e38f7218925680d5b59344a1`. **This is published tutorial scenario data, not the AR6 scenario ensemble.**
 
-The supplied IAMC dataset includes 1,026 input rows, eight distinct model versions and six substantive variables. Three selected models report common World-region Emissions|CO2 observations for six CD-LINKS scenarios in 2050: **18 matched model-scenario observations**.
+The input contains 1,026 IAMC series from eight model versions. Exact matching identifies six shared scenarios for three selected models at World/Emissions|CO2/Mt CO2/yr/2050, yielding 18 model-scenario observations.
 
-## 2050 source-reported CO2
+## Observed 2050 values from the public dataset
 
-All values below are **Mt CO2/year**, and use exact matching on scenario, region, variable and unit. The min-max range is descriptive model spread, not uncertainty of a probabilistic ensemble.
-
-| Scenario | Minimum | Maximum | Cross-model range |
+| Scenario | Min (Mt CO2/yr) | Max (Mt CO2/yr) | Cross-model range (Mt CO2/yr) |
 |---|---:|---:|---:|
-| CD-LINKS_INDCi | 42441.67 | 44642.92 | 2201.25 |
-| CD-LINKS_NPi | 47276.79 | 50722.06 | 3445.27 |
-| CD-LINKS_NPi2020_1000 | 18357.99 | 23754.92 | 5396.93 |
-| CD-LINKS_NPi2020_1600 | 24293.52 | 33271.93 | 8978.41 |
-| CD-LINKS_NPi2020_400 | 7860.05 | 12039.06 | 4179.01 |
-| CD-LINKS_NoPolicy | 50476.05 | 57830.79 | 7354.74 |
+| CD-LINKS_INDCi | 43695.41 | 49784.94 | 6089.53 |
+| CD-LINKS_NPi | 49334.01 | 56121.09 | 6787.08 |
+| CD-LINKS_NPi2020_1000 | 10289.42 | 12753.84 | 2464.42 |
+| CD-LINKS_NPi2020_1600 | 16377.44 | 25181.96 | 8804.52 |
+| CD-LINKS_NPi2020_400 | 94.59 | 2737.84 | 2643.25 |
+| CD-LINKS_NoPolicy | 54471.30 | 65153.27 | 10681.96 |
 
-Data file: [exact 18 observations](../data/derived/verified_tutorial_comparison_2050.json). CI independently recomputes the same observations from the upstream CSV and checks each number.
+The exact 18 numerical values are recorded in [the source-derived JSON](../data/derived/verified_tutorial_comparison_2050.json). The CI pipeline reruns the independent Python IAMC reader and checks the complete model/scenario/year/variable/unit key and value for every observation.
 
-## Interpretation
+## Interpretation and limitations
 
-Common scenario labels alone do **not** establish harmonized assumptions or causal comparability across IAMs. This is a data-handling and descriptive-analysis result. The aggregate variable `Emissions|CO2` cannot be identified from this sample as fully reported *gross positive emissions*, atmospheric removals, or even an independently reviewed *net* reporting boundary. **Zero** cases are promoted to accounting class I3. The range must not be described as an innovation-gap effect.
+- The file reports `Emissions|CO2`, not a reviewed, exhaustive partition into positive gross emissions and atmospheric removals.
+- **I3 coverage is zero and is not inferred from this sample.**
+- Shared scenario labels do not establish common technology assumptions or controlled causal comparisons. The range is descriptive model spread.
+- A future AR6 database study requires an explicit accounting dictionary, model/scenario cohort rules and variable-coverage audit.
+- No MESSAGEix or GAMS optimisation experiment was run for this result.
 
-The next distinct empirical study is the AR6 variable-coverage and removals-semantics audit. This pilot does not use the AR6 full database and does not run MESSAGEix.
+## Provenance and correction
+
+The first independently recorded reference table erroneously read the column at zero-based index 8 (2040) while labelling it 2050. The strict comparison against the Python pipeline caught the mismatch in CI; the reference was replaced using the explicit header lookup `headers.indexOf("2050")`. The original Python analysis reads the year by name and did not have this error. See [QA incident 001](QA_incident_001.md).
