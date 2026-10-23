@@ -62,8 +62,8 @@ def test_export_minimal_allowlist_and_byte_hash(tmp_path):
     assert "gamslice" not in raw.decode().lower()
     assert "secret" not in raw.decode().lower()
     assert "license" not in raw.decode().lower()
-    assert "E:\" not in raw.decode()
-    assert "C:\" not in raw.decode()
+    assert "Users" not in raw.decode()
+    assert "manifest.private.json" not in raw.decode()
 
 
 @pytest.mark.parametrize("mutate", [
