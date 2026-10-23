@@ -1,0 +1,36 @@
+name: AR6 v1.1 metadata sheet structure preflight
+on:
+  push:
+    paths: ['.github/workflows/ar6-metadata-probe.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install openpyxl
+      - name: Fetch independently republished workbook without committing it
+        run: |
+          curl --fail --location --retry 2 --connect-timeout 20 --max-time 90 \
+          --output /tmp/ar6-metadata.xlsx \
+          'https://raw.githubusercontent.com/witch-team/energy-jobs-dataset-iiasadb/master/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+          python - <<'PY'
+          import hashlib
+          from openpyxl import load_workbook
+          path='/tmp/ar6-metadata.xlsx'
+          print('SOURCE: public witch-team redistributed file; source provenance must be checked against official')
+          with open(path,'rb') as f: print('SHA256:',hashlib.sha256(f.read()).hexdigest())
+          wb=load_workbook(path,read_only=True,data_only=True)
+          print('SHEETS:',wb.sheetnames)
+          for sheet in wb:
+              print('SHEET',repr(sheet.title),'rows',sheet.max_row,'cols',sheet.max_column)
+              for i,row in enumerate(sheet.values):
+                  if i>=4:break
+                  print('first',i, list(row[:24]))
+          PY
