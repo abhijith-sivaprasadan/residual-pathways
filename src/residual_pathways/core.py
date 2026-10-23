@@ -225,6 +225,9 @@ def write_outputs(results: dict, directory: str | Path) -> None:
     (directory / "release" / "manifest.json").write_text(json.dumps(release, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     from .trajectory import examine, write_trajectory
     write_trajectory(examine(results["__source_rows"]), directory)
+    release["decadal_sha256"] = hashlib.sha256((directory / "decadal_trajectory.json").read_bytes()).hexdigest()
+    release["decadal_schema"] = "reported_co2_decadal.v1"
+    (directory / "release" / "manifest.json").write_text(json.dumps(release, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     from .plots import render_2050
     render_2050(comparison["rows"], directory / "co2_2050.svg")
