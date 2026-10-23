@@ -63,6 +63,9 @@ def main():
     westeros.add_argument("--output", default="results/messageix_westeros")
     wsrc = sub.add_parser("westeros-source-check", help="Hash-check official notebook sources without licensed solves")
     wsrc.add_argument("--output", default="results/messageix_source_check")
+    wexport = sub.add_parser("westeros-export", help="Export allowlisted local solve metadata to PathwaysHub")
+    wexport.add_argument("--input", required=True, help="Exact private manifest.private.json from a successful run")
+    wexport.add_argument("--output", default="results/westeros_handoff")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -94,6 +97,12 @@ def main():
         from .westeros import source_preflight
         result = source_preflight(args.output)
         print("Verified pinned official notebook inputs (NO GAMS SOLVE):", result["status"])
+    elif args.command == "westeros-export":
+        from .westeros_evidence import export_westeros_evidence
+        index = export_westeros_evidence(args.input, args.output)
+        print("Sanitized local-evidence export created (NOT independently attested).")
+        print("Artifact SHA-256:", index["artifact_sha256"])
+        print("Output:", Path(args.output).resolve())
     elif args.command == "westeros-validate":
         from .westeros import run_westeros
         result = run_westeros(args.output)
