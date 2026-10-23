@@ -52,3 +52,7 @@ The model-sensitivity command solves six hypothetical electricity/CO2 cases with
 ## Full decadal comparison
 
 The tutorial run also generates a sign-aware 2010–2100 (10-year step) comparison and a decadal report. Negative published aggregate CO2 is not positive gross emissions, but does not by itself establish removal categories. See generated decadal_report.md in GitHub Actions artifacts.
+
+## AR6 metadata-stratified coverage
+
+The audit-ar6-strata command joins user-downloaded AR6 World observations to the associated official metadata via exact model-scenario identities and emits class-level variable-presence counts, denominators and hashes. Requires the original data under applicable access terms and a chosen actual metadata category header. See docs/ar6_metadata_protocol.md.

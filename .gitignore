@@ -8,3 +8,5 @@ dist/
 *.egg-info/
 
 data/AR6*
+
+data/*metadata_indicators*

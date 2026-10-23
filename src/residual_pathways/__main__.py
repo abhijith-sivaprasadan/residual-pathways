@@ -25,6 +25,12 @@ def main():
     ar6.add_argument("--year", type=int, default=2050)
     sensitivity = sub.add_parser("model-sensitivity", help="Synthetic SciPy/HiGHS optimisation; NOT MESSAGEix")
     sensitivity.add_argument("--output", default="results/model_sensitivity")
+    strata = sub.add_parser("audit-ar6-strata", help="AR6 presence by metadata category; no gross claims")
+    strata.add_argument("--input", required=True)
+    strata.add_argument("--metadata", required=True)
+    strata.add_argument("--category-column", required=True)
+    strata.add_argument("--output", default="results/ar6/stratified_2050.json")
+    strata.add_argument("--year", type=int, default=2050)
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -35,6 +41,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "audit-ar6-strata":
+        from .stratify import run_strata
+        x = run_strata(args.input, args.metadata, args.output, year=args.year, category_column=args.category_column)
+        print("Metadata-stratified World model-scenarios:", x["matched_model_scenarios"])
     elif args.command == "model-sensitivity":
         from .stylized_model import run_experiments
         r = run_experiments(args.output)
