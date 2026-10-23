@@ -40,3 +40,7 @@ See docs/protocol.md and docs/roadmap.md. A deliberately conservative I0-I3 deci
 AR6 access/license assessment; real variable-coverage pilot; source precision pilot; accounting dictionary; cross-model stratification; a successful logged MESSAGEix/GAMS Westeros solve before any MESSAGEix expertise claim; independent review and report.
 
 License: MIT for original repository code, upstream datasets retain their own terms.
+
+## AR6 World variable-availability audit (implemented; requires authorized source download)
+
+The streaming `audit-ar6` command audits a locally downloaded AR6 v1.1 World CSV and exports model-scenario counts, variable-coverage denominators and source SHA-256 without publishing underlying scenario values. It does **not** claim gross-emissions identifiability from variable names. Instructions: [docs/ar6_access.md](docs/ar6_access.md).

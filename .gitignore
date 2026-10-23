@@ -6,3 +6,5 @@ data/tutorial_data.csv
 results/
 dist/
 *.egg-info/
+
+data/AR6*

@@ -18,6 +18,11 @@ def main():
     run.add_argument("--input", required=True)
     run.add_argument("--output", default="results/tutorial")
     run.add_argument("--pyam-check", action="store_true", help="Parse using real pyam package too")
+    ar6 = sub.add_parser("audit-ar6", help="Stream locally authorized AR6 World data; publish coverage only")
+    ar6.add_argument("--input", required=True)
+    ar6.add_argument("--candidates", default="config/ar6_variable_candidates.json")
+    ar6.add_argument("--output", default="results/ar6/coverage_2050.json")
+    ar6.add_argument("--year", type=int, default=2050)
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -28,6 +33,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "audit-ar6":
+        from .coverage_audit import run_audit
+        result = run_audit(args.input, args.candidates, args.output, year=args.year)
+        print(f"AR6-format input: {result['world_model_scenario_pairs']} World model-scenario pairs; semantic status unresolved")
     elif args.command == "analyze":
         rows, meta = read_iamc(args.input)
         if args.pyam_check:

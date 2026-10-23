@@ -1,0 +1,10 @@
+{
+  "reported_CO2": "Emissions|CO2",
+  "energy_CO2_candidate": "Emissions|CO2|Energy",
+  "land_CO2_candidate": "Emissions|CO2|AFOLU",
+  "fossil_CCS_candidate": "Carbon Sequestration|CCS|Fossil",
+  "biomass_CCS_candidate": "Carbon Sequestration|CCS|Biomass",
+  "DAC_candidate": "Carbon Sequestration|Direct Air Capture",
+  "reported_CH4": "Emissions|CH4",
+  "reported_N2O": "Emissions|N2O"
+}
