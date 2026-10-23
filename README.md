@@ -75,3 +75,7 @@ With your own correctly installed GAMS licence, run the documented [source-pinne
 ## Licensed MESSAGEix Westeros (local execution)
 
 We have a GAMS-free tested, locally executable runner for official pinned MESSAGEix v3.11.1 Westeros baseline and CO2 emissions-bound notebooks. The licensed solve must be performed on a machine with installed GAMS/Java; GitHub CI makes no solve claim. See [Windows clone, setup and execution guide](docs/messageix_westeros_local.md), plus scripts/setup_westeros_windows.ps1 and requirements-messageix.txt. No GAMS license file or secrets belong in Git.
+
+## Export local Westeros evidence to PathwaysHub
+
+After a real successful local run, use `python -m residual_pathways westeros-export --input PATH/TO/manifest.private.json --output results/westeros_handoff` to create an allowlisted SHA-256 evidence bundle without rerunning GAMS. The companion `pathways_hub consume-westeros` validates the separate `pathways-handoff.westeros.v1` schema, hashes and two scenario objectives while explicitly retaining `AUTHOR_REPORTED_LOCAL` provenance. See [Windows two-repo handoff](docs/westeros_handoff.md). Neither unit tests nor CI claim to have executed licensed GAMS.
