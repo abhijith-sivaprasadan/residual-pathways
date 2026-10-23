@@ -118,6 +118,8 @@ def test_local_readonly_cap_diagnostic_with_mock_ixmp(tmp_path, monkeypatch):
     run = tmp_path / "private"
     (run / "ixmp_config").mkdir(parents=True)
     (run / "ixmp_config" / "config.json").write_text("{}")
+    (run / "ixmp_database").mkdir()
+    (run / "ixmp_database" / "westeros.script").write_text("SYNTHETIC_TEST_ONLY")
     (run / "manifest.private.json").write_text(json.dumps(fake_private()))
     d = example()
     class FakeScenario:
@@ -131,7 +133,7 @@ def test_local_readonly_cap_diagnostic_with_mock_ixmp(tmp_path, monkeypatch):
         def par(self, name):
             return d[name]
         def var(self, name):
-            return d[name]
+            return {"lvl": 191510.796875, "mrg": 0.0} if name == "OBJ" else d[name]
     class FakePlatform:
         closed = False
         def close_db(self):
