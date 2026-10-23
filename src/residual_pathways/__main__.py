@@ -31,6 +31,8 @@ def main():
     strata.add_argument("--category-column", required=True)
     strata.add_argument("--output", default="results/ar6/stratified_2050.json")
     strata.add_argument("--year", type=int, default=2050)
+    pf = sub.add_parser("gams-preflight", help="Readiness audit only; never claims a MESSAGEix solve")
+    pf.add_argument("--output", default="results/gams_preflight.json")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -41,6 +43,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "gams-preflight":
+        from .preflight import write_preflight
+        x = write_preflight(args.output)
+        print(x["scientific_status"], "GAMS discovered:", x["gams_executable_discovered"])
     elif args.command == "audit-ar6-strata":
         from .stratify import run_strata
         x = run_strata(args.input, args.metadata, args.output, year=args.year, category_column=args.category_column)

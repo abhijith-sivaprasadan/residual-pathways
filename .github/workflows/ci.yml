@@ -68,6 +68,16 @@ jobs:
           assert x["year_summaries"][-1]["negative_reported_co2_count"] == 9
           assert "not a" in x["interpretation"] or "cannot independently identify" in x["interpretation"]
           PY
+      - name: Record truthful MESSAGEix/GAMS preflight status
+        run: |
+          python -m residual_pathways gams-preflight --output results/gams_preflight.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("results/gams_preflight.json").read_text())
+          assert not p["westeros_solved"]
+          assert p["scientific_status"] == "NOT_A_MESSAGEIX_EXPERIMENT"
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: published-iamc-baseline

@@ -56,3 +56,7 @@ The tutorial run also generates a sign-aware 2010–2100 (10-year step) comparis
 ## AR6 metadata-stratified coverage
 
 The audit-ar6-strata command joins user-downloaded AR6 World observations to the associated official metadata via exact model-scenario identities and emits class-level variable-presence counts, denominators and hashes. Requires the original data under applicable access terms and a chosen actual metadata category header. See docs/ar6_metadata_protocol.md.
+
+## Execute the V3 gates
+
+See docs/v3_execution_runbook.md for the reproducible full workflow, licensed local AR6 source instructions, scientific identifiability criteria and the MESSAGEix/GAMS solve prerequisite. The gams-preflight command records tooling readiness without falsely claiming a solver run.
