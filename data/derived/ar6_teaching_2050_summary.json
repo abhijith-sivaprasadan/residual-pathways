@@ -10,7 +10,8 @@
     "md5": "274ed494a024744052df67611c7322e7",
     "region": "World",
     "csv_iamc_series": 693299,
-    "world_model_scenario_pairs": 2298
+    "world_model_scenario_pairs": 2298,
+    "sha256": "4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977"
   },
   "metadata_source": {
     "repository": "witch-team/energy-jobs-dataset-iiasadb",
@@ -35,7 +36,10 @@
     "Carbon Sequestration|CCS|Biomass": 1646,
     "Carbon Sequestration|Direct Air Capture": 477,
     "Emissions|CH4": 1786,
-    "Emissions|N2O": 1789
+    "Emissions|N2O": 1789,
+    "Emissions|CO2|Energy and Industrial Processes": 1811,
+    "Carbon Sequestration|Land Use": 904,
+    "Carbon Sequestration|Enhanced Weathering": 201
   },
   "observed_units": {
     "Emissions|CO2": "Mt CO2/yr",
@@ -45,7 +49,10 @@
     "Carbon Sequestration|CCS|Biomass": "Mt CO2/yr",
     "Carbon Sequestration|Direct Air Capture": "Mt CO2/yr",
     "Emissions|CH4": "Mt CH4/yr",
-    "Emissions|N2O": "kt N2O/yr"
+    "Emissions|N2O": "kt N2O/yr",
+    "Emissions|CO2|Energy and Industrial Processes": "Mt CO2/yr",
+    "Carbon Sequestration|Land Use": "Mt CO2/yr",
+    "Carbon Sequestration|Enhanced Weathering": "Mt CO2/yr"
   },
   "category_coverage": [
     {
@@ -53,63 +60,81 @@
       "n": 97,
       "co2": 97,
       "dac": 38,
-      "all_six_candidate_presence": 27
+      "all_six_candidate_presence": 27,
+      "eip_afolu_land_beccs_dac": 30,
+      "eip_afolu_land_beccs_dac_fossilccs": 19
     },
     {
       "category": "C2",
       "n": 133,
       "co2": 133,
       "dac": 32,
-      "all_six_candidate_presence": 17
+      "all_six_candidate_presence": 17,
+      "eip_afolu_land_beccs_dac": 26,
+      "eip_afolu_land_beccs_dac_fossilccs": 13
     },
     {
       "category": "C3",
       "n": 311,
       "co2": 311,
       "dac": 127,
-      "all_six_candidate_presence": 96
+      "all_six_candidate_presence": 96,
+      "eip_afolu_land_beccs_dac": 94,
+      "eip_afolu_land_beccs_dac_fossilccs": 66
     },
     {
       "category": "C4",
       "n": 159,
       "co2": 159,
       "dac": 57,
-      "all_six_candidate_presence": 51
+      "all_six_candidate_presence": 51,
+      "eip_afolu_land_beccs_dac": 56,
+      "eip_afolu_land_beccs_dac_fossilccs": 50
     },
     {
       "category": "C5",
       "n": 212,
       "co2": 212,
       "dac": 87,
-      "all_six_candidate_presence": 73
+      "all_six_candidate_presence": 73,
+      "eip_afolu_land_beccs_dac": 80,
+      "eip_afolu_land_beccs_dac_fossilccs": 66
     },
     {
       "category": "C6",
       "n": 97,
       "co2": 97,
       "dac": 42,
-      "all_six_candidate_presence": 34
+      "all_six_candidate_presence": 34,
+      "eip_afolu_land_beccs_dac": 38,
+      "eip_afolu_land_beccs_dac_fossilccs": 30
     },
     {
       "category": "C7",
       "n": 164,
       "co2": 164,
       "dac": 32,
-      "all_six_candidate_presence": 26
+      "all_six_candidate_presence": 26,
+      "eip_afolu_land_beccs_dac": 20,
+      "eip_afolu_land_beccs_dac_fossilccs": 17
     },
     {
       "category": "C8",
       "n": 29,
       "co2": 29,
       "dac": 7,
-      "all_six_candidate_presence": 6
+      "all_six_candidate_presence": 6,
+      "eip_afolu_land_beccs_dac": 1,
+      "eip_afolu_land_beccs_dac_fossilccs": 0
     }
   ],
   "vetted_totals": {
     "scenarios": 1202,
     "reported_co2": 1202,
     "reported_dac": 422,
-    "co_report_six": 330
+    "co_report_six": 330,
+    "co_report_eip_afolu_land_beccs_dac": 345,
+    "co_report_eip_afolu_land_beccs_dac_fossilccs": 261
   },
   "non_vetted_groups": [
     {
@@ -142,7 +167,17 @@
   },
   "run": {
     "github_workflow": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39963627518",
-    "aggregate_artifact_url": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39963627518/artifacts/12504929274"
+    "aggregate_artifact_url": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39963627518/artifacts/12504929274",
+    "expanded_source_verification": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39965219473",
+    "expanded_note": "Source-derived 11-variable inventory. Stricter sets are co-reporting indicators only, not I3."
   },
-  "data_disclosure": "This file contains aggregate counts only and reproduces no underlying scenario rows or metadata scenario identities."
+  "data_disclosure": "This file contains aggregate counts only and reproduces no underlying scenario rows or metadata scenario identities.",
+  "extended_candidate_variable_names": [
+    "Emissions|CO2|Energy and Industrial Processes",
+    "Emissions|CO2|AFOLU",
+    "Carbon Sequestration|Land Use",
+    "Carbon Sequestration|CCS|Biomass",
+    "Carbon Sequestration|CCS|Fossil",
+    "Carbon Sequestration|Direct Air Capture"
+  ]
 }
