@@ -1,0 +1,148 @@
+{
+  "schema_version": "ar6-teaching-2050-aggregate.v1",
+  "analysis_date": "2026-10-23",
+  "source_status": "IIASA-LABELLED_PUBLIC_TEACHING_SUBSET_NOT_VERIFIED_AGAINST_CANONICAL_AR6_WORLD_V1_1",
+  "world_source": {
+    "url": "https://zenodo.org/records/20056332",
+    "filename": "AR6-demo-data.csv",
+    "source_label": "AR6 World data (teaching subset)",
+    "bytes": 361767203,
+    "md5": "274ed494a024744052df67611c7322e7",
+    "region": "World",
+    "csv_iamc_series": 693299,
+    "world_model_scenario_pairs": 2298
+  },
+  "metadata_source": {
+    "repository": "witch-team/energy-jobs-dataset-iiasadb",
+    "filename": "AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx",
+    "sha256": "7d22453bdda52e95cea4df46d362018951dd7114e62f01f5bcea65d6e24a7790",
+    "source_status": "THIRD_PARTY_REDISTRIBUTED_VERSION_NOT_OFFICIAL_HASH_VERIFIED",
+    "vetted_sheet": "meta_Ch3vetted_withclimate",
+    "vetted_model_scenarios": 1202,
+    "all_sheet": "meta",
+    "all_metadata_model_scenarios": 2304,
+    "matched_all_metadata_world_scenarios": 2298,
+    "metadata_without_world": 6
+  },
+  "year": 2050,
+  "region": "World",
+  "denominator_definition": "one distinct Model+Scenario pair with any World-region series in the selected source; observed=explicit finite 2050 value at exact variable path, including zero",
+  "candidate_counts_all_source": {
+    "Emissions|CO2": 1863,
+    "Emissions|CO2|Energy": 1291,
+    "Emissions|CO2|AFOLU": 1779,
+    "Carbon Sequestration|CCS|Fossil": 1444,
+    "Carbon Sequestration|CCS|Biomass": 1646,
+    "Carbon Sequestration|Direct Air Capture": 477,
+    "Emissions|CH4": 1786,
+    "Emissions|N2O": 1789
+  },
+  "observed_units": {
+    "Emissions|CO2": "Mt CO2/yr",
+    "Emissions|CO2|Energy": "Mt CO2/yr",
+    "Emissions|CO2|AFOLU": "Mt CO2/yr",
+    "Carbon Sequestration|CCS|Fossil": "Mt CO2/yr",
+    "Carbon Sequestration|CCS|Biomass": "Mt CO2/yr",
+    "Carbon Sequestration|Direct Air Capture": "Mt CO2/yr",
+    "Emissions|CH4": "Mt CH4/yr",
+    "Emissions|N2O": "kt N2O/yr"
+  },
+  "category_coverage": [
+    {
+      "category": "C1",
+      "n": 97,
+      "co2": 97,
+      "dac": 38,
+      "all_six_candidate_presence": 27
+    },
+    {
+      "category": "C2",
+      "n": 133,
+      "co2": 133,
+      "dac": 32,
+      "all_six_candidate_presence": 17
+    },
+    {
+      "category": "C3",
+      "n": 311,
+      "co2": 311,
+      "dac": 127,
+      "all_six_candidate_presence": 96
+    },
+    {
+      "category": "C4",
+      "n": 159,
+      "co2": 159,
+      "dac": 57,
+      "all_six_candidate_presence": 51
+    },
+    {
+      "category": "C5",
+      "n": 212,
+      "co2": 212,
+      "dac": 87,
+      "all_six_candidate_presence": 73
+    },
+    {
+      "category": "C6",
+      "n": 97,
+      "co2": 97,
+      "dac": 42,
+      "all_six_candidate_presence": 34
+    },
+    {
+      "category": "C7",
+      "n": 164,
+      "co2": 164,
+      "dac": 32,
+      "all_six_candidate_presence": 26
+    },
+    {
+      "category": "C8",
+      "n": 29,
+      "co2": 29,
+      "dac": 7,
+      "all_six_candidate_presence": 6
+    }
+  ],
+  "vetted_totals": {
+    "scenarios": 1202,
+    "reported_co2": 1202,
+    "reported_dac": 422,
+    "co_report_six": 330
+  },
+  "non_vetted_groups": [
+    {
+      "category": "failed-vetting",
+      "n": 587,
+      "co2": 539,
+      "dac": 44,
+      "co_report_six": 32
+    },
+    {
+      "category": "no-climate-assessment",
+      "n": 509,
+      "co2": 122,
+      "dac": 11,
+      "co_report_six": 0
+    }
+  ],
+  "six_candidate_variable_names": [
+    "Emissions|CO2",
+    "Emissions|CO2|Energy",
+    "Emissions|CO2|AFOLU",
+    "Carbon Sequestration|CCS|Biomass",
+    "Carbon Sequestration|CCS|Fossil",
+    "Carbon Sequestration|Direct Air Capture"
+  ],
+  "identifiability": {
+    "verified_i3": 0,
+    "assessment": "NOT_EVALUATED_NO_SOURCE_REVIEWED_EXHAUSTIVE_COMPONENT_PARTITION",
+    "meaning": "Number verified under I3 is zero because identity and scope requirements have not been satisfied. Does not establish there are zero genuinely reconstructible scenarios."
+  },
+  "run": {
+    "github_workflow": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39963627518",
+    "aggregate_artifact_url": "https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39963627518/artifacts/12504929274"
+  },
+  "data_disclosure": "This file contains aggregate counts only and reproduces no underlying scenario rows or metadata scenario identities."
+}
