@@ -20,3 +20,9 @@ gamslice.txt
 **/gamslice.txt
 *.gdx
 *.lst
+
+# Local-only MESSAGEix environment, licensed solver outputs and credentials
+.venv-messageix/
+**/gamslice.txt
+**/gamslice.dat
+**/*.executed.private.ipynb
