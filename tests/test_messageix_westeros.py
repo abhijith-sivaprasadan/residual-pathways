@@ -1,10 +1,11 @@
 import json
 import sys
+from types import SimpleNamespace
 import pytest
 from residual_pathways.messageix_westeros import (
     UPSTREAM_COMMIT, NOTEBOOKS, WesterosError, preflight,
-    model_cells_until_objective, source_url,
-    setup_private_ixmp, setup_private_kernel,
+    model_cells_until_objective, source_url, objective_level,
+    read_gams_solutions, setup_private_ixmp, setup_private_kernel,
 )
 
 
@@ -73,3 +74,57 @@ def test_preflight_never_claims_success():
     assert d["actual_solve_performed"] is False
     assert d["license_checked"] is False
     assert d["evidence"] == "ENVIRONMENT_ONLY_NOT_A_GAMS_SOLVE"
+
+
+def test_scalar_objective_from_ixmp_dict_and_indexed_dataframe():
+    # ixmp returns a dict, not a DataFrame, for scalar variables like OBJ.
+    assert objective_level({"lvl": 159025.830480, "mrg": 0.0}, "baseline") == 159025.830480
+    pd = pytest.importorskip("pandas")
+    df = pd.DataFrame({"lvl": [191510.804279], "mrg": [0.0]})
+    assert objective_level(df, "emission_bound") == 191510.804279
+
+
+@pytest.mark.parametrize("bad", [
+    {}, {"mrg": 0.0}, {"lvl": None}, {"lvl": float("nan")},
+    {"lvl": float("inf")}, {"lvl": [1.0, 2.0]}, "invalid",
+])
+def test_invalid_scalar_objective_rejected(bad):
+    with pytest.raises(WesterosError):
+        objective_level(bad, "baseline")
+
+
+def test_invalid_indexed_objective_rejected():
+    pd = pytest.importorskip("pandas")
+    for df in (pd.DataFrame(), pd.DataFrame({"lvl": []}),
+               pd.DataFrame({"lvl": [1.0, 2.0]}),
+               pd.DataFrame({"mrg": [0.0]})):
+        with pytest.raises(WesterosError):
+            objective_level(df, "baseline")
+
+
+def test_read_gams_solutions_checks_both_solved_scenarios(monkeypatch):
+    class Platform:
+        closed = False
+        def close_db(self):
+            self.closed = True
+
+    platform = Platform()
+    monkeypatch.setitem(sys.modules, "ixmp", SimpleNamespace(Platform=lambda: platform))
+    class Scenario:
+        def __init__(self, platform_arg, model, scenario):
+            assert platform_arg is platform and model == "Westeros Electrified"
+            self.scenario = scenario
+            self.version = 1
+        def has_solution(self):
+            return True
+        def var(self, name):
+            assert name == "OBJ"
+            return {"lvl": {"baseline": 159025.830480,
+                            "emission_bound": 191510.804279}[self.scenario],
+                    "mrg": 0.0}
+    monkeypatch.setitem(sys.modules, "message_ix", SimpleNamespace(Scenario=Scenario))
+    values = read_gams_solutions()
+    assert [v["scenario"] for v in values] == ["baseline", "emission_bound"]
+    assert [v["objective_native"] for v in values] == [159025.830480, 191510.804279]
+    assert all(v["has_solution"] is True and v["version"] == 1 for v in values)
+    assert platform.closed is True
