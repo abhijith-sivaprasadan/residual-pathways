@@ -35,6 +35,14 @@ def main():
     strata.add_argument("--year", type=int, default=2050)
     pf = sub.add_parser("gams-preflight", help="Readiness audit only; never claims a MESSAGEix solve")
     pf.add_argument("--output", default="results/gams_preflight.json")
+    cases = sub.add_parser("case-audit", help="Source-backed 24-case preflight; no I3 claim")
+    cases.add_argument("--input", required=True)
+    cases.add_argument("--metadata", required=True)
+    cases.add_argument("--metadata-sheet", default="meta_Ch3vetted_withclimate")
+    cases.add_argument("--candidates", default="config/ar6_variable_candidates.json")
+    cases.add_argument("--public-output", default="results/ar6-teaching-pilot/case_audit_24_public.json")
+    cases.add_argument("--private-output", default="data/ar6-private/case_audit_review_packet.json")
+    cases.add_argument("--year", type=int, default=2050)
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -49,6 +57,14 @@ def main():
         from .preflight import write_preflight
         x = write_preflight(args.output)
         print(x["scientific_status"], "GAMS discovered:", x["gams_executable_discovered"])
+    elif args.command == "case-audit":
+        from .case_audit import run_case_audit
+        result = run_case_audit(args.input, args.metadata, args.candidates,
+                                args.public_output, args.private_output,
+                                args.year, args.metadata_sheet)
+        print("RP24 audit:", result["summary"]["case_count"],
+              "source-grounded cases; human-reviewed:", result["summary"]["reviewed_cases"],
+              "I3 verified:", result["summary"]["verified_i3_cases"])
     elif args.command == "audit-ar6-strata":
         from .stratify import run_strata
         import json
