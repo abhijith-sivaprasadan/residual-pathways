@@ -24,6 +24,24 @@ def test_truncate_after_actual_model_solve_but_before_plotting():
     trimmed = model_cells_until_objective(original, 'scenario.var("OBJ")')
     assert len(trimmed["cells"]) == 3
     assert len(original["cells"]) == 4
+    assert all(isinstance(cell["source"], str) for cell in trimmed["cells"])
+    assert [cell["source"] for cell in trimmed["cells"]] == [
+        "Intro", "scenario.solve()", 'scenario.var("OBJ")["lvl"]',
+    ]
+    # The original upstream notebook and any cells beyond OBJ remain untouched.
+    assert isinstance(original["cells"][0]["source"], list)
+    assert original["cells"][3]["source"] == ["only_plot_afterward()"]
+
+
+def test_normalizes_multiline_sources_without_losing_line_breaks():
+    original = {"cells": [
+        {"cell_type": "code", "source": ["first = 1\\n", "scenario.solve()\\n"]},
+        {"cell_type": "code", "source": ['scenario.var("OBJ")\\n']},
+    ]}
+    trimmed = model_cells_until_objective(original, 'scenario.var("OBJ")')
+    assert trimmed["cells"][0]["source"] == "first = 1\\nscenario.solve()\\n"
+    assert trimmed["cells"][1]["source"] == 'scenario.var("OBJ")\\n'
+    assert isinstance(original["cells"][0]["source"], list)
 
 
 def test_fail_if_no_solve_or_malformed():
