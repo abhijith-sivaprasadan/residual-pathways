@@ -5,6 +5,7 @@ on:
       - '.github/workflows/ar6-public-source-pilot.yml'
       - 'src/residual_pathways/coverage_audit.py'
       - 'src/residual_pathways/stratify.py'
+      - 'src/residual_pathways/case_audit.py'
       - 'src/residual_pathways/__main__.py'
       - 'data/derived/ar6_teaching_2050_summary.json'
       - 'config/ar6_variable_candidates.json'
@@ -155,6 +156,45 @@ jobs:
           assert sum(x['eip_afolu_land_beccs_dac_fossilccs'] for x in baseline['category_coverage'])==baseline['vetted_totals']['co_report_eip_afolu_land_beccs_dac_fossilccs']
           assert broad['metadata_sha256']==baseline['metadata_source']['sha256']
           print('Independently checked repository research summary against streamed teaching CSV and pinned metadata.')
+          PY
+      - name: Run real 24-case forensic preflight; keep unredacted packet private
+        run: |
+          python -m residual_pathways case-audit \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            --metadata-sheet meta_Ch3vetted_withclimate \
+            --candidates config/ar6_variable_candidates.json \
+            --public-output results/ar6-teaching-pilot/case_audit_24_public.json \
+            --private-output data/ar6-private/case_audit_review_packet.json \
+            --year 2050
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          public_file=Path('results/ar6-teaching-pilot/case_audit_24_public.json')
+          d=json.loads(public_file.read_text())
+          baseline=json.loads(Path('data/derived/ar6_teaching_2050_summary.json').read_text())
+          assert d['source_sha256']==baseline['world_source']['sha256']
+          assert d['metadata_sha256']==baseline['metadata_source']['sha256']
+          assert d['source_matched_cohort_size']==1202
+          assert d['summary']['case_count']==24
+          assert d['summary']['per_category']=={f'C{i}':3 for i in range(1,9)}
+          assert d['summary']['reviewed_cases']==0
+          assert d['summary']['verified_i3_cases']==0
+          assert not d['selection']['probability_sample']
+          assert all(case['human_review']=='NOT_REVIEWED' and
+                     case['accounting_grade']=='NOT_DETERMINED' and
+                     not case['i3_verified'] for case in d['cases'])
+          assert len(set(x['case_id'] for x in d['cases']))==24
+          assert 'source_observations' not in public_file.read_text()
+          assert 'model_specific_definitions_ref' not in public_file.read_text()
+          private_file=Path('data/ar6-private/case_audit_review_packet.json')
+          assert private_file.exists() and 'source_observations' in private_file.read_text()
+          print('RP24 SOURCE-BACKED FORENSIC PREFLIGHT:',d['summary'])
+          for row in d['cases']:
+              print(row['case_id'],row['category'],row['slot'],
+                    'six_reporting',row['six_valid_unit_count'],
+                    'three_term_diagnostic',row['arithmetic_diagnostic_possible'])
+          print('All 24 selected on real input, no scientific human review falsely claimed.')
           PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4
