@@ -49,7 +49,7 @@ For the three listed periods **if their effective weights are equal, and if no o
     * 7.4 / 3 = 500.000000 MtCO2 (average annual)
 ```
 
-The exact numerical agreement is **strong evidence of a saturated emissions constraint**. However, the author's pasted report does not include the raw saved `duration_period`, `EMISS`, `emission_scaling`, `historical_emission`, `bound_emission`, or `EMISSION_CONSTRAINT` records. A full binding test should inspect these and the correct time-type mappings; without this, a formal constraint or shadow-price statement remains **NOT_ESTABLISHED**.
+The exact numerical agreement is **strong evidence of a saturated emissions constraint**. The author's subsequent pasted diagnostic **does now include** saved `EMISS` and `bound_emission` records: emissions for Westeros are **350.5697571642012**, **568.5098361190279**, **580.9204067167708** in years 700, 710, 720, respectively. The saved cap is **500 MtCO2**. Their simple arithmetic average is **500.0000000000** within floating-point error. The same values also appear under `World` and must **not** be double-counted. The `EMISSION_CONSTRAINT` retrieval returned **EMPTY**, meaning no stored equation level/marginal was available. The transcript still does not establish saved `duration_period`, `cat_year`, `emission_scaling`, or `historical_emission` inputs. A full binding test should inspect these and the correct time-type mappings; without this, a formal constraint or shadow-price statement remains **NOT_ESTABLISHED**.
 
 **Do not describe the 500 figure as an unnormalized 30-year cumulative 500 MtCO2 budget.** Under the cited equation, the multi-year bound is normalized by the total duration.
 
@@ -72,3 +72,7 @@ $s.emissions_bound | ConvertTo-Json -Depth 16
 ```
 
 A genuine controlled three-scenario emissions sensitivity and an independent numerical reproduction remain the next higher scientific-evidence steps.
+
+## Follow-up diagnostic
+
+The repository now implements `python -m residual_pathways westeros-cap-check --manifest PATH/TO/manifest.private.json --output results/westeros_cap_check`. It reads the original local ixmp scenario, verifies bound/category/period definitions, applies the exact duration-weighted average annual emissions equation and records a numerical saturation status. A missing or incompatible model-year mapping leaves the status `NOT_ESTABLISHED`; it cannot manufacture a shadow price. The audit has not been executed against the author's saved database yet, only developed with mock fixtures.
