@@ -35,12 +35,12 @@ def test_truncate_after_actual_model_solve_but_before_plotting():
 
 def test_normalizes_multiline_sources_without_losing_line_breaks():
     original = {"cells": [
-        {"cell_type": "code", "source": ["first = 1\\n", "scenario.solve()\\n"]},
-        {"cell_type": "code", "source": ['scenario.var("OBJ")\\n']},
+        {"cell_type": "code", "source": ["first = 1\n", "scenario.solve()\n"]},
+        {"cell_type": "code", "source": ['scenario.var("OBJ")\n']},
     ]}
     trimmed = model_cells_until_objective(original, 'scenario.var("OBJ")')
-    assert trimmed["cells"][0]["source"] == "first = 1\\nscenario.solve()\\n"
-    assert trimmed["cells"][1]["source"] == 'scenario.var("OBJ")\\n'
+    assert trimmed["cells"][0]["source"] == "first = 1\nscenario.solve()\n"
+    assert trimmed["cells"][1]["source"] == 'scenario.var("OBJ")\n'
     assert isinstance(original["cells"][0]["source"], list)
 
 
