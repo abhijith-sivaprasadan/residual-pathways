@@ -113,7 +113,20 @@ def audit_strata(source_csv, metadata_path, *,
             duplicate_obs.add(obs_id)
             observed[var].add(key)
             unit_register[var].add(row["Unit"])
+
     by_category = Counter(md[key] for key in matched_source)
+    # Co-reporting means variables are present under the same model-scenario-year
+    # and still says nothing about physical accounting semantics or I3.
+    groups = {
+        "co2_energy_land": ("Emissions|CO2", "Emissions|CO2|Energy", "Emissions|CO2|AFOLU"),
+        "co2_and_dac": ("Emissions|CO2", "Carbon Sequestration|Direct Air Capture"),
+        "co2_and_biomass_ccs": ("Emissions|CO2", "Carbon Sequestration|CCS|Biomass"),
+        "co2_and_fossil_ccs": ("Emissions|CO2", "Carbon Sequestration|CCS|Fossil"),
+        "co2_energy_land_ccs_dac": ("Emissions|CO2", "Emissions|CO2|Energy",
+            "Emissions|CO2|AFOLU", "Carbon Sequestration|CCS|Biomass",
+            "Carbon Sequestration|CCS|Fossil",
+            "Carbon Sequestration|Direct Air Capture"),
+    }
     result = {}
     for category, denominator in sorted(by_category.items()):
         result[category] = {
@@ -123,6 +136,19 @@ def audit_strata(source_csv, metadata_path, *,
                        "units_seen": sorted(unit_register[name])}
                 for name in variable_names},
         }
+        eligible = {key for key in matched_source if md[key] == category}
+        result[category]["candidate_co_reporting"] = {}
+        for group_label, group_vars in groups.items():
+            if not set(group_vars) <= set(variable_names):
+                continue
+            shared = set.intersection(*(observed[var] for var in group_vars))
+            shared_in_category = len(shared & eligible)
+            result[category]["candidate_co_reporting"][group_label] = {
+                "model_scenarios": shared_in_category,
+                "denominator": denominator,
+                "fraction": shared_in_category/denominator,
+                "meaning": "PRESENCE_ONLY_NOT_ACCOUNTING_IDENTIFIABILITY",
+            }
         for var in variable_names:
             n = result[category]["variable_coverage"][var]["observed_model_scenarios"]
             result[category]["variable_coverage"][var]["coverage_fraction"] = n / denominator
@@ -146,8 +172,8 @@ def audit_strata(source_csv, metadata_path, *,
             ]}
 
 
-def run_strata(source, metadata, output, *, year=2050, category_column="Category", metadata_sheet=None):
-    result = audit_strata(source, metadata, year=year, category_column=category_column, metadata_sheet=metadata_sheet)
+def run_strata(source, metadata, output, *, year=2050, category_column="Category", metadata_sheet=None, variable_names=None):
+    result = audit_strata(source, metadata, year=year, category_column=category_column, metadata_sheet=metadata_sheet, variable_names=variable_names)
     target = Path(output)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")

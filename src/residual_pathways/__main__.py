@@ -30,6 +30,7 @@ def main():
     strata.add_argument("--metadata", required=True)
     strata.add_argument("--category-column", required=True)
     strata.add_argument("--metadata-sheet", help="Explicit XLSX sheet, e.g. meta_Ch3vetted_withclimate")
+    strata.add_argument("--candidates", help="JSON mapping of labels to exact IAMC variable names")
     strata.add_argument("--output", default="results/ar6/stratified_2050.json")
     strata.add_argument("--year", type=int, default=2050)
     pf = sub.add_parser("gams-preflight", help="Readiness audit only; never claims a MESSAGEix solve")
@@ -50,7 +51,10 @@ def main():
         print(x["scientific_status"], "GAMS discovered:", x["gams_executable_discovered"])
     elif args.command == "audit-ar6-strata":
         from .stratify import run_strata
-        x = run_strata(args.input, args.metadata, args.output, year=args.year, category_column=args.category_column, metadata_sheet=args.metadata_sheet)
+        import json
+        from pathlib import Path
+        names = tuple(json.loads(Path(args.candidates).read_text()).values()) if args.candidates else None
+        x = run_strata(args.input, args.metadata, args.output, year=args.year, category_column=args.category_column, metadata_sheet=args.metadata_sheet, variable_names=names)
         print("Metadata-stratified World model-scenarios:", x["matched_model_scenarios"])
     elif args.command == "model-sensitivity":
         from .stylized_model import run_experiments

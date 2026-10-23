@@ -69,3 +69,17 @@ def test_explicit_xlsx_sheet_required(tmp_path):
     assert result['metadata_sheet']=='meta_Ch3vetted_withclimate'
     with pytest.raises(StrataError, match='Missing requested metadata sheet'):
         audit_strata(src, meta, metadata_sheet='wrong')
+
+
+def test_joint_presence_not_gross_decomposition(tmp_path):
+    md = writer(tmp_path/'metadata.csv',['Model','Scenario','Category'],[['A','S','C1'],['B','S','C1']])
+    names = ['Emissions|CO2','Carbon Sequestration|Direct Air Capture']
+    src = writer(tmp_path/'world.csv',['Model','Scenario','Region','Variable','Unit','2050'],[
+       ['A','S','World','Emissions|CO2','Mt CO2/yr','10'],
+       ['A','S','World','Carbon Sequestration|Direct Air Capture','Mt CO2/yr','2'],
+       ['B','S','World','Emissions|CO2','Mt CO2/yr','8']])
+    r = audit_strata(src, md, variable_names=names)
+    co = r['strata']['C1']['candidate_co_reporting']['co2_and_dac']
+    assert co['model_scenarios']==1
+    assert co['denominator']==2
+    assert co['meaning']=='PRESENCE_ONLY_NOT_ACCOUNTING_IDENTIFIABILITY'
