@@ -160,6 +160,29 @@ def temporary_environment(values):
                 os.environ[name] = old
 
 
+def objective_level(obj, stage):
+    """Return one finite level from ixmp's scalar dict or indexed DataFrame.
+
+    ixmp returns {'lvl': ..., 'mrg': ...} for a scalar variable such as OBJ,
+    but a pandas DataFrame for indexed variables. Do not conflate the two.
+    """
+    if isinstance(obj, dict):
+        levels = [obj["lvl"]] if "lvl" in obj else []
+    elif hasattr(obj, "columns") and hasattr(obj, "empty"):
+        levels = obj["lvl"].tolist() if not obj.empty and "lvl" in obj.columns else []
+    else:
+        raise WesterosError(f"Unexpected objective representation for {stage}")
+    if len(levels) != 1:
+        raise WesterosError(f"Missing or multiple objective levels for {stage}")
+    try:
+        value = float(levels[0])
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise WesterosError(f"Invalid objective level for {stage}") from exc
+    if not math.isfinite(value):
+        raise WesterosError(f"Non-finite objective level for {stage}")
+    return value
+
+
 def read_gams_solutions():
     """Read values persisted by actually solved scenarios from private ixmp."""
     import ixmp
@@ -172,13 +195,9 @@ def read_gams_solutions():
             if not scenario.has_solution():
                 raise WesterosError(f"No solved variables for {stage}")
             obj = scenario.var("OBJ")
-            if obj.empty or "lvl" not in obj.columns:
-                raise WesterosError(f"Missing solved objective for {stage}")
-            values = [float(x) for x in obj["lvl"].tolist()]
-            if len(values) != 1 or not math.isfinite(values[0]):
-                raise WesterosError(f"Invalid/multiple objective levels for {stage}")
+            value = objective_level(obj, stage)
             result.append({"scenario": stage, "version": scenario.version,
-                           "objective_native": values[0], "has_solution": True})
+                           "objective_native": value, "has_solution": True})
         return result
     finally:
         mp.close_db()
