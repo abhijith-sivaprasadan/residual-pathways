@@ -90,6 +90,18 @@ jobs:
           assert x["year_summaries"][-1]["negative_reported_co2_count"] == 9
           assert "not a" in x["interpretation"] or "cannot independently identify" in x["interpretation"]
           PY
+      - name: Verify official Westeros notebook SHA and staged code cells
+        run: |
+          python -m residual_pathways westeros-source-check --output results/messageix_source_check
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("results/messageix_source_check/source_preflight.json").read_text())
+          assert s["status"] == "SOURCE_VERIFIED_ONLY_NO_GAMS_EXECUTION"
+          assert s["gams_solved"] is False
+          assert len(s["baseline_approved_cells"]) == 25
+          assert len(s["emissions_parameter_cells"]) == 3
+          PY
       - name: Record truthful MESSAGEix/GAMS preflight status
         run: |
           python -m residual_pathways gams-preflight --output results/gams_preflight.json
@@ -119,6 +131,7 @@ jobs:
             results/model_sensitivity/
             results/pyomo_validation.json
             results/gams_preflight.json
+            results/messageix_source_check/source_preflight.json
             results/communication/
             results/environment/
           retention-days: 30

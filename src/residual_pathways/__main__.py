@@ -61,6 +61,8 @@ def main():
     brief.add_argument("--output",default="results/communication")
     westeros = sub.add_parser("westeros-validate", help="ACTUALLY solve pinned Westeros with user's GAMS license")
     westeros.add_argument("--output", default="results/messageix_westeros")
+    wsrc = sub.add_parser("westeros-source-check", help="Hash-check official notebook sources without licensed solves")
+    wsrc.add_argument("--output", default="results/messageix_source_check")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -88,6 +90,10 @@ def main():
         r=write_robustness(args.input,args.metadata,args.candidates,args.output,
                            sheet=args.metadata_sheet)
         print("Robustness rows:",len(r["records"]),"source-matched scenarios:",r["matched_source_scenarios"])
+    elif args.command == "westeros-source-check":
+        from .westeros import source_preflight
+        result = source_preflight(args.output)
+        print("Verified pinned official notebook inputs (NO GAMS SOLVE):", result["status"])
     elif args.command == "westeros-validate":
         from .westeros import run_westeros
         result = run_westeros(args.output)

@@ -30,3 +30,7 @@ Docs: https://docs.messageix.org/en/stable/tutorials.html and https://docs.messa
 ## Scope and remaining work
 
 Passing this run would close the technical Westeros baseline/perturbation gate. The canonical AR6 World source-authentication gate and the RP24 source-specific emissions-accounting reviews remain separate. Local GAMS execution cannot authenticate a scientific accounting partition or a real IIASA collaboration.
+
+## License-free source preflight in CI
+
+Run python -m residual_pathways westeros-source-check --output results/messageix_source_check to download and verify the two official tagged notebooks, compile the precisely approved execution cells and check that the source bound/factor values still match the documented case. This needs no GAMS installation and emits source_preflight.json. It must remain distinct from westeros-validate, which performs three actual solves and requires a license-compatible GAMS installation.
