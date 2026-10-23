@@ -46,6 +46,17 @@ jobs:
           assert "<svg" in Path("results/tutorial/co2_2050.svg").read_text()
           print("Every source-derived 2050 number matches the independently recorded reference.")
           PY
+      - name: Run actual synthetic SciPy/HiGHS optimisation
+        run: |
+          python -m residual_pathways model-sensitivity --output results/model_sensitivity
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("results/model_sensitivity/experiment_results.json").read_text())
+          assert len(r["results"]) == 6
+          assert r["results"][0]["status"] == "OPTIMAL"
+          assert r["results"][-1]["status"] == "INFEASIBLE_OR_UNSOLVED"
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: published-iamc-baseline

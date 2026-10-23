@@ -44,3 +44,7 @@ License: MIT for original repository code, upstream datasets retain their own te
 ## AR6 World variable-availability audit (implemented; requires authorized source download)
 
 The streaming `audit-ar6` command audits a locally downloaded AR6 v1.1 World CSV and exports model-scenario counts, variable-coverage denominators and source SHA-256 without publishing underlying scenario values. It does **not** claim gross-emissions identifiability from variable names. Instructions: [docs/ar6_access.md](docs/ar6_access.md).
+
+## Controlled synthetic HiGHS experiments
+
+The model-sensitivity command solves six hypothetical electricity/CO2 cases with SciPy/HiGHS. This is a real mathematical solve, but not an empirical IAM study or MESSAGEix execution. See docs/controlled_experiments.md for full methodology.

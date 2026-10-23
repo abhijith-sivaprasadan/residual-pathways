@@ -23,6 +23,8 @@ def main():
     ar6.add_argument("--candidates", default="config/ar6_variable_candidates.json")
     ar6.add_argument("--output", default="results/ar6/coverage_2050.json")
     ar6.add_argument("--year", type=int, default=2050)
+    sensitivity = sub.add_parser("model-sensitivity", help="Synthetic SciPy/HiGHS optimisation; NOT MESSAGEix")
+    sensitivity.add_argument("--output", default="results/model_sensitivity")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -33,6 +35,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "model-sensitivity":
+        from .stylized_model import run_experiments
+        r = run_experiments(args.output)
+        print("Executed", len(r["results"]), "synthetic HiGHS cases (not MESSAGEix)")
     elif args.command == "audit-ar6":
         from .coverage_audit import run_audit
         result = run_audit(args.input, args.candidates, args.output, year=args.year)

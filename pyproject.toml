@@ -11,7 +11,8 @@ dependencies = []
 
 [project.optional-dependencies]
 analysis = ["pyam-iamc==3.5.0"]
-dev = ["pytest>=8,<10", "pyam-iamc==3.5.0"]
+model = ["scipy>=1.11,<2"]
+dev = ["pytest>=8,<10", "pyam-iamc==3.5.0", "scipy>=1.11,<2"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
