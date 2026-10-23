@@ -172,6 +172,7 @@ def build_results(rows: list[dict], metadata: dict) -> dict:
             "year": 2050, "unit": "Mt CO2/yr",
             "interpretation": "Published CD-LINKS tutorial scenarios; descriptive differences, not controlled innovation effects."
         },
+        "__source_rows": rows,
         "accounting": {"status": "NOT_IDENTIFIABLE_FROM_THIS_SOURCE",
                        "i3_scenarios": 0,
                        "i3_claims": [],
@@ -182,7 +183,8 @@ def build_results(rows: list[dict], metadata: dict) -> dict:
 def write_outputs(results: dict, directory: str | Path) -> None:
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
-    (directory / "results.json").write_text(json.dumps(results, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    saved_results = {k: v for k, v in results.items() if k != "__source_rows"}
+    (directory / "results.json").write_text(json.dumps(saved_results, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (directory / "coverage.json").write_text(json.dumps(results["coverage"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     comparison = results["comparison"]
     with (directory / "model_comparison.csv").open("w", newline="", encoding="utf-8") as fd:
@@ -221,5 +223,8 @@ def write_outputs(results: dict, directory: str | Path) -> None:
                "input_sha256": results["source"]["sha256"]}
     (directory / "release").mkdir(exist_ok=True)
     (directory / "release" / "manifest.json").write_text(json.dumps(release, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    from .trajectory import examine, write_trajectory
+    write_trajectory(examine(results["__source_rows"]), directory)
+
     from .plots import render_2050
     render_2050(comparison["rows"], directory / "co2_2050.svg")

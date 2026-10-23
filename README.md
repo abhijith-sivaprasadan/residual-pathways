@@ -48,3 +48,7 @@ The streaming `audit-ar6` command audits a locally downloaded AR6 v1.1 World CSV
 ## Controlled synthetic HiGHS experiments
 
 The model-sensitivity command solves six hypothetical electricity/CO2 cases with SciPy/HiGHS. This is a real mathematical solve, but not an empirical IAM study or MESSAGEix execution. See docs/controlled_experiments.md for full methodology.
+
+## Full decadal comparison
+
+The tutorial run also generates a sign-aware 2010–2100 (10-year step) comparison and a decadal report. Negative published aggregate CO2 is not positive gross emissions, but does not by itself establish removal categories. See generated decadal_report.md in GitHub Actions artifacts.
