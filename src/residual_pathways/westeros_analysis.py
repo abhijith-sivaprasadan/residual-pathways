@@ -312,6 +312,14 @@ def analyze_run(private_manifest, output_dir):
         finally:
             mp.close_db()
     summary = compare_snapshots(snapshots, evidence["source_run_id"])
+    summary["source"] = {
+        "upstream_commit": evidence["upstream_commit"],
+        "upstream_release": evidence["upstream_release"],
+        "message_ix_version": evidence["message_ix_version"],
+        "ixmp_version": evidence["ixmp_version"],
+        "scenario_versions": {s["scenario"]: s["version"] for s in evidence["scenarios"]},
+        "analysis_source": "PRIVATE_STORED_IXMP_NO_NEW_SOLVE",
+    }
     output_dir.mkdir(parents=True, exist_ok=True)
     paths = {}
     def write(name, raw):
