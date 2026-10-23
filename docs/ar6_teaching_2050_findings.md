@@ -55,10 +55,35 @@ The six co-reported variable labels in the first pilot are aggregate Emissions|C
 - An aggregate CO2 series and nested sectoral series are not disjoint addends.
 - AFOLU CO2 is a **net** source/sink balance in published definitions, so negative net AFOLU must not be equated with physically complete gross land removals. A 2025 Earth System Science Data study distinguishes net AFOLU from the separately reported Carbon Sequestration|Land Use gross-removal proxy: [Prütz et al. (2025)](https://doi.org/10.5194/essd-17-221-2025).
 - Fossil point-source CCS reduces fossil CO2 emitted to atmosphere but is not itself atmospheric removal. BECCS requires consistent system boundaries and permanence/supply-chain treatment; DAC variable presence does not identify storage durability or actual nonzero deployment.
-- The first six-name pilot omits specific land-use sequestration and enhanced weathering variables. A follow-up extended candidate audit is tracked separately; the first pilot must not be treated as an exhaustive CDR partition.
+- The first six-name pilot omits specific land-use sequestration and enhanced weathering variables. The extended source audit now includes these additional candidate names, but still does not establish an exhaustive CDR partition.
 - Source precision, consistent partition/exhaustiveness, temporal harmonisation, source model conventions and residual numerical identity have not been independently reviewed.
 
 **Verified I3 count: 0, because I3 has not been established or evaluated.** This is NOT an assertion that zero scenarios could qualify after full semantic audit. Do not map the 330 co-reporting scenarios to 330 gross-reconstructible cases.
+
+## Extended land-use and industrial CO2 candidate audit
+
+A second actual-data run added three previously absent exact-name candidates: Emissions|CO2|Energy and Industrial Processes, Carbon Sequestration|Land Use, and Carbon Sequestration|Enhanced Weathering. Their 2050 reporting counts across all 2,298 World source pairs are 1,811, 904, and 201, respectively. The teaching CSV SHA-256 is 4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977.
+
+Two stricter candidate intersections were measured within the 1,202 climate-vetted model-scenarios:
+
+- Set A: EIP net CO2, AFOLU net CO2, Land Use sequestration, biomass CCS, and DAC all have reported values.
+- Set B: the same five variables plus fossil point-source CCS also have reported values.
+
+| Climate category | Vetted pairs | Set A reported | Set B reported |
+|---|---:|---:|---:|
+| C1 | 97 | 30 | 19 |
+| C2 | 133 | 26 | 13 |
+| C3 | 311 | 94 | 66 |
+| C4 | 159 | 56 | 50 |
+| C5 | 212 | 80 | 66 |
+| C6 | 97 | 38 | 30 |
+| C7 | 164 | 20 | 17 |
+| C8 | 29 | 1 | 0 |
+| **Total** | **1,202** | **345 (28.7%)** | **261 (21.7%)** |
+
+These are co-reporting *presence* sets only. Neither set establishes an exhaustive nonoverlapping partition, a verified physical source boundary, or a unique inversion from sectoral net to positive gross emissions. Consequently neither 345 nor 261 is the number of I3-identifiable scenarios. A genuine I3 determination requires source-specific reviewed variables, scope, sign conventions, precision and explicit numerical/materiality reconciliation.
+
+Reproducible source-derived evidence: [expanded CI run](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/runs/39965219473) and the [aggregate JSON summary](../data/derived/ar6_teaching_2050_summary.json).
 
 ## Research implications
 
