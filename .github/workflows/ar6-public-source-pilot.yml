@@ -56,7 +56,6 @@ jobs:
           print('No account partition or I3 classification inferred.')
           PY
       - name: Inspect separately redistributed official-named metadata spreadsheet
-        continue-on-error: true
         run: |
           curl --fail --location --retry 3 --connect-timeout 30 --max-time 120 \
             --output data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
@@ -73,9 +72,44 @@ jobs:
               print('SHEET:',repr(name),'rows:',s.max_row,'cols:',s.max_column)
               print('Top 3 rows, first 14 fields:',[list(r[:14]) if r else None for r in top])
           PY
+      - name: Climate-category stratification of source and separately republished v1.1 metadata
+        run: |
+          python -m residual_pathways audit-ar6-strata \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            --metadata-sheet meta_Ch3vetted_withclimate --category-column Category \
+            --candidates config/ar6_variable_candidates.json \
+            --year 2050 \
+            --output results/ar6-teaching-pilot/vetted_coverage_2050.json
+          python -m residual_pathways audit-ar6-strata \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            --metadata-sheet meta --category-column Category \
+            --candidates config/ar6_variable_candidates.json \
+            --year 2050 \
+            --output results/ar6-teaching-pilot/all_metadata_coverage_2050.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for key in ('vetted','all_metadata'):
+              d=json.loads((Path('results/ar6-teaching-pilot')/(key+'_coverage_2050.json')).read_text())
+              print('POPULATION',key,'source rows',d['source_rows_scanned'],
+                    'metadata population',d['metadata_model_scenarios'],
+                    'World source+metadata matched',d['matched_model_scenarios'],
+                    'source without metadata',d['unmatched_source_model_scenarios_count'],
+                    'metadata without source',d['unmatched_metadata_model_scenarios_count'])
+              for cat,x in sorted(d['strata'].items()):
+                  co=x['candidate_co_reporting']
+                  print('CATEGORY',cat,'denominator',x['model_scenarios_in_source_and_metadata'],
+                        'CO2',x['variable_coverage']['Emissions|CO2']['observed_model_scenarios'],
+                        'DAC',x['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios'],
+                        'CO2_DAC_CO_REPORTED',co['co2_and_dac']['model_scenarios'],
+                        'ALL_SIX_CO_REPORTED',co['co2_energy_land_ccs_dac']['model_scenarios'])
+          print('STRICT INTERPRETATION: co-reporting presence only; zero verified I3 classifications.')
+          PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4
         with:
           name: ar6-teaching-subset-variable-coverage-2050
-          path: results/ar6-teaching-pilot/variable_coverage_2050.json
+          path: results/ar6-teaching-pilot/*.json
           retention-days: 15
