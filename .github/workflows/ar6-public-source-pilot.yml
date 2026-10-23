@@ -8,6 +8,7 @@ on:
       - 'src/residual_pathways/case_audit.py'
       - 'src/residual_pathways/__main__.py'
       - 'data/derived/ar6_teaching_2050_summary.json'
+      - 'data/derived/rp24_case_register.csv'
       - 'config/ar6_variable_candidates.json'
   workflow_dispatch:
 permissions:
@@ -195,6 +196,21 @@ jobs:
                     'six_reporting',row['six_valid_unit_count'],
                     'three_term_diagnostic',row['arithmetic_diagnostic_possible'])
           print('All 24 selected on real input, no scientific human review falsely claimed.')
+          import csv
+          with open('data/derived/rp24_case_register.csv', newline='', encoding='utf-8') as ref:
+              fixed=list(csv.DictReader(ref))
+          assert len(fixed)==len(d['cases'])==24
+          for row, observed in zip(fixed,d['cases']):
+              assert row['case_id']==observed['case_id']
+              assert row['category']==observed['category']
+              assert row['selection_slot']==observed['slot']
+              assert int(row['compatible_six_count'])==observed['six_valid_unit_count']
+              assert (row['arithmetic_diagnostic_available']=='true')==observed['arithmetic_diagnostic_possible']
+              assert row['human_review_state']==observed['human_review']
+              assert row['accounting_class']==observed['accounting_grade']
+              assert (row['i3_verified']=='true')==observed['i3_verified']
+          print('All 24 permanent coded-register rows exactly match newly downloaded source selection.')
+
           PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4
