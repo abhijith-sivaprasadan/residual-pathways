@@ -13,7 +13,7 @@ The first release works with the official pyam tutorial dataset, which contains 
 3. Run: python -m residual_pathways analyze --input data/tutorial_data.csv --output results/tutorial --pyam-check
 4. Test: python -m pytest -q
 
-Outputs: coverage.json, model_comparison.csv, results.json, report.md, and release/manifest.json. No downloaded source CSV is committed. The source is revision-pinned; hashes and sample counts are generated for each local run.
+Outputs: coverage.json, model_comparison.csv, results.json, report.md, co2_2050.svg, and release/manifest.json. See docs/initial_findings.md for the first source-derived results. No downloaded source CSV is committed. The source is revision-pinned; hashes and sample counts are generated for each local run.
 
 The scenario-comparison script selects an explicit three-model, six-scenario cohort (MESSAGEix-GLOBIOM 1.0, REMIND-MAgPIE 1.7-3.0, IMAGE 3.0.1) in the World region and records reported Emissions|CO2 trajectories. These are **not** gross residual emissions. CD-LINKS is historical scenario research and does not describe present-day model configurations.
 

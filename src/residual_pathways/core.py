@@ -221,3 +221,5 @@ def write_outputs(results: dict, directory: str | Path) -> None:
                "input_sha256": results["source"]["sha256"]}
     (directory / "release").mkdir(exist_ok=True)
     (directory / "release" / "manifest.json").write_text(json.dumps(release, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    from .plots import render_2050
+    render_2050(comparison["rows"], directory / "co2_2050.svg")

@@ -55,6 +55,7 @@ def test_comparison_exact_matching(tmp_path):
     out = tmp_path / "out"
     write_outputs(build_results(rows, meta), out)
     assert json.loads((out / "release/manifest.json").read_text())["identifiability_level"] == "I0"
+    assert "<svg" in (out / "co2_2050.svg").read_text()
 
 
 def test_accounting_unknown_precision_cannot_be_i3():

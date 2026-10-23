@@ -1,0 +1,200 @@
+{
+  "source_revision": "88706bd70051ff630b73096c050e3697364e2302",
+  "source_git_blob_sha": "34886a95402d1be3e38f7218925680d5b59344a1",
+  "description": "Verified directly against public pyam tutorial data; 2050 reported CO2 only, NOT gross or residual emissions",
+  "common_scenarios": [
+    "CD-LINKS_INDCi",
+    "CD-LINKS_NPi",
+    "CD-LINKS_NPi2020_1000",
+    "CD-LINKS_NPi2020_1600",
+    "CD-LINKS_NPi2020_400",
+    "CD-LINKS_NoPolicy"
+  ],
+  "cohort_models": [
+    "MESSAGEix-GLOBIOM 1.0",
+    "REMIND-MAgPIE 1.7-3.0",
+    "IMAGE 3.0.1"
+  ],
+  "rows": [
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_INDCi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 44642.91669,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_INDCi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 43758.0831,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_INDCi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 42441.66667,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_NPi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 48326.74212,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_NPi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 50722.0565,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_NPi",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 47276.78972,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_NPi2020_1000",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 23754.91708,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_NPi2020_1000",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 18793.0676,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_NPi2020_1000",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 18357.99203,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_NPi2020_1600",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 33271.92656,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_NPi2020_1600",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 26907.3445,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_NPi2020_1600",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 24293.52149,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_NPi2020_400",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 12039.05505,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_NPi2020_400",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 10060.4881,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_NPi2020_400",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 7860.049643,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "MESSAGEix-GLOBIOM 1.0",
+      "scenario": "CD-LINKS_NoPolicy",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 50476.05394,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "REMIND-MAgPIE 1.7-3.0",
+      "scenario": "CD-LINKS_NoPolicy",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 57830.7904,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    },
+    {
+      "model": "IMAGE 3.0.1",
+      "scenario": "CD-LINKS_NoPolicy",
+      "region": "World",
+      "variable": "Emissions|CO2",
+      "unit": "Mt CO2/yr",
+      "year": 2050,
+      "value": 51456.46029,
+      "meaning": "reported_CO2_not_a_gross_or_CDR_decomposition"
+    }
+  ]
+}

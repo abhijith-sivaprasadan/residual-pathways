@@ -33,6 +33,19 @@ jobs:
           assert result['accounting']['i3_scenarios'] == 0
           print('Source-derived comparisons: 18; no fabricated gross/CDR.')
           PY
+      - name: Verify real-model source-derived observations
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          actual = json.loads(Path("results/tutorial/results.json").read_text())["comparison"]
+          expected = json.loads(Path("data/derived/verified_tutorial_comparison_2050.json").read_text())
+          assert actual["cohort_models"] == expected["cohort_models"]
+          assert actual["common_scenarios"] == expected["common_scenarios"]
+          assert actual["rows"] == expected["rows"]
+          assert "<svg" in Path("results/tutorial/co2_2050.svg").read_text()
+          print("Every source-derived 2050 number matches the independently recorded reference.")
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: published-iamc-baseline
