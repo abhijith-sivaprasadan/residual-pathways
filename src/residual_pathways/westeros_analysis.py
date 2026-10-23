@@ -280,8 +280,6 @@ def report_md(data):
 
 def analyze_run(private_manifest, output_dir):
     """Analyze an exact local run directory, writing derived-only results."""
-    import ixmp
-    import message_ix
     private_manifest = Path(private_manifest).resolve()
     require(private_manifest.name == "manifest.private.json", "Expected local private manifest")
     require(private_manifest.is_file(), "Private manifest missing")
@@ -300,6 +298,10 @@ def analyze_run(private_manifest, output_dir):
     expected = {r["scenario"]: r for r in private["solved_scenarios"]}
     snapshots = {}
     with temporary_environment({"IXMP_DATA": run_dir / "ixmp_config"}):
+        # ixmp must first be imported after IXMP_DATA is set, because its
+        # configuration can be initialized at import time.
+        import ixmp
+        import message_ix
         mp = ixmp.Platform()
         try:
             for stage in STAGES:
