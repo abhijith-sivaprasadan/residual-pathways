@@ -5,6 +5,7 @@ on:
       - '.github/workflows/ar6-public-source-pilot.yml'
       - 'src/residual_pathways/coverage_audit.py'
       - 'src/residual_pathways/stratify.py'
+      - 'src/residual_pathways/cohort_robustness.py'
       - 'src/residual_pathways/case_audit.py'
       - 'src/residual_pathways/__main__.py'
       - 'data/derived/ar6_teaching_2050_summary.json'
@@ -211,6 +212,33 @@ jobs:
               assert (row['i3_verified']=='true')==observed['i3_verified']
           print('All 24 permanent coded-register rows exactly match newly downloaded source selection.')
 
+          PY
+      - name: Four-year climate-vetted cohort-robustness analysis
+        run: |
+          python -m residual_pathways cohort-robustness \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            --metadata-sheet meta_Ch3vetted_withclimate \
+            --candidates config/ar6_variable_candidates.json \
+            --output results/ar6-teaching-pilot/robustness_4years.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path("results/ar6-teaching-pilot/robustness_4years.json").read_text())
+          baseline=json.loads(Path("data/derived/ar6_teaching_2050_summary.json").read_text())
+          assert x["source_sha256"]==baseline["world_source"]["sha256"]
+          assert x["metadata_sha256"]==baseline["metadata_source"]["sha256"]
+          assert x["matched_source_scenarios"]==1202
+          assert x["years"]==[2030,2050,2070,2100]
+          assert len(x["records"])==8*4*len(x["variable_names"])
+          for c in baseline["category_coverage"]:
+              d=next(x for x in x["records"] if x["category"]==c["category"]
+                     and x["variable"]=="Carbon Sequestration|Direct Air Capture" and x["year"]==2050)
+              assert d["eligible_scenarios"]==c["n"]
+              assert d["reporting_scenarios"]==c["dac"]
+              assert 0<=d["scenario_weighted_fraction"]<=1
+              assert 0<=d["model_label_balanced_fraction"]<=1
+          print("4-YEAR ROBUSTNESS CI:",len(x["records"]),"category-year-variable aggregate records")
           PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4

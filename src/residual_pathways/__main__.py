@@ -43,6 +43,12 @@ def main():
     cases.add_argument("--public-output", default="results/ar6-teaching-pilot/case_audit_24_public.json")
     cases.add_argument("--private-output", default="data/ar6-private/case_audit_review_packet.json")
     cases.add_argument("--year", type=int, default=2050)
+    robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
+    robustness.add_argument("--input", required=True)
+    robustness.add_argument("--metadata", required=True)
+    robustness.add_argument("--metadata-sheet", default="meta_Ch3vetted_withclimate")
+    robustness.add_argument("--candidates", default="config/ar6_variable_candidates.json")
+    robustness.add_argument("--output", default="results/ar6-teaching-pilot/robustness_4years.json")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -53,6 +59,11 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "cohort-robustness":
+        from .cohort_robustness import write_robustness
+        r=write_robustness(args.input,args.metadata,args.candidates,args.output,
+                           sheet=args.metadata_sheet)
+        print("Robustness rows:",len(r["records"]),"source-matched scenarios:",r["matched_source_scenarios"])
     elif args.command == "gams-preflight":
         from .preflight import write_preflight
         x = write_preflight(args.output)
