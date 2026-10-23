@@ -6,6 +6,7 @@ on:
       - 'src/residual_pathways/coverage_audit.py'
       - 'src/residual_pathways/stratify.py'
       - 'src/residual_pathways/__main__.py'
+      - 'data/derived/ar6_teaching_2050_summary.json'
       - 'config/ar6_variable_candidates.json'
   workflow_dispatch:
 permissions:
@@ -124,6 +125,7 @@ jobs:
           aggregate=json.loads((source/'variable_coverage_2050.json').read_text())
           vetted=json.loads((source/'vetted_coverage_2050.json').read_text())
           broad=json.loads((source/'all_metadata_coverage_2050.json').read_text())
+          assert aggregate['source_sha256']==baseline['world_source']['sha256']
           assert aggregate['world_model_scenario_pairs']==baseline['world_source']['world_model_scenario_pairs']
           assert aggregate['csv_series_rows']==baseline['world_source']['csv_iamc_series']
           for variable, count in baseline['candidate_counts_all_source'].items():
@@ -140,12 +142,17 @@ jobs:
               assert v['variable_coverage']['Emissions|CO2']['observed_model_scenarios']==x['co2']
               assert v['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios']==x['dac']
               assert v['candidate_co_reporting']['co2_energy_land_ccs_dac']['model_scenarios']==x['all_six_candidate_presence']
+              assert v['candidate_co_reporting']['eip_afolu_land_beccs_dac']['model_scenarios']==x['eip_afolu_land_beccs_dac']
+              assert v['candidate_co_reporting']['eip_afolu_land_beccs_dac_fossilccs']['model_scenarios']==x['eip_afolu_land_beccs_dac_fossilccs']
           for x in baseline['non_vetted_groups']:
               v=broad['strata'][x['category']]
               assert v['model_scenarios_in_source_and_metadata']==x['n']
               assert v['variable_coverage']['Emissions|CO2']['observed_model_scenarios']==x['co2']
               assert v['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios']==x['dac']
               assert v['candidate_co_reporting']['co2_energy_land_ccs_dac']['model_scenarios']==x['co_report_six']
+          assert broad['source_sha256']==baseline['world_source']['sha256']
+          assert sum(x['eip_afolu_land_beccs_dac'] for x in baseline['category_coverage'])==baseline['vetted_totals']['co_report_eip_afolu_land_beccs_dac']
+          assert sum(x['eip_afolu_land_beccs_dac_fossilccs'] for x in baseline['category_coverage'])==baseline['vetted_totals']['co_report_eip_afolu_land_beccs_dac_fossilccs']
           assert broad['metadata_sha256']==baseline['metadata_source']['sha256']
           print('Independently checked repository research summary against streamed teaching CSV and pinned metadata.')
           PY
