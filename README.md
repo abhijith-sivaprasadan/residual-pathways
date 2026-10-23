@@ -63,3 +63,7 @@ The case-audit command deterministically selects three source-matched climate-ve
     python -m residual_pathways case-audit --input data/ar6-private/AR6-demo-data.csv --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx --candidates config/ar6_variable_candidates.json --public-output results/ar6-teaching-pilot/case_audit_24_public.json --private-output data/ar6-private/case_audit_review_packet.json
 
 The CI run uploads a coded, no-source-values public case register; original model/scenario identities, values and blank review forms remain in the local-only packet. See [Research Note 02](docs/research_note_02.md), the [24-case coded register](data/derived/rp24_case_register.csv), and [RP24 registered methods](docs/case_audit_protocol.md). To regenerate the local-only model/scenario reviewer packet on Windows PowerShell, run scripts/run_rp24.ps1 after placing the exact hash-verified study inputs in data/ar6-private.
+
+## Research outputs for external readers
+
+[Research Note 03](docs/research_note_03.md) reports model-label and year coverage and source-grounded N2O metric sensitivity. [Innovation hypotheses](data/derived/innovation_gap_register.csv) are literature topic-linked but untested, not causal estimates. Run python -m residual_pathways publish-brief to generate a one-page [source-scoped policy briefing](docs/communication_readme.md), a publication-oriented coverage SVG and source SHA manifest. All are exploratory teaching-source products, not IIASA publications.

@@ -90,6 +90,17 @@ jobs:
           assert not p["westeros_solved"]
           assert p["scientific_status"] == "NOT_A_MESSAGEIX_EXPERIMENT"
           PY
+      - name: Produce science policy brief and reproducible SVG
+        run: |
+          python -m residual_pathways publish-brief --output results/communication
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path("results/communication/communication_manifest.json").read_text())
+          assert data["scientific_claims"]=="COVERAGE_AND_METRIC_COMPARISON_ONLY_NO_I3"
+          assert "<svg" in Path("results/communication/reporting_funnel.svg").read_text()
+          assert "Not affiliated" in Path("results/communication/policy_brief.md").read_text()
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: published-iamc-baseline
@@ -98,4 +109,5 @@ jobs:
             results/model_sensitivity/
             results/pyomo_validation.json
             results/gams_preflight.json
+            results/communication/
           retention-days: 30

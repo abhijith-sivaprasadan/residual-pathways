@@ -57,6 +57,8 @@ def main():
     gases.add_argument("--year", type=int, default=2050)
     pyomo = sub.add_parser("validate-pyomo", help="Run independent Pyomo formulation; synthetic HiGHS not MESSAGEix")
     pyomo.add_argument("--output", default="results/pyomo_validation.json")
+    brief = sub.add_parser("publish-brief",help="Generate derived coverage figure and policy brief")
+    brief.add_argument("--output",default="results/communication")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -67,6 +69,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "publish-brief":
+        from .communication import write_communication
+        r=write_communication(Path("."),args.output)
+        print("Published derived-only source-locked brief:",r["figure_sha256"])
     elif args.command == "validate-pyomo":
         from .pyomo_validation import verify_all
         r=verify_all(args.output)
