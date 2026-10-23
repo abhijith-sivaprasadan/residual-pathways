@@ -78,8 +78,20 @@ def model_cells_until_objective(notebook, objective_expression):
                 break
     if stop is None:
         raise WesterosError("Upstream solve/objective cells missing")
+    # JSON notebooks may store source as a list of lines. nbclient requires
+    # a string for every cell, including markdown, before executing cells.
+    normalized_cells = []
+    for cell in cells[:stop]:
+        source = cell.get("source", "")
+        if isinstance(source, list):
+            if not all(isinstance(line, str) for line in source):
+                raise WesterosError("Malformed notebook cell source")
+            source = "".join(source)
+        elif not isinstance(source, str):
+            raise WesterosError("Malformed notebook cell source")
+        normalized_cells.append({**cell, "source": source})
     result = dict(notebook)
-    result["cells"] = list(cells[:stop])
+    result["cells"] = normalized_cells
     return result
 
 
