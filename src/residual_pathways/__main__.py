@@ -52,7 +52,6 @@ def main():
     elif args.command == "audit-ar6-strata":
         from .stratify import run_strata
         import json
-        from pathlib import Path
         names = tuple(json.loads(Path(args.candidates).read_text()).values()) if args.candidates else None
         x = run_strata(args.input, args.metadata, args.output, year=args.year, category_column=args.category_column, metadata_sheet=args.metadata_sheet, variable_names=names)
         print("Metadata-stratified World model-scenarios:", x["matched_model_scenarios"])
