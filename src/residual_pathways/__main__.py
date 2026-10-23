@@ -66,6 +66,9 @@ def main():
     wexport = sub.add_parser("westeros-export", help="Export allowlisted local solve metadata to PathwaysHub")
     wexport.add_argument("--input", required=True, help="Exact private manifest.private.json from a successful run")
     wexport.add_argument("--output", default="results/westeros_handoff")
+    wanalyze = sub.add_parser("westeros-analyze", help="Analyze saved Westeros ixmp variables without a new GAMS solve")
+    wanalyze.add_argument("--manifest", required=True, help="Original successful local manifest.private.json")
+    wanalyze.add_argument("--output", default="results/westeros_analysis")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -103,6 +106,14 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "westeros-analyze":
+        from .westeros_analysis import analyze_run
+        summary, manifest = analyze_run(args.manifest, args.output)
+        print("Analysis:", summary["status"])
+        print("Objective difference (stored ixmp):", summary["objective"]["difference_native"])
+        print("Comparable or missing technology rows:", len(summary["comparisons"]))
+        print("Hashed output files:", len(manifest["files_sha256"]))
+        print("No GAMS solve performed.")
     elif args.command == "westeros-validate":
         from .westeros import run_westeros
         result = run_westeros(args.output)
