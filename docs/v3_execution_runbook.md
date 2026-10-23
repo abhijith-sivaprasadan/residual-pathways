@@ -48,6 +48,6 @@ PathwaysHub can verify source artifact bytes and generate a briefing and a synth
 
 A research article should include data access/license table, variable dictionary and checks, model-category cohort definitions, audited exclusions and coverage, non-CO2 GWP source versions, registered sensitivity design, reproducible scripts and results, assumptions/limitations, and independent technical review. A functioning codebase is not itself a completed research paper.
 
-## D2. GAMS licence now available to user — local solve required
+## D2. GAMS licence active — two-scenario tutorial run achieved locally
 
-The local licensed execution procedure is in [messageix_westeros.md](messageix_westeros.md). The repository implements a tagged 3.11.1 Westeros three-solve pipeline, with an isolated in-memory ixmp database, wind capex intervention, official cumulative-emission-bound intervention and source SHA checks. **Do not change G0-3 to passed until actual local successful solved_manifest.json exists.**
+On 2026-10-24 the author provided a Windows execution transcript confirming optimal GAMS 54.6.0/CPLEX solutions for the official MESSAGEix 3.11.1 Westeros baseline and emissions-bound notebooks, followed by runner status `ACTUAL_MESSAGEIX_GAMS_SOLVED`. See [the local two-scenario runner](messageix_westeros_local.md) and the [scope-limited PathwaysHub record](https://github.com/abhijith-sivaprasadan/pathways-hub/blob/main/docs/messageix_local_run.md). Private run artifacts are not in Git and CI has not independently re-executed the solver. The separate three-scenario `westeros-validate` wind capex perturbation remains unverified locally; **do not mark its three-solve G0-3 gate passed** until its own success manifest exists.
