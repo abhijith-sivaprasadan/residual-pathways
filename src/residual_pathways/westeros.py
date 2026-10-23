@@ -64,6 +64,37 @@ def load_official_sources(directory):
     return notebooks, provenance
 
 
+
+def source_preflight(output_dir):
+    """Verify official notebook bytes and all chosen cells WITHOUT executing GAMS."""
+    dest = Path(output_dir)
+    notebooks, sources = load_official_sources(dest / "official_notebooks")
+    baseline = notebooks["baseline"]
+    emission = notebooks["emissions"]
+    for i in BASE_CELLS:
+        candidate = baseline_cell(baseline, i)
+        if not candidate.strip():
+            raise WesterosError(f"Empty approved baseline cell {i}")
+        compile(candidate, f"baseline_cell_{i}", "exec")
+    for i in EMISSION_CELLS:
+        text = cell_text(emission, i)
+        compile(text, f"emissions_cell_{i}", "exec")
+    if '500.0' not in cell_text(emission, 8):
+        raise WesterosError("Pinned emission-bound source no longer specifies 500 MtCO2")
+    if '7.4' not in cell_text(emission, 6):
+        raise WesterosError("Pinned emission-factor source no longer specifies 7.4 tCO2/kWa")
+    result = {
+        "status": "SOURCE_VERIFIED_ONLY_NO_GAMS_EXECUTION",
+        "source_provenance": sources,
+        "baseline_approved_cells": list(BASE_CELLS),
+        "emissions_parameter_cells": list(EMISSION_CELLS),
+        "gams_solved": False,
+        "license_validity": "NOT_CHECKED",
+        "limitation": "Static cell compilation is not evidence of successful MESSAGEix setup or solver execution.",
+    }
+    (dest / "source_preflight.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    return result
+
 def preflight():
     try:
         installed = version("message_ix")
