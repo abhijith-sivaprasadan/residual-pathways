@@ -47,3 +47,7 @@ PathwaysHub can verify source artifact bytes and generate a briefing and a synth
 ## F. Scientific exit criteria
 
 A research article should include data access/license table, variable dictionary and checks, model-category cohort definitions, audited exclusions and coverage, non-CO2 GWP source versions, registered sensitivity design, reproducible scripts and results, assumptions/limitations, and independent technical review. A functioning codebase is not itself a completed research paper.
+
+## D2. GAMS licence now available to user — local solve required
+
+The local licensed execution procedure is in [messageix_westeros.md](messageix_westeros.md). The repository implements a tagged 3.11.1 Westeros three-solve pipeline, with an isolated in-memory ixmp database, wind capex intervention, official cumulative-emission-bound intervention and source SHA checks. **Do not change G0-3 to passed until actual local successful solved_manifest.json exists.**

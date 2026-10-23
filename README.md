@@ -67,3 +67,7 @@ The CI run uploads a coded, no-source-values public case register; original mode
 ## Research outputs for external readers
 
 [Research Note 03](docs/research_note_03.md) reports model-label and year coverage and source-grounded N2O metric sensitivity. [Innovation hypotheses](data/derived/innovation_gap_register.csv) are literature topic-linked but untested, not causal estimates. Run python -m residual_pathways publish-brief to generate a one-page [source-scoped policy briefing](docs/communication_readme.md), a publication-oriented coverage SVG and source SHA manifest. All are exploratory teaching-source products, not IIASA publications.
+
+## Actual GAMS/MESSAGEix Westeros gate
+
+With your own correctly installed GAMS licence, run the documented [source-pinned official Westeros experiments](docs/messageix_westeros.md). The CLI command westeros-validate runs three actual GAMS-backed MESSAGEix solves: the official tutorial baseline, one wind-capital-cost change, and the official emissions bound. It writes success metadata **only after** every solve succeeds. Ordinary license-free CI tests orchestration but does not pretend to run GAMS. This is a stylized training model, not an AR6 ensemble calculation.

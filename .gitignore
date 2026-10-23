@@ -13,3 +13,10 @@ data/*metadata_indicators*
 
 # Large external source and unredacted human audit packet
 data/ar6-private/
+
+# Isolated local licensed MESSAGEix environment and any license secrets
+.venv-messageix/
+gamslice.txt
+**/gamslice.txt
+*.gdx
+*.lst

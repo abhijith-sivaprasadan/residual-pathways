@@ -59,6 +59,8 @@ def main():
     pyomo.add_argument("--output", default="results/pyomo_validation.json")
     brief = sub.add_parser("publish-brief",help="Generate derived coverage figure and policy brief")
     brief.add_argument("--output",default="results/communication")
+    westeros = sub.add_parser("westeros-validate", help="ACTUALLY solve pinned Westeros with user's GAMS license")
+    westeros.add_argument("--output", default="results/messageix_westeros")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -86,6 +88,11 @@ def main():
         r=write_robustness(args.input,args.metadata,args.candidates,args.output,
                            sheet=args.metadata_sheet)
         print("Robustness rows:",len(r["records"]),"source-matched scenarios:",r["matched_source_scenarios"])
+    elif args.command == "westeros-validate":
+        from .westeros import run_westeros
+        result = run_westeros(args.output)
+        print("Actual MESSAGEix/GAMS solves:", len(result["cases"]),
+              "status:", result["status"])
     elif args.command == "gams-preflight":
         from .preflight import write_preflight
         x = write_preflight(args.output)
