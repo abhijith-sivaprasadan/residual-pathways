@@ -10,7 +10,7 @@ import math
 from hashlib import sha256
 from pathlib import Path
 
-from .messageix_westeros import MODEL, temporary_environment
+from .messageix_westeros import MODEL, objective_level, temporary_environment
 from .westeros_evidence import evidence_from_private_manifest
 from .westeros_analysis import records, require, number, WesterosAnalysisError
 
@@ -175,6 +175,9 @@ def audit_saved_run(private_manifest, output_dir):
     verified = evidence_from_private_manifest(source)
     run_dir = private_manifest.parent
     require((run_dir / "ixmp_config" / "config.json").is_file(), "Missing ixmp configuration")
+    require((run_dir / "ixmp_database" / "westeros.properties").is_file()
+            or (run_dir / "ixmp_database" / "westeros.script").is_file(),
+            "Missing original private saved ixmp database")
     output_dir = Path(output_dir).resolve()
     require(output_dir != run_dir and run_dir not in output_dir.parents,
             "Never write audit into private run directory")
@@ -187,6 +190,11 @@ def audit_saved_run(private_manifest, output_dir):
                                            version=next(r["version"] for r in verified["scenarios"]
                                                         if r["scenario"] == "emission_bound"))
             require(scenario.has_solution(), "Bounded scenario has no persisted solution")
+            saved_obj = objective_level(scenario.var("OBJ"), "emission_bound")
+            expected_obj = next(r["objective_native"] for r in verified["scenarios"]
+                                if r["scenario"] == "emission_bound")
+            require(math.isclose(saved_obj, expected_obj, rel_tol=1e-7, abs_tol=1e-3),
+                    "Saved objective differs from successful run manifest")
             data = {
                 "year_set": _years(scenario),
                 "cat_year": _rows(scenario, "set", "cat_year"),
