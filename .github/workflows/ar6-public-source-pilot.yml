@@ -61,7 +61,8 @@ jobs:
         run: |
           curl --fail --location --retry 3 --connect-timeout 30 --max-time 120 \
             --output data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
-            'https://raw.githubusercontent.com/witch-team/energy-jobs-dataset-iiasadb/master/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+            'https://raw.githubusercontent.com/witch-team/energy-jobs-dataset-iiasadb/23e446a3de0a6d59243a536740576ab386e56ccc/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+          echo '7d22453bdda52e95cea4df46d362018951dd7114e62f01f5bcea65d6e24a7790  data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx' | sha256sum --check
           python - <<'PY'
           from openpyxl import load_workbook
           p='data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
@@ -108,6 +109,41 @@ jobs:
                         'CO2_DAC_CO_REPORTED',co['co2_and_dac']['model_scenarios'],
                         'ALL_SIX_CO_REPORTED',co['co2_energy_land_ccs_dac']['model_scenarios'])
           print('STRICT INTERPRETATION: co-reporting presence only; zero verified I3 classifications.')
+          PY
+      - name: Assert all previously audited counts and metadata joins against committed reference
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source=Path('results/ar6-teaching-pilot')
+          baseline=json.loads(Path('data/derived/ar6_teaching_2050_summary.json').read_text())
+          aggregate=json.loads((source/'variable_coverage_2050.json').read_text())
+          vetted=json.loads((source/'vetted_coverage_2050.json').read_text())
+          broad=json.loads((source/'all_metadata_coverage_2050.json').read_text())
+          assert aggregate['world_model_scenario_pairs']==baseline['world_source']['world_model_scenario_pairs']
+          assert aggregate['csv_series_rows']==baseline['world_source']['csv_iamc_series']
+          for variable, count in baseline['candidate_counts_all_source'].items():
+              got=aggregate['candidate_coverage'][next(k for k,v in json.loads(Path('config/ar6_variable_candidates.json').read_text()).items() if v==variable)]
+              assert got['model_scenario_pairs_with_observation']==count,(variable,got['model_scenario_pairs_with_observation'],count)
+              assert got['units_seen']==[baseline['observed_units'][variable]]
+          assert vetted['metadata_model_scenarios']==1202
+          assert vetted['matched_model_scenarios']==1202
+          assert broad['metadata_model_scenarios']==2304
+          assert broad['matched_model_scenarios']==2298
+          for x in baseline['category_coverage']:
+              v=vetted['strata'][x['category']]
+              assert v['model_scenarios_in_source_and_metadata']==x['n'],x
+              assert v['variable_coverage']['Emissions|CO2']['observed_model_scenarios']==x['co2']
+              assert v['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios']==x['dac']
+              assert v['candidate_co_reporting']['co2_energy_land_ccs_dac']['model_scenarios']==x['all_six_candidate_presence']
+          for x in baseline['non_vetted_groups']:
+              v=broad['strata'][x['category']]
+              assert v['model_scenarios_in_source_and_metadata']==x['n']
+              assert v['variable_coverage']['Emissions|CO2']['observed_model_scenarios']==x['co2']
+              assert v['variable_coverage']['Carbon Sequestration|Direct Air Capture']['observed_model_scenarios']==x['dac']
+              assert v['candidate_co_reporting']['co2_energy_land_ccs_dac']['model_scenarios']==x['co_report_six']
+          assert broad['metadata_sha256']==baseline['metadata_source']['sha256']
+          print('Independently checked repository research summary against streamed teaching CSV and pinned metadata.')
           PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4
