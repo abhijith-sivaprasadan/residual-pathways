@@ -43,3 +43,14 @@ Inspect `outputs/westeros_contract/decision.json`; a valid handoff reports **ACC
 Review both generated files before publishing. Only share the sanitized bundle if comfortable releasing this narrowly scoped metadata. **Never publish** `results/messageix_private/`, raw logs, executed notebooks or licence identifiers.
 
 The purpose is an auditable research-operations boundary: PathwaysHub verifies a digest and a semantic schema for an *author-attested tutorial result*. It is not a numerical reproduction, an AR6 source audit, an I3 carbon-accounting certificate, or independent research peer review. GitHub Actions may exercise this contract with **synthetic fixtures only**, and must never report that as actual GAMS execution.
+
+## First author-reported real local handoff (2026-10-24)
+
+The author supplied terminal output confirming that this exporter ran against the previously solved private run `20261023T230104Z_e182e730` and that the resulting allowlisted artifact was accepted by the *local* PathwaysHub `consume-westeros` command:
+
+- Consumer status: `ACCEPTED_AUTHOR_REPORTED_LOCAL`
+- Integrity: `BYTE_HASH_MATCH_AND_SCHEMA_CHECKED`
+- Reported evidence artifact SHA-256: `f8da4d0ddacc35758e48b1c1396b89867cc9ed0e7e55ed8a1abba708a3dc3fe1`
+- Persisted ixmp objectives: baseline **159025.828125**, emissions bound **191510.796875**, change **20.427479694974863%**
+
+This is **not a published handoff bundle, independent hash recomputation, or independently executed model**. Original private manifest and licence-bearing GAMS logs remain on the author's Windows system. See [PathwaysHub evidence note](https://github.com/abhijith-sivaprasadan/pathways-hub/blob/main/docs/messageix_local_run.md).
