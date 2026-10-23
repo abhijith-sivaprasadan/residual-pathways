@@ -55,3 +55,11 @@ The evidence ladder is I0 (no reviewed identity), I1 (reviewed net only), I2 (pa
 Read the [scientific protocol](docs/protocol.md), [v3 execution runbook](docs/v3_execution_runbook.md), [open research tasks](https://github.com/abhijith-sivaprasadan/residual-pathways/issues), and companion [PathwaysHub](https://github.com/abhijith-sivaprasadan/pathways-hub).
 
 MIT license applies to original code. Upstream data have separate access and redistribution terms.
+
+## Registered RP24 forensic case preflight
+
+The case-audit command deterministically selects three source-matched climate-vetted scenarios in each C1-C8 category based on low/median/high completeness across six exactly named CO2/CCS/CDR variables. It checks source reporting, compatible units and availability of an exploratory aggregate-minus-EIP-minus-AFOLU calculation. It does NOT carry out the human scientific assessment or certify I1-I3.
+
+    python -m residual_pathways case-audit --input data/ar6-private/AR6-demo-data.csv --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx --candidates config/ar6_variable_candidates.json --public-output results/ar6-teaching-pilot/case_audit_24_public.json --private-output data/ar6-private/case_audit_review_packet.json
+
+The CI run uploads a coded, no-source-values public case register; original model/scenario identities, values and blank review forms remain in the local-only packet. See [RP24 registered methods](docs/case_audit_protocol.md).
