@@ -1,0 +1,52 @@
+{
+  "schema_version": "evidence-registry.v1",
+  "status": "CURATED_STARTER_NOT_SYSTEMATIC_REVIEW",
+  "items": [
+    {
+      "id": "LIT001",
+      "type": "peer_reviewed",
+      "title": "Evaluating the near- and long-term role of carbon dioxide removal in meeting global climate objectives",
+      "year": 2024,
+      "doi": "10.1038/s43247-024-01527-z",
+      "url": "https://doi.org/10.1038/s43247-024-01527-z",
+      "relevance": "Conceptual definitions and CDR roles; not an empirical result reproduced by this repository.",
+      "claim_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "LIT002",
+      "type": "institutional_data",
+      "title": "AR6 Scenario Explorer and Database",
+      "year": 2022,
+      "url": "https://iiasa.ac.at/models-tools-data/ar6-scenario-explorer-and-database",
+      "relevance": "Official source context, model-scenario heterogeneity and access route; source variables not yet audited.",
+      "claim_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "LIT003",
+      "type": "peer_reviewed",
+      "title": "AR6 scenarios database: an assessment of current practices and future recommendations",
+      "year": 2023,
+      "doi": "10.1038/s44168-023-00050-9",
+      "url": "https://doi.org/10.1038/s44168-023-00050-9",
+      "relevance": "Scenario curation, metadata and provenance caveats; no correction of AR6 source data inferred.",
+      "claim_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "LIT004",
+      "type": "institutional_methods",
+      "title": "IPCC AR6 Working Group I Chapter 7 and published errata",
+      "year": 2025,
+      "url": "https://www.ipcc.ch/report/ar6/wg1/about/errata/",
+      "relevance": "Version-specific 100-year methane and nitrous oxide GWP correction.",
+      "claim_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "LIT005",
+      "type": "software_documentation",
+      "title": "MESSAGEix 3.11.1 tutorials — Westeros Electrified",
+      "url": "https://docs.messageix.org/en/stable/tutorials.html",
+      "relevance": "Official tutorial for a future actually executed GAMS/MESSAGEix solve; no execute/solve claim.",
+      "claim_status": "REFERENCE_ONLY"
+    }
+  ]
+}
