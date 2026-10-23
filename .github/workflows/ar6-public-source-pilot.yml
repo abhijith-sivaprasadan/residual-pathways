@@ -4,6 +4,8 @@ on:
     paths:
       - '.github/workflows/ar6-public-source-pilot.yml'
       - 'src/residual_pathways/coverage_audit.py'
+      - 'src/residual_pathways/stratify.py'
+      - 'src/residual_pathways/__main__.py'
       - 'config/ar6_variable_candidates.json'
   workflow_dispatch:
 permissions:
