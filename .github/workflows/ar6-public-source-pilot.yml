@@ -1,0 +1,81 @@
+name: AR6 public teaching subset preflight and variable-coverage pilot
+on:
+  push:
+    paths:
+      - '.github/workflows/ar6-public-source-pilot.yml'
+      - 'src/residual_pathways/coverage_audit.py'
+      - 'config/ar6_variable_candidates.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install local source-audit software and metadata reader
+        run: python -m pip install -e '.[metadata]'
+      - name: Download independently labelled public teaching subset
+        run: |
+          mkdir -p data/ar6-private results/ar6-teaching-pilot
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 900 \
+            --output data/ar6-private/AR6-demo-data.csv \
+            'https://zenodo.org/records/20056332/files/AR6-demo-data.csv?download=1'
+          echo '274ed494a024744052df67611c7322e7  data/ar6-private/AR6-demo-data.csv' | md5sum --check
+          python - <<'PY'
+          import csv, hashlib, pathlib
+          p=pathlib.Path('data/ar6-private/AR6-demo-data.csv')
+          with p.open(encoding='utf-8-sig',newline='') as f:
+              rd=csv.reader(f)
+              h=next(rd)
+          print('Provenance: Zenodo 20056332 (IIASA-labelled teaching subset), NOT authenticated official World v1.1')
+          print('Source bytes:', p.stat().st_size)
+          print('Columns:', len(h))
+          print('First headers:', h[:8])
+          print('Year 2050 column present:', '2050' in h or 'X2050' in h)
+          PY
+      - name: Run actual source-data coverage audit, no raw data redistribution
+        run: |
+          python -m residual_pathways audit-ar6 \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --candidates config/ar6_variable_candidates.json \
+            --output results/ar6-teaching-pilot/variable_coverage_2050.json \
+            --year 2050
+          python - <<'PY'
+          import json
+          d=json.load(open('results/ar6-teaching-pilot/variable_coverage_2050.json'))
+          print('Teaching-source model-scenario pairs:',d['world_model_scenario_pairs'])
+          print('Teaching-source series rows:',d['csv_series_rows'])
+          print('Matched 2050 candidates:')
+          for key, val in sorted(d['candidate_coverage'].items()):
+              print(key, val['model_scenario_pairs_with_observation'], '/ '+str(val['model_scenario_denominator']), 'units:', val['units_seen'])
+          print('No account partition or I3 classification inferred.')
+          PY
+      - name: Inspect separately redistributed official-named metadata spreadsheet
+        continue-on-error: true
+        run: |
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 120 \
+            --output data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            'https://raw.githubusercontent.com/witch-team/energy-jobs-dataset-iiasadb/master/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+          python - <<'PY'
+          from openpyxl import load_workbook
+          p='data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+          wb=load_workbook(p,read_only=True,data_only=True)
+          print('Metadata redistribution source: witch-team GitHub, not official IIASA direct download')
+          for name in wb.sheetnames:
+              s=wb[name]
+              rows=s.iter_rows(values_only=True)
+              top=[next(rows,None) for _ in range(3)]
+              print('SHEET:',repr(name),'rows:',s.max_row,'cols:',s.max_column)
+              print('Top 3 rows, first 14 fields:',[list(r[:14]) if r else None for r in top])
+          PY
+      - name: Upload AGGREGATE coverage only — never scenario rows
+        uses: actions/upload-artifact@v4
+        with:
+          name: ar6-teaching-subset-variable-coverage-2050
+          path: results/ar6-teaching-pilot/variable_coverage_2050.json
+          retention-days: 15
