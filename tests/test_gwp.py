@@ -42,3 +42,11 @@ def test_nan_and_bool_rejected():
         with pytest.raises(GWPScopeError):
             gas_to_co2e(value, "N2O", "Mt N2O/yr", metric="GWP100",
                         assessment_version="IPCC_AR6_2025_ERRATA")
+
+
+def test_actual_ar6_n2o_unit_kt_yields_mtco2e_without_thousandfold_error():
+    x = gas_to_co2e(100, 'N2O', 'kt N2O/yr', metric='GWP100', assessment_version='IPCC_AR6_2025_ERRATA')
+    y = gas_to_co2e(0.1, 'N2O', 'Mt N2O/yr', metric='GWP100', assessment_version='IPCC_AR6_2025_ERRATA')
+    assert x.input_mt_per_year == pytest.approx(0.1)
+    assert x.co2e_mt_per_year == pytest.approx(26.7)
+    assert x.co2e_mt_per_year == pytest.approx(y.co2e_mt_per_year)
