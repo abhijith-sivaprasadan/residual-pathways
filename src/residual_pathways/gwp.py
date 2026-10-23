@@ -58,8 +58,12 @@ def gas_to_co2e(amount: float, gas: str, unit: str, *,
         if methane_origin is not None:
             raise GWPScopeError("Methane origin must not be attached to N2O")
         key = "N2O"
-    if unit != UNITS[key]:
-        raise GWPScopeError(f"Expected raw gas mass unit {UNITS[key]}; do not reconvert CO2e")
+    if gas == "N2O" and unit == "kt N2O/yr":
+        mass_mt = float(amount) / 1000.0
+    elif unit == UNITS[key]:
+        mass_mt = float(amount)
+    else:
+        raise GWPScopeError(f"Expected unaggregated raw gas mass unit {UNITS[key]} or kt N2O/yr; never convert CO2e twice")
     factor = GWP100[assessment_version][key]
-    return GWPResult(gas, methane_origin, metric, assessment_version, float(amount),
-                     unit, factor, float(amount) * factor, "Mt CO2e/yr", SOURCE[assessment_version])
+    return GWPResult(gas, methane_origin, metric, assessment_version, mass_mt,
+                     unit, factor, mass_mt * factor, "Mt CO2e/yr", SOURCE[assessment_version])
