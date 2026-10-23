@@ -35,8 +35,8 @@ def _rows(scene, kind, name):
         return []
 
 
-def _years(scene):
-    values = scene.set("year")
+def _years(scene_or_values):
+    values = scene_or_values.set("year") if hasattr(scene_or_values, "set") else scene_or_values
     if hasattr(values, "tolist"):
         values = values.tolist()
     require(isinstance(values, list), "year must be an indexed set")
