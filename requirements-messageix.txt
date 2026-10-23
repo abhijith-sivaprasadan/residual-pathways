@@ -1,0 +1,7 @@
+# Local-only, pinned official MESSAGEix Westeros notebook environment.
+# System requirements: GAMS installed/licensed via GAMS, and Java runtime.
+message-ix[tutorial,report]==3.11.1
+nbclient>=0.10,<1
+nbformat>=5.10,<6
+ipykernel>=6.29,<7
+matplotlib>=3.8,<4
