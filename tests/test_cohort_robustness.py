@@ -40,6 +40,6 @@ def test_duplicate_source_variable_year_rejected(tmp_path):
 
 def test_invalid_numeric_rejected(tmp_path):
     s,m=paths(tmp_path)
-    s.write_text(s.read_text().replace(",7,\\n",",NaN,\\n"))
+    s.write_text(s.read_text().replace(",7,\n",",NaN,\n"))
     with pytest.raises(CohortError,match="Nonfinite"):
         compute(s,m,["Emissions|CO2"],years=(2030,))
