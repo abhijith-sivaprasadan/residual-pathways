@@ -79,3 +79,7 @@ We have a GAMS-free tested, locally executable runner for official pinned MESSAG
 ## Export local Westeros evidence to PathwaysHub
 
 After a real successful local run, use `python -m residual_pathways westeros-export --input PATH/TO/manifest.private.json --output results/westeros_handoff` to create an allowlisted SHA-256 evidence bundle without rerunning GAMS. The companion `pathways_hub consume-westeros` validates the separate `pathways-handoff.westeros.v1` schema, hashes and two scenario objectives while explicitly retaining `AUTHOR_REPORTED_LOCAL` provenance. See [Windows two-repo handoff](docs/westeros_handoff.md). Neither unit tests nor CI claim to have executed licensed GAMS.
+
+## Explain the saved Westeros technology response
+
+Use `python -m residual_pathways westeros-analyze --manifest results/messageix_private/20261023T230104Z_e182e730/manifest.private.json --output results/westeros_analysis` in the existing MESSAGEix Windows environment to read the **already solved** ixmp database (no new GAMS run). The analyzer compares stored `ACT`, `CAP`, and `CAP_NEW` by technology/year, writes CSV/JSON, produces three native-unit SVG charts, a caveated report and a SHA-256 inventory. It refuses missing persisted solutions and does not fill missing values with zero. Baseline emissions were not modelled, so neither a CO2 reduction nor a carbon shadow price is asserted. See [analysis methods, command and limitations](docs/westeros_analysis.md). CI tests mock stored data only.
