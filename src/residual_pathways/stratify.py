@@ -20,7 +20,7 @@ def sha_file(filename):
     return digest.hexdigest()
 
 
-def metadata_rows(path):
+def metadata_rows(path, *, sheet_name=None):
     path = Path(path)
     if path.suffix.lower() in (".xlsx", ".xlsm"):
         try:
@@ -28,7 +28,11 @@ def metadata_rows(path):
         except ImportError as e:
             raise StrataError("Install the metadata optional extra for XLSX inputs") from e
         wb = load_workbook(path, read_only=True, data_only=True)
-        ws = wb.active
+        if len(wb.sheetnames) > 1 and not sheet_name:
+            raise StrataError('Multi-sheet metadata requires explicit --metadata-sheet')
+        if sheet_name is not None and sheet_name not in wb.sheetnames:
+            raise StrataError(f'Missing requested metadata sheet {sheet_name!r}; options: {wb.sheetnames}')
+        ws = wb[sheet_name] if sheet_name else wb.active
         iterator = ws.values
         headers = [str(x) if x is not None else "" for x in next(iterator)]
         if len(headers) != len(set(headers)):
@@ -47,7 +51,7 @@ def metadata_rows(path):
 
 
 def audit_strata(source_csv, metadata_path, *,
-                 year=2050, category_column="Category",
+                 year=2050, category_column="Category", metadata_sheet=None,
                  variable_names=None):
     """Exact Model+Scenario join to source-defined metadata class; no class inferred."""
     if variable_names is None:
@@ -55,7 +59,7 @@ def audit_strata(source_csv, metadata_path, *,
     if len(set(variable_names)) != len(variable_names) or not variable_names:
         raise StrataError("Explicit unique variables required")
     md = {}
-    for i, rec in enumerate(metadata_rows(metadata_path), 2):
+    for i, rec in enumerate(metadata_rows(metadata_path, sheet_name=metadata_sheet), 2):
         if not {"Model", "Scenario", category_column} <= rec.keys():
             raise StrataError("Metadata must have Model/Scenario plus explicitly named category")
         key = (rec["Model"].strip(), rec["Scenario"].strip())
@@ -127,6 +131,7 @@ def audit_strata(source_csv, metadata_path, *,
             "scientific_status":"PRESENCE_ONLY_NO_ACCOUNTING_IDENTIFIABILITY",
             "source_sha256": sha_file(source_csv), "metadata_sha256": sha_file(metadata_path),
             "year": year, "region": "World", "category_column": category_column,
+            "metadata_sheet": metadata_sheet or "CSV",
             "metadata_model_scenarios": len(md), "source_rows_scanned": source_series_count,
             "matched_model_scenarios": len(matched_source),
             "unmatched_source_model_scenarios_count": len(sources_without_metadata),
@@ -141,8 +146,8 @@ def audit_strata(source_csv, metadata_path, *,
             ]}
 
 
-def run_strata(source, metadata, output, *, year=2050, category_column="Category"):
-    result = audit_strata(source, metadata, year=year, category_column=category_column)
+def run_strata(source, metadata, output, *, year=2050, category_column="Category", metadata_sheet=None):
+    result = audit_strata(source, metadata, year=year, category_column=category_column, metadata_sheet=metadata_sheet)
     target = Path(output)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")

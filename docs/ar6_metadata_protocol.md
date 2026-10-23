@@ -15,3 +15,10 @@ Source:
 - https://zenodo.org/records/7197970
 
 The official AR6 dataset retains upstream access and redistribution terms. The repository does not contain raw AR6 scenario or metadata files. **No claim of running on the actual AR6 ensemble is made.**
+
+
+## Inspected workbook structure
+
+A publicly hosted v1.1-named metadata XLSX at witch-team/energy-jobs-dataset-iiasadb was inspected (SHA-256 7d22453bdda52e95cea4df46d362018951dd7114e62f01f5bcea65d6e24a7790). Its sheets include README, meta_Ch3vetted_withclimate (1,202 data rows), meta (2,304 data rows), categories_indicators_doc and Illustrative_Pathways. Both scientific tables contain Model, Scenario and Category. This third-party redistributed file is NOT independently hash-matched to a direct official IIASA download.
+
+The CLI now requires --metadata-sheet on multi-sheet XLSX. For climate-vetted results select --metadata-sheet meta_Ch3vetted_withclimate --category-column Category. For a broader metadata population instead select --metadata-sheet meta --category-column Category. Do not combine their denominators. A source scenario not found in the selected metadata table is excluded from classified coverage but explicitly counted as unmatched.

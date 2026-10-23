@@ -46,3 +46,26 @@ def test_duplicate_metadata_key_rejected(tmp_path):
         ["A","S","World","Emissions|CO2","Mt CO2/yr","1"]])
     with pytest.raises(StrataError, match="Duplicate model"):
         audit_strata(src,md)
+
+
+def test_explicit_xlsx_sheet_required(tmp_path):
+    from openpyxl import Workbook
+    wb = Workbook()
+    wb.active.title = 'README'
+    wb.active.append(['Explanation, not model metadata'])
+    sheet = wb.create_sheet('meta_Ch3vetted_withclimate')
+    sheet.append(['Model','Scenario','Category'])
+    sheet.append(['A','S','C1'])
+    sheet.append(['B','S','C2'])
+    meta = tmp_path / 'meta.xlsx'
+    wb.save(meta)
+    src = writer(tmp_path/'source.csv', ['Model','Scenario','Region','Variable','Unit','2050'], [
+      ['A','S','World','Emissions|CO2','Mt CO2/yr','10'],
+      ['B','S','World','Emissions|CO2','Mt CO2/yr','20']])
+    with pytest.raises(StrataError, match='explicit --metadata-sheet'):
+        audit_strata(src, meta)
+    result = audit_strata(src, meta, metadata_sheet='meta_Ch3vetted_withclimate')
+    assert result['matched_model_scenarios']==2
+    assert result['metadata_sheet']=='meta_Ch3vetted_withclimate'
+    with pytest.raises(StrataError, match='Missing requested metadata sheet'):
+        audit_strata(src, meta, metadata_sheet='wrong')
