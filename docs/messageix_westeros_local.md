@@ -1,6 +1,6 @@
 # Licensed MESSAGEix Westeros: GitHub-first Windows setup
 
-**The actual GAMS solve is not yet executed.** The runner is implemented and unit-tested without a GAMS license. Source-controlled code does not require a local checkout; executing licensed GAMS on your computer does.
+**Author-reported local execution succeeded on 2026-10-24.** The author supplied Windows terminal output showing both pinned MESSAGEix 3.11.1 Westeros notebook scenarios solved to optimality using GAMS 54.6.0/CPLEX. The local runner reported `ACTUAL_MESSAGEIX_GAMS_SOLVED` after reading saved objectives from ixmp: baseline 159025.830480, emissions-bound 191510.804279 (native objective units). The private manifest and raw logs have **not** been published or independently re-executed by CI. See the [PathwaysHub evidence-scope note](https://github.com/abhijith-sivaprasadan/pathways-hub/blob/main/docs/messageix_local_run.md). Source-controlled code does not require a local checkout; executing licensed GAMS on your computer does.
 
 ## 1. Clone the GitHub repositories
 
