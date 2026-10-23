@@ -6,6 +6,7 @@ on:
       - 'src/residual_pathways/coverage_audit.py'
       - 'src/residual_pathways/stratify.py'
       - 'src/residual_pathways/cohort_robustness.py'
+      - 'src/residual_pathways/nonco2_pilot.py'
       - 'src/residual_pathways/case_audit.py'
       - 'src/residual_pathways/__main__.py'
       - 'data/derived/ar6_teaching_2050_summary.json'
@@ -239,6 +240,31 @@ jobs:
               assert 0<=d["scenario_weighted_fraction"]<=1
               assert 0<=d["model_label_balanced_fraction"]<=1
           print("4-YEAR ROBUSTNESS CI:",len(x["records"]),"category-year-variable aggregate records")
+          PY
+      - name: N2O-only real-source GWP metric sensitivity
+        run: |
+          python -m residual_pathways nonco2-pilot \
+            --input data/ar6-private/AR6-demo-data.csv \
+            --metadata data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx \
+            --metadata-sheet meta_Ch3vetted_withclimate \
+            --output results/ar6-teaching-pilot/nonco2_2050.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          n=json.loads(Path("results/ar6-teaching-pilot/nonco2_2050.json").read_text())
+          ref=json.loads(Path("data/derived/ar6_teaching_2050_summary.json").read_text())
+          assert n["source_sha256"]==ref["world_source"]["sha256"]
+          assert n["metadata_sha256"]==ref["metadata_source"]["sha256"]
+          assert len(n["classes"])==8
+          assert sum(x["eligible_source_scenarios"] for x in n["classes"])==1202
+          assert all(x["methane_co2e"].startswith("BLOCKED") for x in n["classes"])
+          assert all(x["n2o_mean_mtco2e_per_reporting_scenario_original_2021"] is not None
+                     for x in n["classes"])
+          for d in n["classes"]:
+              print("GAS",d["category"],"N2O",d["n2o_reported_kt_count"],
+                    "mean MtCO2e 2021",d["n2o_mean_mtco2e_per_reporting_scenario_original_2021"],
+                    "2025",d["n2o_mean_mtco2e_per_reporting_scenario_corrected_2025"],
+                    "metric-only delta",d["n2o_metric_change_mtco2e"])
           PY
       - name: Upload AGGREGATE coverage only — never scenario rows
         uses: actions/upload-artifact@v4

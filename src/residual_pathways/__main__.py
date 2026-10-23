@@ -49,6 +49,12 @@ def main():
     robustness.add_argument("--metadata-sheet", default="meta_Ch3vetted_withclimate")
     robustness.add_argument("--candidates", default="config/ar6_variable_candidates.json")
     robustness.add_argument("--output", default="results/ar6-teaching-pilot/robustness_4years.json")
+    gases = sub.add_parser("nonco2-pilot", help="Gas coverage and IPCC N2O GWP100 version sensitivity")
+    gases.add_argument("--input", required=True)
+    gases.add_argument("--metadata", required=True)
+    gases.add_argument("--metadata-sheet", default="meta_Ch3vetted_withclimate")
+    gases.add_argument("--output", default="results/ar6-teaching-pilot/nonco2_2050.json")
+    gases.add_argument("--year", type=int, default=2050)
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -59,6 +65,10 @@ def main():
             raise SystemExit("Upstream content is not expected IAMC CSV")
         dest.write_bytes(raw)
         print(f"Downloaded pinned IAMC source to {dest}")
+    elif args.command == "nonco2-pilot":
+        from .nonco2_pilot import run_nonco2
+        r=run_nonco2(args.input,args.metadata,args.output,year=args.year,sheet=args.metadata_sheet)
+        print("Gas-specific class rows:",len(r["classes"]),"no methane origin invented")
     elif args.command == "cohort-robustness":
         from .cohort_robustness import write_robustness
         r=write_robustness(args.input,args.metadata,args.candidates,args.output,
