@@ -6,5 +6,8 @@
   "biomass_CCS_candidate": "Carbon Sequestration|CCS|Biomass",
   "DAC_candidate": "Carbon Sequestration|Direct Air Capture",
   "reported_CH4": "Emissions|CH4",
-  "reported_N2O": "Emissions|N2O"
+  "reported_N2O": "Emissions|N2O",
+  "eip_CO2_candidate": "Emissions|CO2|Energy and Industrial Processes",
+  "land_use_CDR_candidate": "Carbon Sequestration|Land Use",
+  "enhanced_weathering_candidate": "Carbon Sequestration|Enhanced Weathering"
 }

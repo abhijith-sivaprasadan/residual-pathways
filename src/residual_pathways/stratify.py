@@ -119,6 +119,19 @@ def audit_strata(source_csv, metadata_path, *,
     # and still says nothing about physical accounting semantics or I3.
     groups = {
         "co2_energy_land": ("Emissions|CO2", "Emissions|CO2|Energy", "Emissions|CO2|AFOLU"),
+        "eip_afolu_land_beccs_dac": (
+            "Emissions|CO2|Energy and Industrial Processes",
+            "Emissions|CO2|AFOLU",
+            "Carbon Sequestration|Land Use",
+            "Carbon Sequestration|CCS|Biomass",
+            "Carbon Sequestration|Direct Air Capture"),
+        "eip_afolu_land_beccs_dac_fossilccs": (
+            "Emissions|CO2|Energy and Industrial Processes",
+            "Emissions|CO2|AFOLU",
+            "Carbon Sequestration|Land Use",
+            "Carbon Sequestration|CCS|Biomass",
+            "Carbon Sequestration|CCS|Fossil",
+            "Carbon Sequestration|Direct Air Capture"),
         "co2_and_dac": ("Emissions|CO2", "Carbon Sequestration|Direct Air Capture"),
         "co2_and_biomass_ccs": ("Emissions|CO2", "Carbon Sequestration|CCS|Biomass"),
         "co2_and_fossil_ccs": ("Emissions|CO2", "Carbon Sequestration|CCS|Fossil"),

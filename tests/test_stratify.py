@@ -83,3 +83,13 @@ def test_joint_presence_not_gross_decomposition(tmp_path):
     assert co['model_scenarios']==1
     assert co['denominator']==2
     assert co['meaning']=='PRESENCE_ONLY_NOT_ACCOUNTING_IDENTIFIABILITY'
+
+
+def test_extended_candidate_land_inference_remains_presence_only(tmp_path):
+    md=writer(tmp_path/'m.csv',['Model','Scenario','Category'],[['M','S','C1']])
+    names=['Emissions|CO2|Energy and Industrial Processes','Emissions|CO2|AFOLU','Carbon Sequestration|Land Use','Carbon Sequestration|CCS|Biomass','Carbon Sequestration|Direct Air Capture']
+    src=writer(tmp_path/'s.csv',['Model','Scenario','Region','Variable','Unit','2050'],[['M','S','World',v,'Mt CO2/yr','1'] for v in names])
+    d=audit_strata(src,md,variable_names=names)
+    joint=d['strata']['C1']['candidate_co_reporting']['eip_afolu_land_beccs_dac']
+    assert joint['model_scenarios']==1
+    assert joint['meaning']=='PRESENCE_ONLY_NOT_ACCOUNTING_IDENTIFIABILITY'
