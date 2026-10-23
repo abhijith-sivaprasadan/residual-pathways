@@ -10,3 +10,6 @@ dist/
 data/AR6*
 
 data/*metadata_indicators*
+
+# Large external source and unredacted human audit packet
+data/ar6-private/
