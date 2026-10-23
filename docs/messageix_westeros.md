@@ -1,6 +1,6 @@
 # Actual MESSAGEix Westeros / GAMS execution gate
 
-**Current status: runner coded and unit-tested; no licensed GAMS solve yet reported.** This is not a claim that possession of a GAMS license suffices to run the model.
+**Current status: the separate three-scenario `westeros-validate` pipeline is not yet supported by a locally verified three-solve report.** A different, official-notebook **two-scenario** runner (`python -m residual_pathways.messageix_westeros`) did complete locally on 2026-10-24 with solved baseline and emissions-bound results. Do not conflate that success with completion of this additional wind-cost perturbation route; see [two-scenario local setup](messageix_westeros_local.md).
 
 The runner fetches and validates the official Westeros Electrified baseline and emissions-bound notebook sources from iiasa/message_ix **tag v3.11.1**. It checks their exact Git blob SHA-1 IDs, then runs the corresponding official data-building cells with only two deliberate changes: the ixmp Platform is an isolated in-memory HSQLDB database, and optional visual plotting is skipped. It then runs the official GAMS-backed MESSAGEix baseline.
 
