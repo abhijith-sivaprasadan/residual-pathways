@@ -76,3 +76,21 @@ A genuine controlled three-scenario emissions sensitivity and an independent num
 ## Follow-up diagnostic
 
 The repository now implements `python -m residual_pathways westeros-cap-check --manifest PATH/TO/manifest.private.json --output results/westeros_cap_check`. It reads the original local ixmp scenario, verifies bound/category/period definitions, applies the exact duration-weighted average annual emissions equation and records a numerical saturation status. A missing or incompatible model-year mapping leaves the status `NOT_ESTABLISHED`; it cannot manufacture a shadow price. The audit has not been executed against the author's saved database yet, only developed with mock fixtures.
+
+## Verified local duration-weighted cap reconciliation (2026-10-24 01:55 local)
+
+The author supplied the actual `westeros-cap-check` terminal result and derived `cap_reconciliation.json`, not merely an equal-weight arithmetic assumption. **All eight mock tests passed**, and the analyzer connected to the same source HSQLDB scenario. The derived audit reports:
+
+| Check | Saved-data result |
+| --- | --- |
+| Status | `NUMERICALLY_SATURATED` |
+| Bound (MtCO2 average annual) | **500.0** |
+| Reconstructed LHS (MtCO2 average annual) | **500.0** |
+| Slack | **0.0** |
+| Periods in `cumulative` | 700, 710, 720 |
+| `duration_period` (source: `SAVED_SCENARIO_PARAMETER`) | 10, 10, 10 years |
+| Emissions scaling | **1.0** (GAMS default where absent) |
+| Tolerance | **0.0005** |
+| Dual/shadow-price status | `NOT_ESTABLISHED` |
+
+This upgrades the **numerical saturation** conclusion: it is no longer merely an equal-period hypothesis, because the saved model period durations were read and checked. It does **not** provide an observed `EMISSION_CONSTRAINT` dual, external replication, or carbon price. The cap checker did not rerun GAMS; the result is based on the author's locally persisted ixmp solution and provided transcript. A controlled emissions-accounting/no-bound clone is the next causal comparison.
