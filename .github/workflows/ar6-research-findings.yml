@@ -9,12 +9,14 @@ on:
       - "src/residual_pathways/metadata_readme_private.py"
       - "src/residual_pathways/arc24_review_docket.py"
       - "src/residual_pathways/arc24_engage_v2_probe.py"
+      - "src/residual_pathways/arc24_engage_v2_identity_inventory.py"
       - "src/residual_pathways/source_provenance_receipt.py"
       - "tests/test_coverage_findings.py"
       - "tests/test_metadata_sheet_review.py"
       - "tests/test_metadata_readme_private.py"
       - "tests/test_arc24_review_docket.py"
       - "tests/test_arc24_engage_v2_probe.py"
+      - "tests/test_arc24_engage_v2_identity_inventory.py"
       - "tests/test_source_provenance_receipt.py"
       - "atlas/data/coverage_release.json"
       - "atlas/data/coverage_release.json.sha256"
@@ -26,12 +28,14 @@ on:
       - "src/residual_pathways/metadata_readme_private.py"
       - "src/residual_pathways/arc24_review_docket.py"
       - "src/residual_pathways/arc24_engage_v2_probe.py"
+      - "src/residual_pathways/arc24_engage_v2_identity_inventory.py"
       - "src/residual_pathways/source_provenance_receipt.py"
       - "tests/test_coverage_findings.py"
       - "tests/test_metadata_sheet_review.py"
       - "tests/test_metadata_readme_private.py"
       - "tests/test_arc24_review_docket.py"
       - "tests/test_arc24_engage_v2_probe.py"
+      - "tests/test_arc24_engage_v2_identity_inventory.py"
       - "tests/test_source_provenance_receipt.py"
       - ".github/workflows/ar6-research-findings.yml"
 permissions:
@@ -51,7 +55,7 @@ jobs:
           python -m pip install "pytest>=8,<10" "openpyxl>=3.1,<4"
       - name: Check real pinned aggregate, workbook classifiers and private review controls
         run: |
-          python -m pytest -q tests/test_coverage_findings.py tests/test_metadata_sheet_review.py tests/test_metadata_readme_private.py tests/test_arc24_review_docket.py tests/test_arc24_engage_v2_probe.py tests/test_source_provenance_receipt.py
+          python -m pytest -q tests/test_coverage_findings.py tests/test_metadata_sheet_review.py tests/test_metadata_readme_private.py tests/test_arc24_review_docket.py tests/test_arc24_engage_v2_probe.py tests/test_arc24_engage_v2_identity_inventory.py tests/test_source_provenance_receipt.py
       - name: Generate AR6 reporting-presence manuscript, table and SVG figures
         run: |
           python -m residual_pathways.coverage_findings \
