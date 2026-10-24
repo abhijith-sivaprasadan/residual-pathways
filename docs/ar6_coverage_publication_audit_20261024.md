@@ -73,6 +73,23 @@ $r.small_cell_screen.flagged | Select-Object -First 25 category, year, variable,
 
 The preflight refuses malformed candidate schema and wrong pins. It flags 1–4 reported or non-reported cases and category denominators below 5 by a **conservative project screening heuristic**—this is *not* an AR6 publisher/license threshold and not evidence of a real privacy breach. All reports stay ignored locally under `results/`; no scenario identities are emitted. A zero-flag result is **not permission to publish**; a human must assess rights, metadata and disclosure.
 
+## Local disclosure preflight result: 24 flags, six distinct reporting gaps
+
+**User-reported PowerShell execution, 24 October 2026:** all 12 preflight unit tests passed; empirical preflight returned `automated_structural_checks=PASS`, 1,202 matched scenarios, 352 aggregate records, `human_approval=False`. The conservative threshold was 5. The screen identified **24 flagged aggregate records**, consisting of the **same six category–variable patterns in each of four years**, all of type `SMALL_NONZERO_MISSING_CELL`. There were no small positive reporting counts or category denominators under five.
+
+| Category | Exact variable | Reporting / eligible | Not reporting |
+| --- | --- | ---: | ---: |
+| C1 | `Carbon Sequestration\|CCS\|Biomass` | 95 / 97 | 2 |
+| C3 | `Emissions\|CO2\|AFOLU` | 308 / 311 | 3 |
+| C4 | `Emissions\|CO2\|Energy and Industrial Processes` | 156 / 159 | 3 |
+| C6 | `Emissions\|CO2\|AFOLU` | 96 / 97 | 1 |
+| C6 | `Emissions\|CO2\|Energy and Industrial Processes` | 96 / 97 | 1 |
+| C8 | `Emissions\|CO2\|AFOLU` | 26 / 29 | 3 |
+
+These are **aggregate reporting-presence counts**; zero/absence of a named source variable **does not prove zero physical deployment or emissions**. The six patterns repeated across all four years are not 24 independent instances of disclosure risk. No scenario names, numeric emissions or individual private data were included. The screen itself does not prove that all indirect identifications are impossible; the original AR6 database permits derived analysis but restricts redistribution of substantial original content. See the [adapted AR6 legal code](https://data.ene.iiasa.ac.at/ar6/static/License/Legal.html), §2(a)(1) and §3(a).
+
+**Assessment:** small complementary counts alone are **not a source-license prohibition** and do not require automatic suppression in an aggregate research visualization. Suppressing them would require a **new** reviewed dataset and SHA-256, and could distort denominators and the four-year data interpretation. This is a documented, **conditional author-level recommendation** to retain aggregate cells with their reporting-not-physical caveat. **Human permission/disclosure approval remains explicitly outstanding**; no empirical artifact has been committed or tagged by this repository change.
+
 ## Publication go/no-go
 
 **HOLD_PUBLIC_ARTIFACT** until these remain complete: (1) exact aggregate artifact and small-cell/licensing review; (2) immutable version/tag pinning exact artifact bytes; (3) post-deploy public SHA and browser check. **Already author-reported complete:** AR6 UI attribution and modification notice; local PathwaysHub empirical acceptance and mismatched-pin rejection. Publisher authentication and independent I3 scientific review may remain explicitly unresolved if the published deliverable is unambiguously coverage-only. Publisher authentication and independent I3 scientific review can remain openly incomplete **only when declared explicitly**, without presenting coverage as physically verified carbon accounting.
