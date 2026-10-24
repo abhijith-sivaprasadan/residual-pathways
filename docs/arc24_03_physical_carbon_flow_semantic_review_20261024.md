@@ -179,3 +179,34 @@ $a.study_CO2pos_vs_separate_gross_fossil_industry | Format-List
 ```
 
 **Study method versus physically closed carbon accounting must remain separate.** In particular, `CO2pos = CO2tot + CDRtotal` is an exact *definition* in this research script; writing its residual as zero is tautological, not external validation. The label `Gross Fossil Fuels and Industry` describes an additional narrower gross-sector indicator with a different boundary. Neither source should be used as a drop-in positive economy-wide emissions ledger. Verified I3 remains zero.
+
+## 8. Original author 2050 operational formula real execution: missing source-key mapping, not zero CDR (24 October 2026)
+
+The author executed the newly committed source-MD5/SHA-locked worksheet on the **real CEMICS source archive and AR6 World v1.1**, with **8/8 regression tests passed**. Command outcome: `ORIGINAL_AUTHOR_FORMULA_DIAGNOSTIC_NO_I3`; `NOT_COMPUTABLE_MISSING_OR_UNVERIFIED_SOURCE_TERM` due solely to the exact-name source `Emissions|CO2|Land|Land-use Change|Regrowth`; distinct Gross Fossil Fuels and Industry versus study-derived CO2pos `NOT_COMPARABLE_UNVERIFIED_INPUT`.
+
+| Source-original variable | User-observed 2050 source status | Source-observed sign |
+| --- | --- | --- |
+| Emissions|CO2 | EXACT_REPORTED_DECIMAL_MATCH | POSITIVE |
+| Emissions|CO2|Land|Land-use Change|Regrowth | AUTHOR_SERIES_NOT_REPORTED *under exact raw name* | UNVERIFIED |
+| Carbon Sequestration|Enhanced Weathering | EXACT_REPORTED_DECIMAL_MATCH | ZERO |
+| Carbon Sequestration|CCS|Biomass | EXACT_REPORTED_DECIMAL_MATCH | POSITIVE |
+| Carbon Sequestration|Direct Air Capture | EXACT_REPORTED_DECIMAL_MATCH | ZERO |
+| Emissions|CO2|Gross Fossil Fuels and Industry | AR6_SERIES_NOT_REPORTED *under exact AR6 name* (authors' MIF does report it) | UNVERIFIED in two-source comparison |
+| Emissions|CO2|AFOLU | EXACT_REPORTED_DECIMAL_MATCH | POSITIVE |
+| Carbon Sequestration|Land Use | EXACT_REPORTED_DECIMAL_MATCH | POSITIVE |
+| Carbon Sequestration|CCS|Fossil | EXACT_REPORTED_DECIMAL_MATCH | POSITIVE |
+
+**No numeric operational CDRtotal or CO2pos has yet been computed** for this case. An absent exact regrowth source field must not be turned into zero. Separately, source-reported positive `Carbon Sequestration|Land Use` is **not established equivalent to the Rmd regrowth flux**.
+
+### Material new source-preprocessing clue
+
+The very same original R Markdown, **lines 144–145**, does a preprocessing step *before* selecting land regrowth at line 151:
+
+```r
+# delete "+" and "++" from variable names
+data <- deletePlus(data)
+```
+
+Current [PIK MAgPIE reporting documentation](https://pik-piam.r-universe.dev/magpie4/doc/manual.html) lists its regrowth hierarchical variable as `Emissions|CO2|Land|Land-use Change|+|Regrowth`, and classifies it as **negative removals from forest regrowth**, distinct from a signed net land-sector flux. **This public documentation may refer to a later version than the 2021 source MIF**. Therefore it is a *hypothesis* that the authors' original source Regrowth line is stored with an extra `|+|`/`|++|` marker that `deletePlus()` strips before the authors' Rmd formula. The actual raw archive field and original `deletePlus` behaviour still need verification. This explains why prior strict crosswalk could show `AUTHOR_SERIES_NOT_REPORTED` without proving that the dataset lacks an operational regrowth flow.
+
+**Scientific next step:** inspect source names for `Regrowth`, `Gross Fossil Fuels and Industry` and `Land Use` in the **same MD5-locked author scenario**, inspect same names in World v1.1 and Rmd pre-processing lines 95–146. Report original names, units, unique source-record counts and candidate hierarchy-only transformations, **no numeric emissions values**. No arithmetic substitution until a *unique* source field maps through the author's preprocessing. Even then label any source-author-only regrowth as NOT directly crosswalked to AR6 if absent in World. Hold I3=0.
