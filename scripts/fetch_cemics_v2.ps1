@@ -29,7 +29,7 @@ foreach ($entry in $files) {
     $uri = $base + [uri]::EscapeDataString($entry.Name) + "?download=1"
     Write-Host ("Downloading original from Zenodo: " + $entry.Name)
     try {
-        Invoke-WebRequest -Uri $uri -OutFile $tmp -MaximumRedirection 5
+        Invoke-WebRequest -Uri $uri -OutFile $tmp -MaximumRedirection 5 -UseBasicParsing
         $hash = (Get-FileHash -LiteralPath $tmp -Algorithm MD5).Hash.ToLowerInvariant()
         if ($hash -ne $expected) {
             throw ("Zenodo-listed MD5 mismatch for " + $entry.Name + " (got " + $hash + ")")
