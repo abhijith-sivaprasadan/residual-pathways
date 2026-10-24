@@ -247,3 +247,21 @@ Run the following PowerShell on the already saved **public coded** output to sum
 After that, **do not generate additional narrowly repetitive closure checks** without new source facts. Research ROI is higher for exact POLES-ENGAGE source-variable semantics, the role of model-reported/constructed Other, and gross/net/land/BECCS/fossil-CCS/DAC overlap. Revisit the REMIND-MAgPIE ARC24-03 primary model/year accounting next, to ensure this remains a cross-model study rather than four POLES scenarios.
 
 **Scientific claim boundary:** this is a source-verified arithmetic near-closure and a documented processing-convention lead, **not an expert-reviewed exhaustive, nonoverlapping gross-emissions and atmospheric-removal reconstruction**. Status remains NOT_DETERMINED, verified I3=0.
+## 12. POLES EIP-versus-detail final band distribution and numerical stop decision (24 October 2026)
+
+The author read the **already generated public source-derived** ARC24 EIP aggregation report and returned the final 20-case-year distribution:
+
+| Reported-decimal difference: (Energy Demand + Energy Supply + Industrial Processes) − EIP | Number of source case-years |
+| --- | ---: |
+| Negative and <0.001% of maximum absolute source term | **10** |
+| Positive and <0.001% of maximum absolute source term | **9** |
+| Exactly zero at recorded source decimal values | **1** |
+| **Total** | **20** |
+
+**Decision: conclude the exploratory POLES arithmetic phase.** The signed difference is always exactly zero or below 0.001% under the pre-registered scale. The source-submitted `CO2|Other` accounts for the overwhelming share of the earlier 1–10%/≥10% total-minus-EIP-minus-AFOLU residual. Both the detailed ENGAGE-like expanded expression and EIP-based expanded expression are near-equalities, though none of the 20 fully expanded balances is *exactly* zero in the original decimal strings. Small signed departures do not validate original source quantization or imply a particular export-rounding mechanism. Do not call them physical emissions accounting inconsistencies.
+
+The three arithmetic checks are **algebraically related**, not independent validation: subtracting the two candidate expanded identities yields detailed Demand+Supply+Industry minus EIP. A near-equality in two identities must not be counted twice as independent evidence.
+
+**Research decision:** do not add more ad hoc CO2 aggregation utilities without new original model-export definitions. Elevate the next source-based task to an independent, version-specific **REMIND-MAgPIE ARC24-03** carbon-flow review, cross-referenced to the 2021 CEMICS CDR-portfolio study and the authors' AR6-name-aligned source archive. Bring POLES ARC24-06 into the same accounting evidence framework, explicitly marking the use of Other as reported/arithmetic rather than proven physically independent. This is not an I1/I2/I3 classification.
+
+All 24 canonical-named cases stay NOT_DETERMINED, and verified I3 remains 0 pending semantic/precision/completeness and independent review.
