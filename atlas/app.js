@@ -10,7 +10,7 @@ const coverFields = {
   sixPlus: ["eip_afolu_land_beccs_dac_fossilccs", "Previous set + fossil CCS"],
   co2: ["co2", "Reported net CO₂"]
 };
-const sectionLabels = { overview: "Overview", coverage: "Scenario coverage", models: "Model comparison", gases: "Non-CO₂ metrics", experiments: "Controlled modelling", operations: "Research operations", methods: "Methods & sources" };
+const sectionLabels = { overview: "Overview", coverage: "Scenario coverage", models: "Model comparison", gases: "Non-CO₂ metrics", experiments: "Controlled modelling", innovations: "Innovation gaps", operations: "Research operations", methods: "Methods & sources" };
 const state = { data: null, metric: "dac", view: "overview" };
 function finite(value) { const n = Number(value); if (!Number.isFinite(n)) throw new Error("Invalid numeric source value"); return n; }
 function kpi(title, value, note, alert=false) {
@@ -116,6 +116,16 @@ function renderOperations(d) {
     '<tr><td><strong>'+esc(x.id)+'</strong></td><td>'+esc(x.name)+'</td><td><span class="status-pill '+esc(x.status)+'">'+esc(x.status.replaceAll("_"," "))+'</span></td></tr>'
   ).join("");
 }
+function renderInnovations(d) {
+  const sector=$("#innovation-sector").value,search=$("#innovation-search").value.trim().toLocaleLowerCase();
+  const rows=d.innovations.filter(x=>(sector==="all"||x.sector===sector)
+    && (x.title+" "+x.mechanism+" "+x.sector).toLocaleLowerCase().includes(search));
+  $("#innovation-count").textContent=rows.length+" / "+d.innovations.length+" research hypotheses";
+  $("#innovation-list").innerHTML=rows.map(x=>{
+    const safeSource=/^https:\/\/(www\.)?ipcc\.ch\//.test(x.source)?x.source:"https://www.ipcc.ch/";
+    return '<article class="card innovation-card"><div class="innovation-top"><span>'+esc(x.id)+' / '+esc(x.sector.toUpperCase())+'</span><span class="status-pill">UNTESTED HYPOTHESIS</span></div><h2>'+esc(x.title)+'</h2><p>'+esc(x.mechanism)+'</p><div class="innovation-caution"><strong>Interpretation constraint</strong><span>'+esc(x.caution)+'</span></div><a href="'+esc(safeSource)+'" target="_blank" rel="noopener noreferrer" class="linklike">SOURCE CONTEXT ↗</a></article>';
+  }).join("")||'<div class="notice">No matching hypotheses. Change the sector or search terms.</div>';
+}
 function renderMethods(d) {
   const items=[
     ["Input",d.provenance.coverageSource],["World SHA256",d.provenance.coverageSha256],
@@ -132,6 +142,8 @@ async function init(){
     $("#snapshot").textContent="DATA SNAPSHOT · "+d.date;
     renderHeadlines(d);
     renderGases(d);renderExperiment(d);renderOperations(d);renderMethods(d);
+    $("#innovation-sector").innerHTML='<option value="all">All research domains</option>'+[...new Set(d.innovations.map(x=>x.sector))].sort().map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("");
+    renderInnovations(d);
     $("#scenario-select").innerHTML=d.comparison.scenarios.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("");
     renderModels(d);renderCoverage(d);
     $$("[data-go]").forEach(button=>button.addEventListener("click",()=>go(button.dataset.go)));
@@ -140,6 +152,8 @@ async function init(){
     $("#coverage-mode").addEventListener("change",()=>renderCoverage(d));
     $("#scenario-select").addEventListener("change",()=>renderModels(d));
     $("#operation-filter").addEventListener("change",()=>renderOperations(d));
+    $("#innovation-sector").addEventListener("change",()=>renderInnovations(d));
+    $("#innovation-search").addEventListener("input",()=>renderInnovations(d));
     $("#coverage-download").addEventListener("click",()=>{
       const [key,label]=coverFields[state.metric];
       downloadCsv("ar6-world-2050-reporting-"+state.metric+".csv",["category","vetted_scenarios","reported","not_reported","reporting_share_percent","field"],
