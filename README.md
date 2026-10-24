@@ -1,5 +1,7 @@
 # ResidualPathways
 
+**[Explore the live Residual Pathways Atlas](https://residual-pathways-atlas.vercel.app/)** — Nordic-style interactive evidence explorer for 1,202 climate-vetted 2050 scenario reporting records, historical reported net CO₂, N₂O metric sensitivity, author-reported Westeros experiment, innovation hypotheses and PathwaysHub workstreams. **No verified I3 physical gross/removal partitions.** [Atlas source, data and limitations](atlas/README.md).
+
 Independent open-source research on IAM scenario reporting, residual-emissions identifiability and controlled optimisation experiments.
 
 [![IAMC baseline](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ci.yml/badge.svg)](https://github.com/abhijith-sivaprasadan/residual-pathways/actions/workflows/ci.yml)
