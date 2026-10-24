@@ -99,3 +99,27 @@ $identity | Select-Object status,exact_model_label_found,exact_scenario_pairs_ac
 ~~~
 
 Only if the name inventory uncovers an interesting source identity should a separately registered, source-specific original-decimal comparison be designed, with positive/negative controls as for CEMICS. **No automatic aliases; no physical gross or durable CDR I3 promotion.**
+
+## E. Source-native ENGAGE World identity inventory — author-run 24 October 2026
+
+The author re-ran the pinned original file identity inventory with **10/10 tests passed**. The original ENGAGE World v2.0 file (94,560,538 bytes, local SHA256 `c92b8944b1d2a71eed7a07702c42e48f6f3e3eee59a4404d145d0babc61315da`) contains **603 distinct World model–scenario pairs**. The exact AR6 model label `POLES ENGAGE` is **absent**. However, the exact scenario name `EN_NPi2020_400f` occurs in **seven other World model–scenario pairs**. The single source model label containing `POLES` has **70** World scenario pairs, of which **31** share the pre-registered scenario prefix; **40** exceed the source-name lexical similarity threshold of 0.75. No source alias is established by these name counts. They are not numerically independent replications, and there is no physical emissions/CDR grade.
+
+**New controlled source-decimal fingerprint:** `src/residual_pathways/arc24_engage_v2_candidate_fingerprint.py` now registers two nonexclusive scientific lead classes, deduplicated by exact source pair: (a) *all* seven exact-scenario-name pairs regardless of model label; and (b) *all* original ENGAGE World pairs under a source label with `POLES` as a word/token (not arbitrary substring), including the 31 scenario-prefix controls. It compares **eleven predefined exact source variables × five years**, only when source Variable, Unit and World region match, using original `Decimal` values. All source rows are read locally; no missing value is imputed, no unit is silently converted, and reported zero is counted separately from nonzero exact matches.
+
+The public summary contains **only** candidate-group counts, the best exact-decimal observation count, the best *nonzero* exact-decimal count, and explicitly unverified scientific status. The entire candidate-name register and per-candidate results remain strictly in the ignored `data/ar6-private/engage_v2_candidate_fingerprint_private.json`; these are source-led comparison hypotheses and **not verified aliases**, even if all 55 chosen source cells match. All actual source observation values remain confined to the original downloaded files. Synthetic positive and crossed negative controls test that identical source-label text alone is not an equivalence certificate. **The original ENGAGE v2.0 source fingerprint run has not yet been executed locally by the author.**
+
+~~~powershell
+git switch main
+git pull --ff-only
+$py = ".\.venv-messageix\Scripts\python.exe"
+& $py -m pytest -q tests/test_arc24_engage_v2_candidate_fingerprint.py
+if ($LASTEXITCODE -ne 0) { throw 'Crosswalk tests failed' }
+
+& $py -m residual_pathways.arc24_engage_v2_candidate_fingerprint
+if ($LASTEXITCODE -ne 0) { throw 'ENGAGE candidate fingerprint failed' }
+
+$pub = Get-Content "results/ar6-canonical-gate/engage_v2_candidate_fingerprint_public.json" -Raw | ConvertFrom-Json
+$pub | Select-Object candidate_total, exact_scenario_other_model_candidates, poles_family_other_scenario_controls, exact_scenario_under_poles_model_found, candidates_with_any_comparable_decimal, maximum_exact_reported_decimal_cells, maximum_exact_nonzero_cells, any_fully_exact_source_series_candidate, verified_i3 | Format-List
+~~~
+
+**Decision rule:** If an original source case gives a strongly discriminating source fingerprint across nonzero variables, record it as `NUMERICAL_CORRESPONDENCE_CANDIDATE` only, then obtain dated model-authored source-model, scenario/version or export-pipeline confirmation. If no case has a discriminating fingerprint, close this **v2.0 World dataset** as inadequate for identifying the precise ARC24-06 AR6 export; seek original submitted AR6 source run documentation. In both outcomes, physical gross/CDR partitions and independent I3 remain `NOT_ESTABLISHED` / zero.
