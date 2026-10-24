@@ -38,7 +38,7 @@ Thus the observed change is a **technology-mix substitution at fixed delivered s
 
 `CAP` is installed capacity at an active model year. `CAP_NEW` is a **yearly average new-capacity decision over the model period**, not a simple cumulative investment. The large additional wind CAP relative to its ACT is consistent with its tutorial capacity factor (0.36 versus 1.0 for coal); this does not by itself attribute the full increase in system costs.
 
-## Emissions-bound consistency: suggestive, not yet fully audited
+## Emissions-bound consistency: verified numerical saturation from saved ixmp
 
 The upstream emissions-bound tutorial assigns `coal_ppl` an emission factor of **7.4 tCO2/kWa**, while defining a `bound_emission` of **500 MtCO2** for `GHG`, `all` technologies, and the `cumulative` year category. MESSAGEix's [EMISSION_CONSTRAINT formulation](https://docs.messageix.org/en/stable/model/MESSAGE/model_core.html) scales multi-period limits to an **average-annual** emission rate, weighted by each period's `duration_period`.
 
@@ -49,7 +49,7 @@ For the three listed periods **if their effective weights are equal, and if no o
     * 7.4 / 3 = 500.000000 MtCO2 (average annual)
 ```
 
-The exact numerical agreement is **strong evidence of a saturated emissions constraint**. The author's subsequent pasted diagnostic **does now include** saved `EMISS` and `bound_emission` records: emissions for Westeros are **350.5697571642012**, **568.5098361190279**, **580.9204067167708** in years 700, 710, 720, respectively. The saved cap is **500 MtCO2**. Their simple arithmetic average is **500.0000000000** within floating-point error. The same values also appear under `World` and must **not** be double-counted. The `EMISSION_CONSTRAINT` retrieval returned **EMPTY**, meaning no stored equation level/marginal was available. The transcript still does not establish saved `duration_period`, `cat_year`, `emission_scaling`, or `historical_emission` inputs. A full binding test should inspect these and the correct time-type mappings; without this, a formal constraint or shadow-price statement remains **NOT_ESTABLISHED**.
+The exact numerical agreement is **strong evidence of a saturated emissions constraint**. The author's subsequent pasted diagnostic **does now include** saved `EMISS` and `bound_emission` records: emissions for Westeros are **350.5697571642012**, **568.5098361190279**, **580.9204067167708** in years 700, 710, 720, respectively. The saved cap is **500 MtCO2**. Their simple arithmetic average is **500.0000000000** within floating-point error. The same values also appear under `World` and must **not** be double-counted. The `EMISSION_CONSTRAINT` retrieval returned **EMPTY**, meaning no stored equation level/marginal was available. The later duration-weighted audit (reported below) resolved the necessary period lengths, mapping and scaling for numerical cap saturation. The actual constraint equation marginal remains unavailable, so a carbon shadow price remains **NOT_ESTABLISHED**.
 
 **Do not describe the 500 figure as an unnormalized 30-year cumulative 500 MtCO2 budget.** Under the cited equation, the multi-year bound is normalized by the total duration.
 
@@ -71,11 +71,11 @@ $s = Get-Content 'results/westeros_analysis/summary.json' -Raw | ConvertFrom-Jso
 $s.emissions_bound | ConvertTo-Json -Depth 16
 ```
 
-A genuine controlled three-scenario emissions sensitivity and an independent numerical reproduction remain the next higher scientific-evidence steps.
+The controlled three-scenario comparison has since been solved locally (see below). Independent numerical reproduction and external review remain open.
 
 ## Follow-up diagnostic
 
-The repository now implements `python -m residual_pathways westeros-cap-check --manifest PATH/TO/manifest.private.json --output results/westeros_cap_check`. It reads the original local ixmp scenario, verifies bound/category/period definitions, applies the exact duration-weighted average annual emissions equation and records a numerical saturation status. A missing or incompatible model-year mapping leaves the status `NOT_ESTABLISHED`; it cannot manufacture a shadow price. The audit has not been executed against the author's saved database yet, only developed with mock fixtures.
+The repository now implements `python -m residual_pathways westeros-cap-check --manifest PATH/TO/manifest.private.json --output results/westeros_cap_check`. It reads the original local ixmp scenario, verifies bound/category/period definitions, applies the exact duration-weighted average annual emissions equation and records a numerical saturation status. A missing or incompatible model-year mapping leaves the status `NOT_ESTABLISHED`; it cannot manufacture a shadow price. The author has since run this audit against the actual saved database; its observed outputs follow.
 
 ## Verified local duration-weighted cap reconciliation (2026-10-24 01:55 local)
 
@@ -93,4 +93,20 @@ The author supplied the actual `westeros-cap-check` terminal result and derived 
 | Tolerance | **0.0005** |
 | Dual/shadow-price status | `NOT_ESTABLISHED` |
 
-This upgrades the **numerical saturation** conclusion: it is no longer merely an equal-period hypothesis, because the saved model period durations were read and checked. It does **not** provide an observed `EMISSION_CONSTRAINT` dual, external replication, or carbon price. The cap checker did not rerun GAMS; the result is based on the author's locally persisted ixmp solution and provided transcript. A controlled emissions-accounting/no-bound clone is the next causal comparison.
+This upgrades the **numerical saturation** conclusion: it is no longer merely an equal-period hypothesis, because the saved model period durations were read and checked. It does **not** provide an observed `EMISSION_CONSTRAINT` dual, external replication, or carbon price. The cap checker did not rerun GAMS; the result is based on the author's locally persisted ixmp solution and provided transcript. An emissions-accounting/no-bound clone was subsequently solved successfully; its objective parity is described below.
+
+## Actual third-scenario control solve (2026-10-24 02:24 local)
+
+The author supplied terminal evidence of a successful additional **GAMS 54.6.0 / CPLEX LP** solve in a different, private ixmp HSQLDB. Five regression tests passed. The solver reported LP optimal, normal completion, and a high-precision objective of **159025.830480** (native units). The runner reported `ACTUAL_MESSAGEIX_GAMS_CONTROL_SOLVED`, with `baseline_vs_control.numerically_equivalent = true` and `cap_effect.difference_native = 32484.96875`. This solves the emissions-accounting-only case **without** the bound; no earlier solution was overwritten.
+
+| Case | Emissions bookkeeping | 500 MtCO2 cap | Objective (persisted ixmp, native units) |
+| --- | --- | --- | ---: |
+| Baseline | No | No | 159025.828125 |
+| Emissions-only control | Yes | No | ~159025.828125 (inferred from reported objective difference; confirm exact record below) |
+| Emissions-constrained | Yes | Yes | 191510.796875 |
+
+The difference **32484.96875**, or **about 20.4275%**, is specifically attributable to adding the emissions cap between the *two emissions-accounting-enabled* cases in this stylized fixed-input model, subject to the runner's source/control input-parameter parity checks and reported objective-equivalence gate. The exact saved control objective and technology rows should be independently inspected in the produced **private** `three_case_comparison.json` before attributing any particular change in dispatch/investment to the control. A shadow price remains unavailable.
+
+The new control runner produced `results/westeros_control_private/20261024T002431Z_f8428b42/` locally; that folder contains a private HSQLDB and must **never** be committed. No raw GAMS transcript should be published because it contains licence and identity data. Both the solved scenario and research interpretation are educational, author-reported and not independently reproduced.
+
+Next research priority: inspect the **three-case `ACT`, `CAP`, `CAP_NEW` columns** and derive sanitized evidence (including model and input-provenance pins) without adding private identifiers. Thereafter, vary the cap across several controlled levels to build a response curve and validate marginal-cost approximations with finite differences.
