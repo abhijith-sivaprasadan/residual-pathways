@@ -39,6 +39,17 @@ if ($LASTEXITCODE -ne 0) { throw 'README difference check failed' }
 
 This is the **only** worksheet-level content question that the two checked workbook copies still require. Any publisher-side errata or file version updates published later must be investigated separately; workbook-to-workbook agreement is not a statement that no future errata exist.
 
+## 2a. Final metadata README!A19 citation-only adjudication — resolved
+
+The author privately inspected both original normalized cell values and supplied the following short citation-instruction texts:
+
+- **Original-named v1.1 XLSX README!A19:** “When using the scenario ensemble data for own analysis, please cite the reference for all versions, and specify in text the version number (e.g. v1.1)”
+- **Earlier redistributed XLSX README!A19:** “When using the scenario ensemble data for own analysis, please cite:”
+
+**Result:** `DOCUMENTATION_CITATION_INSTRUCTION_UPDATED`. This is an editorial/reference guidance change, not a changed Model+Scenario observation, climate category, eligibility row or data-unit definition. The official [IIASA AR6 About page](https://data.ene.iiasa.ac.at/ar6/static/About.html) independently confirms the complete all-versions citation, with DOI **10.5281/zenodo.5886911**, and separately instructs explicit release version identification. For reproducibility the study additionally identifies [v1.1's DOI](https://doi.org/10.5281/zenodo.7197970). The all-version DOI and the v1.1 DOI serve different citation purposes; neither authenticates the publisher receipt for either local workbook.
+
+**Metadata content reconciliation:** `RESOLVED_SOURCE_WORKBOOKS_IDENTITY_EQUIVALENT_WITH_CITATION_README_CHANGE`. The author's original SHA-256 fingerprints and zero shared-identity record differences are unchanged. The download provenance remains `NOT_ESTABLISHED`.
+
 ## 3. Publisher provenance remains an independent question
 
 The local `source_provenance_receipt` produced `publisher_origin_authentication=NOT_ESTABLISHED`, `file_download_receipt_status=NOT_PROVIDED`. Official [AR6 v1.1 Zenodo record](https://zenodo.org/records/7197970) explicitly lists the two source file names and directs source download to the IIASA AR6 Explorer; it does **not** provide an independently verified publisher content digest for the author's locally held files. A Scenario Services account-confirmation email, **if separately available**, would show account registration only and not a specific dataset download. No private account correspondence is reproduced here. The source hashes identify the actual local inputs; a saved HTTP response/browser download entry with server URL and delivery timestamp is stronger acquisition evidence but does not by itself constitute a publisher cryptographic signature.
