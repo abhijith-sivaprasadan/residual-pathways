@@ -168,3 +168,25 @@ PowerShell:
     $c.rows | Select-Object case_id,year,status,residual_sign,other_sign,mismatch_band | Format-Table -AutoSize
 
 **Actual source result of this new numeric identity command is pending.** If equality holds, it would explain the *reported aggregate arithmetic* for these cases, not establish disjoint gross emission and atmospheric removal inventories, emission-source attribution within Other, or whether the model/export convention was applied before or after climate-assessment processing. Zero verified I3 still.
+## 9. Actual POLES optional-CO2 numerical comparison — 24 October 2026
+
+The author reran both optional-sector and direct Other identity synthetic test suites; **13/13 passed**. The original World v1.1 source-locked four-scenario by five-year comparison finished with the following actual statuses:
+
+| Source arithmetic finding | Count |
+| --- | ---: |
+| Case-years with both original net-CO2 residual R and CO2 Other present | **20** |
+| R and Other have **matching signs in the same case-year** | **20** |
+| Exact reported-decimal identities R = Other | **0** |
+| Nonzero reported-decimal differences R − Other | **20** |
+| Absolute mismatch less than 0.001% of `max(1, abs(total), abs(EIP), abs(AFOLU), abs(Other))` | **20** |
+| I3 verified scientific partitions | **0** |
+
+R is the previously reported global total CO2 minus energy/industrial CO2 minus signed net AFOLU CO2. Every one of the **20 original residuals** was at least 1% of `max(1, |total|, |EIP|, |AFOLU|)`, while the mismatch R−Other was below 0.001% of the slightly larger maximum including |Other|. Because the magnitude of Other is near that of R and all signs match, the ratio of absolute mismatch to absolute R is less than approximately 0.1%; more rigorously, if |R|≥0.01 M and |R−Other|<0.00001 max(M,|Other|), then |R−Other|/|R| < 0.00100002. The observed numerically unclosed fourth sector is therefore a small correction to R rather than a second multi-percent anomaly. The exact residual ratio and model-implied export precision have **not** been published or source-verified.
+
+**Important conclusion:** Emissions|CO2|Other **accounts for almost all of the earlier POLES four-scenario reported-decimal residual**, in the sense of numerical approximation, not a physically certified disjoint four-part emissions inventory. It does **not** close *exactly* at source decimal precision. The model/pipeline-specific convention appears consistent with the [ENGAGE Netzero Analysis notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html), which explicitly computes an Other CO2 category as total minus AFOLU, energy demand/supply and industrial-process emissions. The notebook uses a separate ENGAGE v2.0 snapshot, and its detailed energy/industrial categories are not proven identical to the AR6 World v1.1 EIP aggregate. The direct v1.1 source arithmetic, not the notebook, grounds the 20-case comparison.
+
+**Outstanding distinctions:** a very small nonzero reported-decimal difference might come from export/decimal formatting or different source postprocessing; without model-version-specific numeric precision, it must not be labelled a rounding error. `Other` may be a deliberately constructed bookkeeping remainder rather than a physically independent emissions-generating sector; therefore neither gross positive emissions nor removal pools can be computed by adding `Other` to source sectors without further documentation. Do not treat arithmetic near-closure as I3 verification.
+
+**Next defensible tests:** use privately held exact source values to identify source decimal reporting granularity; check whether the original detailed Energy Demand, Energy Supply and Industrial Processes sum to EIP for the same case-years; document the upstream ENGAGE submission and AR6 transformations. Keep any raw values and absolute residuals local, and run independent model/documentation review before classifying I1-I3.
+
+New `arc24-poles-other-identity` executable implements the direct raw-decimal comparison and reports only case codes, years, signs and coarse descriptive mismatches. New synthetic tests passed in the author's Windows environment. Follow-up model-specific physical accounting remains open.
