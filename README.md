@@ -301,3 +301,11 @@ The [2021 REMIND `deletePlus` implementation](https://rdrr.io/github/pik-piam/re
     python -m residual_pathways arc24-cemics-author-accounting
 
 Source-specific evidence and interpretation boundary: [ARC24-03 original author carbon accounting](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md).
+
+##### Actual original-author 2050 CDR formula reproduced: source-complete operational accounting; physical I3 remains zero
+
+**User-run 24 Oct 2026 outcome:** field-lineage and original author accounting commands successfully completed with **20/20 synthetic regression tests passing**. MD5-verified original Strefler CEMICS author data + World v1.1 SHA source locks establish ARC24-03 2050 `CO2tot` positive, original unreported-in-AR6 plus-marked Regrowth flux negative (hence author's `CDRaff` positive), Biomass CCS positive, DAC zero, Enhanced Weathering zero. The explicit Rmd formula `CDRtotal=-Regrowth+EW+BECCS+DAC` now **computes successfully** and gives a positive operational CDR total. `CO2pos=CO2tot+CDRtotal` also computes successfully, positive.
+
+The separately reported author-only `Emissions|CO2|Gross Fossil Fuels and Industry` is **positive but below derived `CO2pos`** by a nonzero difference of **≥10% of max(1, |CO2pos|, |gross_FI|)**. This is a **different-scope comparison, not a required carbon balance or error**. The author-only gross fossil/industry and signed Regrowth values are absent from the original AR6 World export under their raw/postprocessed names. `Carbon Sequestration|Land Use` is separately present in both sources and was **not substituted** for regrowth; fossil CCS positive but not counted as author study CDR.
+
+The operational calculation's actual provenance and new >10% scope-difference finding are recorded in [original author carbon-flow source review §10](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). No additional pseudo-reconciliation is warranted without original model-specific gross sector and signed net land accounting definitions. **I3=0; no certified physically complete/exclusive positive emissions or net durable atmospheric removal partition.**
