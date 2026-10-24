@@ -232,3 +232,14 @@ A new source-hashed **`arc24-cemics-alias-fingerprint`** command tests: author f
     python -m residual_pathways arc24-cemics-alias-fingerprint
 
 Review scientific limitations and all four scenarios in [CEMICS author-archive source crosswalk](docs/arc24_cemics_v2_original_source_crosswalk.md). I3 remains zero.
+
+##### Real CEMICS alias run revealed duplicate author MIF Variable names (24 October 2026)
+
+The source-locked CEMICS alias fingerprint's initial seven synthetic tests passed, but the real original MIF run raised `Duplicate authors' scenario/variable` before any result was written. That failure reflects our original oversimplified assumption that World-region Model+Scenario+Variable was a globally unique record key; the MIF specification permits Unit and extra metadata fields. **The local source was neither corrupted nor numerically disproven by this exception.**
+
+The updated fingerprint preserves all source rows and uses **one unique common Unit record per source** for each variable. It reports `NO_SHARED_UNIT`, `AMBIGUOUS_MULTIPLE_SHARED_UNITS`, or `AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT` instead of silently discarding, averaging, or selecting ambiguous source rows. It also logs whether multiple author units occurred and excludes ambiguous/missing observations from the exact-match fraction. Added synthetic regression tests exercise repeated source variables across different units, same-unit duplicates, and ambiguous original AR6 observations. **Those new tests and the real archive comparison require rerunning locally.**
+
+    python -m pytest -q tests/test_arc24_cemics_alias_fingerprint.py
+    python -m residual_pathways arc24-cemics-alias-fingerprint
+
+Consult [CEMICS source-provenance and duplicate key handling](docs/arc24_cemics_v2_original_source_crosswalk.md). The model-level noCDR/minCDR identity remains unproven and I3=0.
