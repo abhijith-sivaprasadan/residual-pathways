@@ -1,0 +1,69 @@
+name: Residual Pathways Atlas — public evidence website
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "atlas/**"
+      - "data/derived/ar6_teaching_2050_summary.json"
+      - "data/derived/n2o_metric_sensitivity_2050.csv"
+      - "data/derived/innovation_gap_register.csv"
+      - "data/derived/verified_tutorial_comparison_2050.json"
+      - ".github/workflows/atlas-pages.yml"
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "atlas-pages"
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate dashboard JavaScript
+        run: node --check atlas/app.js
+      - name: Check source-derived public data is current
+        run: python atlas/build_data.py --check
+      - name: Check source-scope boundaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("atlas/data/atlas.json").read_text())
+          assert d["schema"] == "residualpathways.atlas.public.v1"
+          assert d["totals"]["scenarios"] == 1202
+          assert d["totals"]["dac"] == 422
+          assert d["totals"]["six"] == 330
+          assert d["totals"]["verifiedI3"] == 0
+          assert len(d["comparison"]["rows"]) == 18
+          assert len(d["operations"]["milestones"]) == 25
+          assert d["comparison"]["kind"].endswith("_NOT_GROSS")
+          for path in Path("atlas").rglob("*"):
+              assert not "ar6-private" in path.parts
+          print("Atlas publishable source and claims gates: PASS")
+          PY
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static atlas
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./atlas
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy public atlas
+        id: deployment
+        uses: actions/deploy-pages@v4
