@@ -28,7 +28,8 @@ SYNTHETIC = {
 
 
 def fixture(tmp_path, monkeypatch, *, missing=None, gross="25.0",
-            tamper_author_rmd=False, duplicate_author=False):
+            tamper_author_rmd=False, duplicate_author=False,
+            hierarchy_regrowth=False, author_only_gross=False):
     private = tmp_path / "data" / "ar6-private"
     private.mkdir(parents=True)
     mif = private / "CDRoptionsAR6_complete.mif"
@@ -42,18 +43,28 @@ def fixture(tmp_path, monkeypatch, *, missing=None, gross="25.0",
         w = csv.writer(f, delimiter=";")
         w.writerow(["Model", "Scenario", "Region", "Variable", "Unit", "2050", ""])
         for name, value in variables.items():
-            w.writerow([fp.ARCHIVE_MODEL, fp.AUTHOR_NO, "World", name,
+            source_name = (
+                "Emissions|CO2|Land|Land-use Change|+|Regrowth"
+                if hierarchy_regrowth and name == ledger.REGROWTH else name
+            )
+            w.writerow([fp.ARCHIVE_MODEL, fp.AUTHOR_NO, "World", source_name,
                         UNIT, value, ""])
             if duplicate_author and name == ledger.EW:
                 w.writerow([fp.ARCHIVE_MODEL, fp.AUTHOR_NO, "World", name,
                             UNIT, value, ""])
+    world_variables = {
+        name: value for name, value in variables.items()
+        if not (hierarchy_regrowth and name == ledger.REGROWTH)
+        and not (author_only_gross and name == ledger.GROSS_FI)
+    }
     with world.open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Model", "Scenario", "Region", "Variable", "Unit", "2050"])
-        for name, value in variables.items():
+        for name, value in world_variables.items():
             w.writerow([ledger.MODEL, fp.AR6_MIN, "World", name, UNIT, value])
     rmd.write_text(
-        "\n".join(ledger.EXACT_FORMULAS)
+        ("data <- deletePlus(data)\n" if hierarchy_regrowth else "")
+        + "\n".join(ledger.EXACT_FORMULAS)
         + ("\n# tampered" if tamper_author_rmd else "")
         + "\n", encoding="utf-8",
     )
@@ -66,7 +77,7 @@ def fixture(tmp_path, monkeypatch, *, missing=None, gross="25.0",
             "scenario": fp.AR6_MIN if n == 3 else "UNRELATED",
             "source_observations": {
                 k: {"raw": v, "unit": UNIT, "value": float(v)}
-                for k, v in variables.items()
+                for k, v in world_variables.items()
             } if n == 3 else {},
         })
     packet.write_text(json.dumps({
@@ -176,3 +187,107 @@ def test_refuse_public_output_in_private_area(tmp_path, monkeypatch):
     args = fixture(tmp_path, monkeypatch)
     with pytest.raises(CaseAuditError, match="must remain private"):
         run((*args[:4], args[0].parent / "insecure_public.json"))
+
+
+
+def test_original_author_deleteplus_regrowth_and_author_only_gross_scope(
+        tmp_path, monkeypatch):
+    args = fixture(tmp_path, monkeypatch, hierarchy_regrowth=True,
+                   author_only_gross=True)
+    result = run(args)
+    byname = {r["variable"]: r for r in result["individual_source_terms"]}
+    reg = byname[ledger.REGROWTH]
+    assert reg["original_author_raw_variable"] == (
+        "Emissions|CO2|Land|Land-use Change|+|Regrowth"
+    )
+    assert reg["raw_author_regrowth_hierarchy_candidate_count"] == 1
+    assert reg["source_comparison_status"] == (
+        "AUTHOR_ONLY_REGROWTH_AFTER_DELETEPLUS_AR6_ABSENT"
+    )
+    assert reg["source_value_sign"] == "NEGATIVE"
+    assert reg["ar6_source_present"] is False
+    gross = byname[ledger.GROSS_FI]
+    assert gross["source_comparison_status"] == (
+        "AUTHOR_ONLY_GROSS_FOSSIL_INDUSTRY_AR6_ABSENT"
+    )
+    assert gross["ar6_source_present"] is False
+    operational = result["operational_study_accounting"]
+    assert operational["status"] == "AUTHORS_EXPLICIT_FORMULA_COMPUTABLE_NOT_I3"
+    assert operational["regrowth_ar6_independently_reported"] is False
+    assert operational["source_author_preprocessing_confirmed"]
+    assert operational["missing_or_unverified_operational_terms"] == []
+    assert operational["operational_CDRtotal_sign"] == "POSITIVE"
+    assert operational["operational_CO2pos_sign"] == "POSITIVE"
+    assert operational["operational_term_provenance"][ledger.REGROWTH] == (
+        "AUTHOR_MIF_RMD_DELETEPLUS_ONLY"
+    )
+    compare = result["study_CO2pos_vs_separate_gross_fossil_industry"]
+    assert compare["status"] == "DIFFERENT_SCOPES_AUTHOR_GROSS_ONLY_COMPARISON"
+    assert compare["CO2pos_minus_gross_fossil_industry_sign"] == "NEGATIVE"
+    assert compare["comparison_is_a_expected_closure_equation"] is False
+    serialized = args[-1].read_text(encoding="utf-8")
+    assert '"15.00"' not in serialized and '"25.0"' not in serialized
+    assert '"-2.0"' not in serialized and '"21.00"' not in serialized
+    assert result["verified_i3"] == 0
+
+
+def test_ambiguous_two_plus_hierarchy_names_do_not_enter_CDR(
+        tmp_path, monkeypatch):
+    args = fixture(tmp_path, monkeypatch, hierarchy_regrowth=True)
+    with args[0].open("a", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh, delimiter=";")
+        writer.writerow([fp.ARCHIVE_MODEL, fp.AUTHOR_NO, "World",
+                         "Emissions|CO2|Land|Land-use Change|++|Regrowth",
+                         UNIT, "-2.0", ""])
+    monkeypatch.setattr(
+        ledger, "EXPECTED_ARCHIVE_MD5", md5(args[0].read_bytes()).hexdigest()
+    )
+    result = run(args)
+    reg = next(row for row in result["individual_source_terms"]
+               if row["variable"] == ledger.REGROWTH)
+    assert reg["source_comparison_status"] == (
+        "AMBIGUOUS_AFTER_AUTHOR_DELETEPLUS"
+    )
+    assert result["operational_study_accounting"]["status"] == (
+        "NOT_COMPUTABLE_MISSING_OR_UNVERIFIED_SOURCE_TERM"
+    )
+
+
+def test_deleteplus_must_be_in_original_author_code_for_alias(
+        tmp_path, monkeypatch):
+    args = fixture(tmp_path, monkeypatch, hierarchy_regrowth=True)
+    args[3].write_text(
+        args[3].read_text().replace("data <- deletePlus(data)\\n", ""),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        ledger, "AUTHOR_SUPPORT_MD5",
+        {"authors_rmd": md5(args[3].read_bytes()).hexdigest()}
+    )
+    with pytest.raises(CaseAuditError, match="lacks source deletePlus preprocessing"):
+        run(args)
+
+
+def test_duplicate_same_unit_author_only_gross_blocks_comparison(
+        tmp_path, monkeypatch):
+    args = fixture(tmp_path, monkeypatch, hierarchy_regrowth=True,
+                   author_only_gross=True)
+    with args[0].open("a", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh, delimiter=";")
+        writer.writerow([fp.ARCHIVE_MODEL, fp.AUTHOR_NO, "World",
+                         ledger.GROSS_FI, UNIT, "25.0", ""])
+    monkeypatch.setattr(
+        ledger, "EXPECTED_ARCHIVE_MD5", md5(args[0].read_bytes()).hexdigest()
+    )
+    result = run(args)
+    gross = next(row for row in result["individual_source_terms"]
+                 if row["variable"] == ledger.GROSS_FI)
+    assert gross["source_comparison_status"] == (
+        "AUTHOR_ONLY_UNIQUE_EXPECTED_UNIT_NOT_FOUND"
+    )
+    assert result["operational_study_accounting"]["status"] == (
+        "AUTHORS_EXPLICIT_FORMULA_COMPUTABLE_NOT_I3"
+    )
+    assert result["study_CO2pos_vs_separate_gross_fossil_industry"]["status"] == (
+        "NOT_COMPARABLE_UNVERIFIED_INPUT"
+    )
