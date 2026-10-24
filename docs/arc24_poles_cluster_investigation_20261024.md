@@ -110,3 +110,21 @@ The [AR6 climate-assessment workflow](https://climate-assessment.readthedocs.io/
 The first discriminating empirical check is therefore whether the four scenarios actually report those four optional CO2 variables, with compatible units, in the original data for 2030/2040/2050/2060/2070. Do not automatically add them to EIP: some may already overlap, may be missing, or may not be part of the intended global aggregate. Positive land sequestration and fossil CCS are **not** equivalent missing positive emissions.
 
 **Review gate unchanged:** no I3 grade or independently validated source carbon closure for these four or any other selected case.
+## 7. Prepared, not yet locally executed: optional-CO2 sector presence probe
+
+The AR6 climate assessment documentation suggests an explicit falsification: some CO2 reporting inputs can contain additional categories named exactly **Emissions|CO2|Other**, **Emissions|CO2|Waste**, **Emissions|CO2|Other Capture and Removal** and **Emissions|CO2|Product Use**, which its alternate workflow may reclassify into the EIP category under a nonoverlap assumption. This is a documented *workflow* convention and **is not proof** that POLES ENGAGE submitted or requires these four terms.
+
+A new local CLI, arc24-poles-optional-co2, scans the original v1.1 World CSV after verifying its SHA-256 against the already-saved private ARC24 packet. It examines only four known POLES scenarios across 2030, 2040, 2050, 2060 and 2070. It releases only coded case/year/variable **presence, positive/negative/zero, missing-year and incompatible-unit** statuses; no raw emissions quantities or per-scenario names. It never sums any optional variables, assumes that missing means zero or concludes any official reconciliation.
+
+Run on the author's Windows PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_poles_optional_co2.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-poles-optional-co2
+    $v = Get-Content 'results/ar6-canonical-gate/arc24_poles_optional_co2_public.json' -Raw | ConvertFrom-Json
+    $v.status
+    $v.status_by_optional_variable
+
+**No actual four-case result has yet been observed for this new utility.** If these terms are not reported, the directly reported optional-sector hypothesis cannot explain the discrepancy without further source-specific documentation. If present, their overlap, inclusion in EIP, and original model units still require source verification before arithmetic corrections.
+
+Reference: [AR6 WGIII climate assessment workflow](https://climate-assessment.readthedocs.io/en/latest/general.html), [associated 2022 methodology](https://doi.org/10.5194/gmd-15-9075-2022).
