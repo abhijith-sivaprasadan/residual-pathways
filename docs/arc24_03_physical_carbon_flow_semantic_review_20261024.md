@@ -238,3 +238,47 @@ $l.context_name_inventory | Where-Object { $_.original_variable_name -match 'Reg
 ```
 
 To inspect exact Rmd data-loading details also run: `100..146 | % { '{0,4}: {1}' -f $_,$lines[$_-1] }` using the original `$lines` array from prior verified Rmd inspection. The code and tests have been committed but **not yet executed against the user's source**.
+## 9. Original Regrowth name mapping resolved, CLI reporting bug identified, and operational worksheet extended (24 October 2026)
+
+**Actual local source evidence from user:** The new `arc24-cemics-field-lineage` run passed **7/7 original synthetic tests** and successfully wrote `results/ar6-canonical-gate/arc24_cemics_field_lineage_public.json`, then raised `KeyError: 'hierarchy_marker_candidate_count'` **only in CLI summary printing**. The report itself records the correct field `marker_candidate_count`. A committed CLI fix aligns the field name; an end-to-end CLI test was added to prevent that particular regression.
+
+The actual original World 2050 name/availability findings (confirmed from saved generated public JSON):
+
+| Source field | Original authors' `noCDR` MIF | AR6 `minCDR` World |
+| --- | --- | --- |
+| `Emissions|CO2|Land|Land-use Change|Regrowth` (Rmd postprocessed selector) | Not present under that exact raw spelling. **Exactly one** raw hierarchy-marked candidate: `Emissions|CO2|Land|Land-use Change|+|Regrowth` | Neither unmarked nor plus-marked spelling reported |
+| `Emissions|CO2|Gross Fossil Fuels and Industry` | **One** raw `Mt CO2/yr` source record with a present 2050 value | Not reported under that exact name |
+| `Carbon Sequestration|Land Use` | **One** raw `Mt CO2/yr` source record with a present 2050 value | **One** raw `Mt CO2/yr` source record with a present 2050 value |
+
+**Primary transformation code found, version-appropriate:** The archived Rmd line 145 executes `data <- deletePlus(data)`. The upstream [REMIND 2021 `R/deletePlus.R` implementation](https://rdrr.io/github/pik-piam/remind/src/R/deletePlus.R), documented as of September 2021, applies `gsub('(\\+|\\++)\\|','',getNames(mif))` for MAgPIE objects. This strips plus hierarchy tokens immediately before `|`, mapping precisely the observed original author MIF's `...|Land-use Change|+|Regrowth` to its unmarked Rmd selector. **The 2021 helper provides direct software support for the transform**, beyond the previous purely proposed marker removal. The original raw source series is nonetheless NOT present in AR6 World under those names.
+
+### New source-locked operational accounting computation, pending real local test
+
+The `arc24-cemics-author-accounting` module now accepts the source's uniquely identified +/++-hierarchy **regrowth** field only after confirming original Rmd `deletePlus` and the seven source-formula strings. It refuses duplicate postprocessed names, duplicate same-unit source records, unexpected units and absent year values. It does **not** reinterpret `Carbon Sequestration|Land Use` as regrowth. It separately permits the directly selected, uniquely reported **authors'-archive-only** Gross Fossil Fuels and Industry value for a different-scope comparison, marking both inputs as author-only and **NOT** AR6 matched.
+
+All other CDR operands (`Emissions|CO2`, EW, biomass CCS, DAC) still require exact reported-decimal equality between the locked original author MIF and AR6 World source. The calculated formula remains **exactly**:
+
+`CDRtotal = (-Regrowth_source_emissions) + EW + Biomass_CCS + DAC`; `CO2pos = Net_CO2 + CDRtotal`.
+
+The public file reports **only** source-name/unit/status provenance and signs/broad difference bands; all numeric original source/regrowth/gross values stay private. An exact algebraic CO2pos identity is **not independent physical carbon mass-balance evidence**. Source model/version documentation, CDR physical netness/durability/land additionality and independent I3 review remain open (verified I3=0).
+
+New synthetic tests include author-only plus-marker regrowth, author-only gross, multiple postprocessed-name collisions, duplicate original gross-unit rows, and missing source preprocessing. Tests and the real run of this new patch **are not yet confirmed by the user**.
+
+### Next run
+
+```powershell
+cd 'E:\New folder (2)\MissionJob\residual-pathways'
+git pull --ff-only
+& .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_field_lineage.py tests/test_arc24_cemics_author_accounting.py
+if ($LASTEXITCODE -ne 0) { throw 'Source accounting regression tests failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-field-lineage
+if ($LASTEXITCODE -ne 0) { throw 'Source name-lineage CLI failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-author-accounting
+if ($LASTEXITCODE -ne 0) { throw 'Original authors accounting computation failed' }
+$a = Get-Content 'results/ar6-canonical-gate/arc24_cemics_author_accounting_public.json' -Raw | ConvertFrom-Json
+$a.individual_source_terms | Select-Object variable,original_author_raw_variable,source_comparison_status,source_value_sign,provenance | Format-Table -Wrap -AutoSize
+$a.operational_study_accounting | Format-List
+$a.study_CO2pos_vs_separate_gross_fossil_industry | Format-List
+```
+
+**Interpretation criterion:** a successful new run may establish the authors' operational study CDR basket numerically at 2050 while still **not** establishing an exhaustive mutually exclusive physical total-emissions/CDR partition. No I3 promotion is permitted from the arithmetic definition alone.
