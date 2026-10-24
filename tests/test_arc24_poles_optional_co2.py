@@ -67,6 +67,10 @@ def test_distinguishes_zero_missing_negative_and_unit_mismatch(tmp_path):
     assert "UNPUBLISHED_SCENARIO" not in out
     assert '"1"' not in out
     assert "POLES ENGAGE" not in out
+    assert all("model" not in item and "scenario" not in item
+               for item in result["observations"])
+    assert all("reported_value_raw" not in item and "raw" not in item
+               for item in result["observations"])
 
 
 def test_source_sha_change_blocks_false_reuse(tmp_path):
