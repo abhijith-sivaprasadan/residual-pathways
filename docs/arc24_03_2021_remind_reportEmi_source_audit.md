@@ -1,0 +1,37 @@
+# ARC24-03 — contemporaneous 2021 REMIND reporting code audit
+
+**Audit date:** 24 October 2026. **Purpose:** identify source definitions worth testing before building a physically independent gross-CO2/CDR ledger. **Do not promote I3 from this code audit.**
+
+## Provenance: dated near-contemporary primary software (not yet run-specific)
+
+The archived PIK source [`pik-piam/remind`](https://github.com/pik-piam/remind) identifies itself in [`DESCRIPTION`](https://github.com/pik-piam/remind/blob/master/DESCRIPTION) as R package `remind` **version `36.185.2`, dated `2021-09-03`**, by Giannousakis and Pehl. Its code [`R/reportEmi.R`](https://github.com/pik-piam/remind/blob/master/R/reportEmi.R) has original Git blob SHA **`2ab47b638acca9412ef1432feff6873a5948588a`** (read through GitHub on audit date). The package's reportEmi authorship line names **Jessica Strefler, Lavinia Baumstark and Michaja Pehl**. This is strongly relevant **time-proximate source reporting code** but *not proven to be the exact original configuration/commit used for the Strefler 2021 CEMICS runs*, nor the subsequent IAMC name-mapping step from `Emi` to `Emissions`.
+
+Related primary model paper: [Baumstark et al. 2021, REMIND2.1](https://doi.org/10.5194/gmd-14-6571-2021) describes the integration of land-sector emissions via MAgPIE, energy-sector output and technology CDR. Date of reporting package is **September 2021**, which can be later than the paper's model runs, so *only treat it as near-contemporary* until the actual run software manifest is recovered.
+
+## Source-code expressions and boundaries — exact source locations
+
+| 2021 reporting file location | Expression as identifiable from code | Supported conclusion | NOT established |
+| --- | --- | --- | --- |
+| `R/reportEmi.R` **line 441** | `Emi|CO2 = (vm_emiengregi[co2] + vm_sumeminegregi[co2] + vm_emicdrregi[co2]) * GtC_2_MtCO2` | The source constructs an aggregate **net-like** `Emi|CO2` from separate energy-related, nonenergy aggregate, and CDR accounting symbols | Exact meanings of all contributing variables in the paper's CEMICS run; equality with AR6 `Emissions|CO2` after formatting and filtering |
+| **line 489** | `Emi|CO2|Fossil Fuels and Industry = (vm_emiengregi[co2] + vm_eminegregi[co2cement_process]) * GtC_2_MtCO2` | Source construction for a fossil/industry category includes energy-region CO2 and cement-process CO2 | Whether it includes all positive anthropogenic emissions or exactly reproduces selected CEMICS author export |
+| **lines 513–515** | `Emi|CO2|Gross Fossil Fuels and Industry = (vm_emiengregi[co2] + vm_eminegregi[co2cement_process] + sum(v_emi[pebio,cco2])) * GtC_2_MtCO2`; separate `Emi|CO2|Land-Use Change = vm_eminegregi[co2luc] * GtC_2_MtCO2` | The source gross fossil/industry construction is **not** its entire all-sector gross accounting. Land-use-change is a separately named signed reporting stream. Biomass capture enters the gross FFI formula in **source-specific signed convention** | Cannot assume the biomass-capture summand is positive or interpret the observed `CO2pos > gross_FFI` gap as a known gross-land contribution without checking symbol signs/configuration |
+| **lines 1046–1055** | Copy `vm_eminegregi` to `CDRco2luc`, set its **positive** values to zero, select `co2luc` and export as `Emi|CO2|CDR|Land-Use Change` | Source makes a signed negative-only land-use-change removal category, distinct from gross positive emissions | Not proof that this CDR land-use-change term equals the Strefler Rmd's specifically named `Regrowth` term, nor AR6 `Carbon Sequestration|Land Use|Afforestation` |
+| **lines 1058–1103** | Author code distinguishes captured bioenergy carbon, storage-fraction weighted BECCS, DAC and storage-fraction weighted DACCS, EW, and signed LUC removal in its operational `Emi|CO2|CDR` export | The distinction between physical capture and storage is explicitly encoded in some reported categories | No proof every Strefler 2021 `Carbon Sequestration|CCS|Biomass` or DAC variable measures net durable storage versus gross capture in the exact original run |
+
+**Additional primary evidence:** [2021 source `pik-piam/remind` `R/reportCrossVariables.R`](https://github.com/pik-piam/remind/blob/master/R/reportCrossVariables.R) (Git blob SHA `5bb41069f8eb2788d0e8a4f6c022a2eff4007d02`) includes end-use gross/industry reporting and industry biomass capture distinctions at lines 417–419. These are auxiliary definitions, not a license to sum published hierarchies.
+
+## Grounding against actual original CEMICS observations
+
+The user's actual World-source diagnostic (13/13 local synthetic tests, original author MD5-locked MIF) showed that the **Strefler Rmd regrowth removal** is >10% different from each reported Land Use and Land Use|Afforestation series for all nine tested years; the **two Land Use series are numerically equal** 9/9. The actual Rmd source uses `CDRaff = -Emissions|CO2|Land|Land-use Change|Regrowth`, following `deletePlus(data)`. The current code audit does **not** reconcile the original Regrowth subfield with the 2021 source `co2luc` aggregation. We must not replace either one with a similarly named value. Original `CO2pos = Net_CO2 + CDRtotal` differs from separately reported Gross FFI by ≥10% (coarse relative band); equality is **not** a documented model identity.
+
+### Important unresolved source correspondence
+
+1. Determine which original *dated* magpie4/remind preprocessing/reporting function creates raw `Emissions|CO2|Land|Land-use Change|+|Regrowth`, and whether it is passive vs policy-driven, net vs gross, atmospheric uptake and subject to permanence assumptions.
+2. Determine what produces `Carbon Sequestration|Land Use` and `Carbon Sequestration|Land Use|Afforestation` (the 9/9 equal exported World series), including whether they contain distinct forestry classes or are simply one reported aggregate copied into both names.
+3. Find `Emi`→`Emissions` postprocessing/export mapping and **the source release/commit manifest** used for the actual Strefler CEMICS v2 MIF. The `2021-09-03` package could be **later** than the original experiment.
+4. Check `vm_sumeminegregi`, `vm_emicdrregi`, `vm_eminegregi[co2luc]`, `v_emi[pebio,cco2]` and `p_share_carbonCapture_stor` in the original model version. Until then even a precise formula excerpt does not prove the physical accounting sign and coverage in the published CEMICS outputs.
+5. Ask the original authors/model developers to confirm the meaning and physical netness of these fields if run-specific files are unavailable. [Open issue #6](https://github.com/abhijith-sivaprasadan/residual-pathways/issues/6) tracks acceptance criteria.
+
+## Decision
+
+**PASS:** Near-contemporary 2021 source-code formulas located and exact archived source files/blob hashes recorded. **PENDING:** run-specific reporting commit, IAMC mapping, 2021 original MAgPIE sector accounting, lifecycle/durable removal accounting and independent review. This improves source-semantic provenance, but **no physical gross-emissions/CDR ledger, no all-sector gross decomposition, no I3 promotion**. `verified_i3=0` and RP-18 `NEEDS_EXTERNAL_REVIEW`.
