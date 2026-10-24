@@ -5,7 +5,7 @@ import os
 import sys
 from pathlib import Path
 from types import SimpleNamespace
-from weakref import proxy
+from weakref import ProxyType, proxy
 
 import pytest
 
@@ -84,7 +84,7 @@ class FakeScenario:
     def __init__(self, platform, model, scenario, version=None):
         assert model == MODEL
         # Mirror ixmp.TimeSeries.__init__: this is a weakref proxy, not mp.
-        self.platform = proxy(platform)
+        self.platform = platform if isinstance(platform, ProxyType) else proxy(platform)
         self.name = scenario
         self.version = version or 1
         self.solved = scenario in ("baseline", "emission_bound")
