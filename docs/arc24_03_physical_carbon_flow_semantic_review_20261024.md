@@ -116,3 +116,39 @@ foreach ($range in @(@(140,215), @(335,355), @(545,561))) {
 ```
 
 This reads publicly released author source code from the user's unchanged local source; it does not print AR6 World emissions observations. Next interpretation target: decide if source `CDRtotal` is a sum of explicitly disjoint source streams and whether the author's `CO2gross` measures have separate sector scopes. **Still no I3: 0 verified physically exhaustive atmospheric removal partitions.**
+## 6. Original author source formulas REVEALED by 2026-10-24 user's exact line-level Rmd extract
+
+**Original source evidence:** The author displayed lines **140–215** of the byte-preserved, Zenodo-MD5-verified `CDRoptions.Rmd` using CP1252 in local PowerShell. The full calculation block (source lines 150–156) is:
+
+```r
+CO2tot <- data[,,"Emissions|CO2 (Mt CO2/yr)"]
+CDRaff <- -data[,,"Emissions|CO2|Land|Land-use Change|Regrowth (Mt CO2/yr)"]
+CDRew <- data[,,"Carbon Sequestration|Enhanced Weathering (Mt CO2/yr)"]
+CDRbeccs <- data[,,"Carbon Sequestration|CCS|Biomass (Mt CO2/yr)"]
+CDRdaccs <- data[,,"Carbon Sequestration|Direct Air Capture (Mt CO2/yr)"]
+CDRtotal <- CDRaff + CDRew + CDRbeccs + CDRdaccs
+CO2pos <- CO2tot + CDRtotal
+```
+
+**This is now an actual author-defined scenario reporting identity, not an inferred additive correction.** For World and 2050 the study's *operational* source-defined removal accounting is `CDRtotal = -Regrowth_emissions + Enhanced_Weathering_sequestration + Biomass_CCS + Direct_Air_Capture`; its **derived** residual positive-side measure is `CO2pos = net_Emissions|CO2 + CDRtotal`. It does NOT include fossil CCS as a CDR contribution. Whether the source model's reported series are physically exhaustive/nonoverlapping anthropogenic atmospheric removal pathways, net of lifecycle/regrowth baselines and storage losses, remains unverified. In particular, **CO2pos is NOT the separately reported original MIF variable `Emissions|CO2|Gross Fossil Fuels and Industry`, and it is NOT automatically the complete economy-wide gross emission stream.**
+
+Other source code that materially constrains interpretation:
+
+- **Line 159:** `CDRcosts <- CO2price*CDRtotal*(-0.001)` — source accounting cost sign convention, *not* a physical mass balance. The unit factor converts study monetary scaling.
+- **Line 160:** `CO2rev <- CO2price*CO2pos*0.001` — author's `CO2pos` is used as the positive-emissions-side quantity for price/revenue calculations.
+- **Lines 162–168:** author time-step weights integrate `CDRtotal` into cumulative contributions; these are not independent physical removal validations.
+- **Lines 193–196:** `CO2gross2020`/`CO2gross2050` directly select `Emissions|CO2|Gross Fossil Fuels and Industry`; `CO2redrate = 100*(1-exp(log(gross2050/gross2020)/30))`. This direct sectoral gross input measures **gross fossil and industry** separately from `CO2pos` and should not be silently substituted for it.
+- **Lines 198–202:** `CO2netneg <- CO2tot; CO2netneg[CO2netneg>0] <- 0; CO2netneg <- CO2netneg*(-0.001)` and weighted cumulative net-negative emissions. This operational metric is the negative portion of net total, expressed in Gt rather than Mt; it **does not equal total CDR deployment**, which may offset positive remaining emissions.
+- **Line 210:** the author's Fig 1 CDR deployment series is `CDRtotal * 0.001`, i.e. Mt CO2/yr to Gt CO2/yr.
+
+### What was actually verified by source matching
+
+Original author's `noCDR`↔AR6 `minCDR` fingerprint showed **9/9 exact recorded-decimal World source matches each** for total CO2, net AFOLU, combined energy/industry, `Carbon Sequestration|Land Use`, biomass CCS, fossil CCS and direct-air capture. **Not yet specifically demonstrated within this report** are source availability/World-2050 matches for the Rmd's distinct `Emissions|CO2|Land|Land-use Change|Regrowth`, `Carbon Sequestration|Enhanced Weathering`, and `Emissions|CO2|Gross Fossil Fuels and Industry`. Do not mistake these for absent or zero; inspect them directly with source hashes and units.
+
+### Scientific accounting interpretation
+
+An exact algebraic source identity of the form `net CO2 = CO2pos - CDRtotal` is **true by the author's definition** of CO2pos. It is *not independently verified physical closure* of gross emissions versus truly atmospheric removals. To certify that, we need (i) source-defined complete partition of positive sector flows, (ii) non-overlap and anthropogenic additionality for the four removal terms, (iii) durability/storage and lifecycle netting, (iv) consistency with AFOLU's signed-net boundary and biomass-origin accounting, (v) model-specific source precision, and (vi) independent expert review. The source is now well beyond provenance inference, but **I3=0** remains justified.
+
+### Next decisive source-locked test
+
+Directly inspect the original World source with a local checksum-verified code path for the eight named variables: net CO2, signed regrowth land flux, enhanced weathering sequestration, biomass CCS, DAC, gross fossil+industry, signed net AFOLU, and separate `Carbon Sequestration|Land Use`. Report public **presence/unit agreement, original-decimal match status, signed flags and a coarse magnitude band** for the *difference* between author's `CO2pos` and separate gross fossil+industry only as a comparison of **unlike system boundaries**, not an expected zero-balance diagnostic. Keep all source numerical observations and computed totals private. Report absent source variables explicitly, never invent zero. Finish reviewing original author model methods before any I3 classification.
