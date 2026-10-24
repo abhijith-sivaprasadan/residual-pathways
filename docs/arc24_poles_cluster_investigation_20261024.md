@@ -87,3 +87,26 @@ Windows PowerShell:
     $t.observations | Sort-Object case_id,year | Select-Object case_id,category,year,arithmetic_status,signed_residual_band | Format-Table -AutoSize
 
 Expected public output: results/ar6-canonical-gate/arc24_poles_timeline_public.json. **The tool has been committed but has not yet been executed on the user's local source.** If the POLES discrepancy persists across the years, that supports a model-family convention *hypothesis*, not proof. If it appears only at 2050, the 2050-specific scenario/model-reporting hypothesis deserves attention instead.
+
+## 6. Source-verified POLES timelines (author's local execution, 24 October 2026)
+
+The user ran arc24-poles-timeline against the local World v1.1 and private ARC24 packets after five out of five synthetic tests passed. The source-lock, 2050 cross-check and all 20 case-year observations succeeded. **All 20 of 20 observed year/case residuals were nonzero at the reported decimal resolution.**
+
+| Case / climate class | 2030 | 2040 | 2050 | 2060 | 2070 |
+| --- | --- | --- | --- | --- | --- |
+| ARC24-06 / C2 | +1–10% | +1–10% | −1–10% | −≥10% | −≥10% |
+| ARC24-09 / C3 | +1–10% | +1–10% | −1–10% | −≥10% | −≥10% |
+| ARC24-12 / C4 | +1–10% | +1–10% | +1–10% | +1–10% | −≥10% |
+| ARC24-21 / C7 | +1–10% | +1–10% | +1–10% | +1–10% | +1–10% |
+
+Signs follow source total minus EIP minus net AFOLU. Percent is absolute residual divided by maximum of 1, absolute total, absolute EIP, and absolute AFOLU, with all terms in Mt CO2/year. A band of 1–10% includes 1% and excludes 10%. Five observations are ≥10%. Three scenarios change sign within the observed grid; none of the 20 residuals is exactly zero. The exact cross-over year is not established. No confidential numerical emissions or absolute residuals are published.
+
+These findings falsify a 2050-specific discrepancy for the four selected scenarios. They also disfavor a fixed-sign omitted source explanation. They **do not** identify a physical accounting error or a particular missing emission component; model export conventions and time-dependent land/process representations remain unverified.
+
+### Newly located AR6 WGIII climate assessment processing control
+
+The [AR6 climate-assessment workflow](https://climate-assessment.readthedocs.io/en/latest/general.html), linked to Kikstra et al. 2022 ([GMD paper](https://doi.org/10.5194/gmd-15-9075-2022)), specifically describes optional reported CO2 sectors Other, Waste, Other Capture and Removal, and Product Use. Under an alternate input route its reclassification step folds these additional variables into EIP, under stated nonoverlap assumptions. The software also documents a hierarchy check. This is **processing methodology**, not a proven equation for the original POLES ENGAGE outputs in the World CSV, and later online documentation may differ from the exact AR6 2022 processing version.
+
+The first discriminating empirical check is therefore whether the four scenarios actually report those four optional CO2 variables, with compatible units, in the original data for 2030/2040/2050/2060/2070. Do not automatically add them to EIP: some may already overlap, may be missing, or may not be part of the intended global aggregate. Positive land sequestration and fossil CCS are **not** equivalent missing positive emissions.
+
+**Review gate unchanged:** no I3 grade or independently validated source carbon closure for these four or any other selected case.
