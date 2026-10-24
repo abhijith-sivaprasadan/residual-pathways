@@ -140,3 +140,43 @@ The command is **committed but has not been executed against the author's origin
 The user-observed initial candidate-variable rows each read `ARCHIVE_VARIABLE_NOT_REPORTED`, but **this was a consequence of an absent exact scenario key**, not proof that the authors' entire MIF did not report total CO2, CCS, DAC or AFOLU variables in other scenarios. Crosswalk code has been amended: a missing scenario now yields `CASE_SCENARIO_ABSENT_FIELDS_NOT_ASSESSED`; a matching scenario with unverified model yields `EXACT_MODEL_UNVERIFIED_FIELDS_NOT_ASSESSED`; and absent World region yields `WORLD_REGION_ABSENT_FIELDS_NOT_ASSESSED`. The existing `ARCHIVE_VARIABLE_NOT_REPORTED` status remains valid only after an exact Model/Scenario/World source record was found and a particular variable is missing.
 
 Author-source model/scenario name inventory implementation added with synthetic tests and separate checksums for both MIF and R Markdown source. **These newest code changes are not yet confirmed by a real local rerun.** The actual completed earlier run still definitively establishes the zero exact-scenario-labelled rows.
+
+## 7. Original authors' 20-scenario MIF inventory; no minCDR direct label (local execution 24 October 2026)
+
+Author-ran source-name inventory **24/24 synthetic tests passed** and processed the checksum-verified original MIF. Actual original author file contains **147,534 rows, one author model label `REMIND-MAgPIE`, 20 distinct scenarios and 20 unique model×scenario pairs**. The registered AR6 ARC24-03 uses the *versioned* model label `REMIND-MAgPIE 2.1-4.2`, scenario `CEMICS_SSP1-1p5C-minCDR`. There are **no exact or punctuation-normalized matches** for minCDR among the 20 author scenario labels. The observed SSP1/1.5°C author scenarios and rows:
+
+| Author source scenario | Number of original author rows |
+| --- | ---: |
+| `CEMICS_SSP1-1p5C-noCDR` | 7,391 |
+| `CEMICS_SSP1-1p5C-fullCDR` | 7,391 |
+| `CEMICS_SSP1-1p5C-AR-only` | 7,391 |
+| `CEMICS_SSP1-1p5C-EW-only` | 7,391 |
+| `CEMICS_SSP1-1p5C-DAC-only` | 7,391 |
+| `CEMICS_SSP1-1p5C-BECCS-only` | 7,391 |
+
+**Do not infer that `noCDR` and `minCDR` mean the same scenario** from their similar names (the string similarity of the author's noCDR name to minCDR is 0.923; it has *no physical or statistical meaning*). The original Strefler paper explicitly refers to a 'min CDR' experiment (see 2021 Environmental Research Letters paper), while the author MIF calls its minimum-looking branch noCDR. A later AR6 pathway paper refers to a scenario minCDR with the versioned 2.1-4.2 label; this is a plausible naming-transformation question, not yet a verified equivalence.
+
+References include the [Strefler paper](https://doi.org/10.1088/1748-9326/ac0a11), [author's Zenodo v2](https://zenodo.org/records/5103024), [Climate Analytics selected AR6 scenarios](https://1p5ndc-pathways.climateanalytics.org/methodology), and [Ganti et al. (2025) illustrative minCDR scenario choices](https://doi.org/10.1080/14693062.2025.2481138). An IPCC WGIII Second Order Draft annex also used a `limCDR` label in early CEMICS scenario lists, but that draft must not be treated as the final mapping or final approved emissions protocol.
+
+### Controlled multi-year, multi-variable source fingerprint — now implemented, **pending local execution**
+
+New CLI `arc24-cemics-alias-fingerprint` compares **four explicitly registered pairings** across shared original World source variables and shared 2020–2100 year columns:
+
+1. **Full same-label positive control**: author's `CEMICS_SSP1-1p5C-fullCDR` versus AR6 `CEMICS_SSP1-1p5C-fullCDR`. Although author Model lacks the 2.1-4.2 version suffix, this is the closest legitimate candidate for validating whether data snapshots match across these exact scenario labels.
+2. **Source alias hypothesis**: author's `CEMICS_SSP1-1p5C-noCDR` versus AR6 `CEMICS_SSP1-1p5C-minCDR` (ARC24-03).
+3. **Crossed negative/control comparison**: author's `fullCDR` versus AR6 `minCDR`.
+4. **Crossed negative/control comparison**: author's `noCDR` versus AR6 `fullCDR`.
+
+The script verifies original author MIF MD5, original World v1.1 source SHA-256, saved ARC24-03 2050 values, original units and author Rmd MD5. It compares exact source Decimal values by *matching original variable names, years and source units*, and reports status counts for each pairing and pre-registered CO2/CCS/land fields **without emitting original emission observations**. It separately indexes Rmd mentions of `noCDR`, `minCDR`, `min CDR`, limited CDR and SSP1. Crucially, even 100% numeric equality cannot by itself establish an **author-approved rename** or model-version identity, and automatic I3 promotion is prohibited.
+
+Windows PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_alias_fingerprint.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-alias-fingerprint
+    $f = Get-Content 'results/ar6-canonical-gate/arc24_cemics_alias_fingerprint_public.json' -Raw | ConvertFrom-Json
+    $f.comparisons | Select-Object comparison,shared_variable_names,year_variable_compared,exact_decimal_matches,exact_decimal_match_fraction | Format-Table -AutoSize
+    $f.comparisons | ForEach-Object { $_.comparison; $_.status_counts | Format-List }
+    $f.author_Rmd_source_text_evidence.keyword_line_counts | Format-List
+
+**Go/no-go:** If the full-label positive control matches across many independent original variable/year cells and the noCDR-to-minCDR fingerprint also matches substantially better than the two crossed negative controls, record this as *strong evidence for numerical series correspondence*, but **not** official model alias confirmation or carbon-flow disjointness. If fingerprints diverge materially, close this author's v2 archive as an unsuitable numerical provenance source for ARC24-03. Preserve the paper solely for its model-family physical methods and seek the actual AR6 original scenario submission/documentation elsewhere. All grades remain NOT_DETERMINED, I3=0.
