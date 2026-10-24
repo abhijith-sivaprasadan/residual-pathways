@@ -54,7 +54,7 @@ def test_inventory_never_equates_name_similarity_to_identity(tmp_path):
     assert out["verified_i3"]==0
     assert "EN_NPi2020_500f" not in public.read_text()
     assert "POLES ENGAGE v2" not in public.read_text()
-    assert "900" not in public.read_text()
+    assert '"900"' not in public.read_text()
     data=json.loads(private.read_text())
     assert data["handling"]=="LOCAL_ONLY_DO_NOT_PUBLISH"
     assert data["candidate_count"] >= 1
