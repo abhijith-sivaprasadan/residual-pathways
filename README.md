@@ -149,3 +149,18 @@ A new source-locked read-only CLI, **arc24-poles-optional-co2**, checks whether 
 
     python -m pytest -q tests/test_arc24_poles_optional_co2.py
     python -m residual_pathways arc24-poles-optional-co2
+
+#### POLES reported CO2 Other: source-backed candidate accounting explanation
+
+The author's original World v1.1 source check reports **Emissions|CO2|Other** in **all 20** four-POLES-scenario/year observations, with **13 positive and 7 negative** entries. Waste, Other Capture and Removal, and Product Use are not reported in any of those 20. The aggregate total-minus-EIP-minus-net-AFOLU residuals also have **13 positive and 7 negative signs**. This coincidence motivated a stricter **per-case/year numeric check**, not a claim of reconciliation.
+
+The [primary ENGAGE Netzero Analysis source notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html) *explicitly derives* the Other CO2 category as total CO2 minus AFOLU, Energy Demand, Energy Supply and Industrial Processes for the ENGAGE v2.0 analysis dataset. That is **strong evidence of a residual-sector convention in a related ENGAGE analysis**, but the exact AR6 World POLES export and whether EIP exactly sums those detailed sectors remain to be proven. The AR6 climate-assessment workflow separately reclassifies certain optional categories to EIP in an alternate pathway. Do not conflate them.
+
+The author's earlier optional-sector synthetic test failed because an over-broad string assertion found the model label in a generic prose warning; **not because original scenario identifiers or source values were emitted**. The generic text has been corrected and privacy checks strengthened, **pending local retest**.
+
+To directly test the proposed original reported-decimal identity without publishing original values:
+
+    python -m pytest -q tests/test_arc24_poles_optional_co2.py tests/test_arc24_poles_other_identity.py
+    python -m residual_pathways arc24-poles-other-identity
+
+Details and scientific limits: [POLES longitudinal accounting investigation](docs/arc24_poles_cluster_investigation_20261024.md). All I3 determinations still pending.
