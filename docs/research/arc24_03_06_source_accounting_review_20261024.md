@@ -192,3 +192,41 @@ $report | Select-Object source_case_compared_cells,exact_reported_decimal_matche
 ~~~
 
 If all three differences fall in small relative bands and preserve signs, the appropriate description is **minor nonidentical printed values**; without the original model export quantization the causal label `rounding` cannot be granted. If the differences concern net land, fossil CCS, CO₂ Other or gross/removal fields, investigate original branch definitions and source-specific postprocessing **before** using them in physical accounting. Scientific I0–I3 review remains open, `verified_i3=0`.
+
+## H. Original three-cell source discrepancy audit — author-run 24 October 2026
+
+**Executed, not planned.** The project author ran `python -m pytest -q tests/test_arc24_06_difference_review.py` (**4 tests passed**) and then `python -m residual_pathways.arc24_06_difference_review` on the previously registered World v1.1 and ENGAGE World v2.0 local files. The source SHA, unique numerical leader and original private 76-candidate fingerprint gates all passed. No public source values were released.
+
+| Preregistered exact Variable / Unit / World / Year checks | Empirical result |
+| --- | ---: |
+| Total comparable source observations | 55 |
+| Exactly identical reported source decimals | **52** |
+| Exactly identical **nonzero** source decimals | **51** |
+| Nonidentical source observations | **3** |
+| Nonidentical observations in `NONZERO_REPORTED_DECIMAL__BELOW_0_001_PERCENT` | **3 / 3** |
+| Nonidentical source observations preserving sign | **3 / 3** |
+| Transitions involving reported zero | **0** |
+| Positive–negative sign reversals | **0** |
+| Original source values, private source labels disclosed publicly | **0** |
+| Independently verified model alias / scientifically reviewed I3 | **No / 0** |
+
+**Correct relative-scale definition:** the [original probe](../../src/residual_pathways/arc24_engage_v2_probe.py) defines the magnitude score as `100 × abs(AR6 − ENGAGE) / max(1, abs(AR6), abs(ENGAGE))`. Thus each difference is strictly **below 0.001% of that scale**, not necessarily below 0.001% of the AR6 value itself if a source magnitude is below 1. The three differences are **real at reported decimal precision** and share sign; they should not be called rounding errors without independent documentation of decimal quantization, serializer options and any intermediate harmonization or infilling.
+
+The private positions are already recorded at `data/ar6-private/arc24_06_differences_private.json`. To inspect **only the variable names and years** privately on the researcher's computer, without emitting numeric source values or copying the source to Git:
+
+~~~powershell
+$localReview = Get-Content "data/ar6-private/arc24_06_differences_private.json" -Raw | ConvertFrom-Json
+$localReview.differences_by_variable_unit_year_no_values |
+    Select-Object variable,year,unit,original_reported_decimal_status,ar6_v1_1_sign,engage_v2_sign |
+    Format-Table -AutoSize
+~~~
+
+Review where the three positions lie, then seek the dated **source producer's export specification**: dataset revision, POLES original model name/version, scenario-run ID, variable postprocessing/infilling, units and format precision. The [ENGAGE source preparation notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/0_data_preparation.html) confirms original ENGAGE v2.0 World data are imported from `ENGAGE_scenario_data_world_r2.0.csv`, while the [ENGAGE categorization notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html) explicitly constructs `Emissions|CO2|Other` by subtraction **in the later analytical pipeline**. Neither notebook independently proves which transformation, if any, generated the exact AR6 v1.1 World series.
+
+An independently maintained [POLES model reference](https://www.iamcdocumentation.eu/index.php/POLES) identifies **POLES ENGAGE** as a model name/version while noting other versions exist. The [EC JRC POLES model inventory](https://web.jrc.ec.europa.eu/policy-model-inventory/explore/models/model-poles/) confirms separately maintained research implementations. Neither document verifies the specific source `Model` label equivalence or explains the three slightly different reported decimals.
+
+### Appropriate manuscript claim
+
+> In a controlled original-decimal comparison of the AR6 v1.1 case ARC24-06 against 76 preselected ENGAGE v2.0 World candidates, a **unique same-scenario, POLES-labelled candidate** matched 52 of 55 exactly aligned variable–year observations (including 51 nonzero values). The runner-up matched 2 of 55. All three unequal observations differed by less than 0.001% of the study's registered comparison scale and retained sign. These results establish unusually strong **numerical correspondence** under the tested variables and years; they do not independently authenticate a model-version alias, explain the export differences, or identify exhaustive disjoint physical gross-emissions and atmospheric-removal streams.
+
+**Next scientific decision gate:** verify the precise source variable names/year positions from the private report and investigate model developer/original export metadata. Do **not** convert this high numerical match rate into confidence intervals, a physical carbon-removal estimate or `I3=1`. The independent gross/CDR and source provenance reviews remain pending.
