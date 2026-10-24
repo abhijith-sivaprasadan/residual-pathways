@@ -84,6 +84,10 @@ def main():
     cx.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
     cx.add_argument("--readme", default="data/ar6-private/cemics-v2/readme_zenodo.txt")
     cx.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_source_crosswalk_public.json")
+    ni = sub.add_parser("arc24-cemics-names", help="Read authors' checksum-locked MIF Model/Scenario name inventory without implying exact ARC24-03 provenance")
+    ni.add_argument("--mif", default="data/ar6-private/cemics-v2/CDRoptionsAR6_complete.mif")
+    ni.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
+    ni.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_name_inventory_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -157,6 +161,16 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-cemics-names":
+        from .arc24_cemics_name_inventory import inspect_source_names
+        result = inspect_source_names(args.mif, args.output, rmd_path=args.rmd)
+        print("CEMICS source identity inventory:", result["status"])
+        print("Archive Model labels:", result["distinct_models"])
+        print("Archive Scenario labels:", result["distinct_scenarios"])
+        print("Normalized scenario matches:", len(result["normalized_scenario_matches"]))
+        print("CEMICS/SSP1/CDR candidate Model+Scenario pairs:",
+              result["cemics_ssp1_cdr_candidate_pair_count"])
+        print("No scenario alias has been verified; I3:", result["verified_i3"])
     elif args.command == "arc24-cemics-crosswalk":
         from .arc24_cemics_crosswalk import crosswalk
         result = crosswalk(args.mif, args.world, args.packet, args.output,
