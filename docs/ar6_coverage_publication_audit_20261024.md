@@ -1,6 +1,6 @@
 # AR6 coverage-only candidate — publication readiness audit
 
-**Review date:** 24 October 2026. **Decision:** `HOLD_PUBLIC_ARTIFACT`. This records terminal/browser results reported by the local author, public license sources, and repository contract checks; it is **not** an independent inspection of the author's private source files or a publisher attestation.
+**Review date:** 24 October 2026. **Historical pre-publication decision:** `HOLD_PUBLIC_ARTIFACT`. **Superseding publication outcome (same day):** `PUBLISHED_COVERAGE_ONLY_CANDIDATE`. The hold described below is the earlier review state, not the current publication status. This records terminal/browser results reported by the local author, public license sources, and repository contract checks; it is **not** an independent inspection of the author's private source files or a publisher attestation.
 
 ## Source- and contract-bounded findings
 
@@ -90,7 +90,15 @@ These are **aggregate reporting-presence counts**; zero/absence of a named sourc
 
 **Assessment:** small complementary counts alone are **not a source-license prohibition** and do not require automatic suppression in an aggregate research visualization. Suppressing them would require a **new** reviewed dataset and SHA-256, and could distort denominators and the four-year data interpretation. This is a documented, **conditional author-level recommendation** to retain aggregate cells with their reporting-not-physical caveat. **Human permission/disclosure approval remains explicitly outstanding**; no empirical artifact has been committed or tagged by this repository change.
 
-## Publication go/no-go
+## Public release evidence — 24 October 2026 (supersedes historical hold)
+
+The author explicitly approved publication of the two aggregate-only files after the 24-flag small-cell review. Their submitted PowerShell transcript reports that the stage and commit bytes matched SHA-256 `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`, the only committed files were `atlas/data/coverage_release.json` and `atlas/data/coverage_release.json.sha256`, and the local commit `e64156b7429441836d1fa3b1879d40d9aa814bb0` plus annotated tag `ar6-coverage-only-v0.1.0-candidate` were pushed successfully. The user's independent HTTP download from the Vercel production hostname matched the exact digest; the JSON retained 1,202 source-matched scenarios, 352 aggregates, `REVIEW_PENDING`, `NOT_ESTABLISHED`, and zero verified I3 cases. The local independent PathwaysHub receiver had previously accepted the exact artifact, and rejected an incorrect pinned hash.
+
+Additional connected-service confirmation: GitHub exposes the [annotated tag](https://github.com/abhijith-sivaprasadan/residual-pathways/tree/ar6-coverage-only-v0.1.0-candidate), pointing to the exact commit; its tag message records the digest and limitations. Vercel lists a production deployment at **READY** for that same commit. The committed JSON contains 88 aggregate records per year, all 352 total; it does not contain direct `Model` or `Scenario` identity fields. GitHub's Atlas artifact CI passed. A separate GitHub Releases entry or cryptographically verified signature **has not been created** and this tag is not guaranteed immutable without tag protections.
+
+**Publication status:** `PUBLISHED_COVERAGE_ONLY_CANDIDATE`; **scientific status:** `REVIEW_PENDING`; **independently verified I3:** 0; **source origin:** independently authenticated publisher receipt remains open. This records an author-approved publication of derived *reporting-presence aggregates*, not an independent scientific carbon-accounting or rights certification. Subsequent README/documentation commits cannot alter the bytes pinned to this historic candidate tag, provided the tag is not rewritten.
+
+## Historical publication go/no-go (pre-release)
 
 **HOLD_PUBLIC_ARTIFACT** until these remain complete: (1) exact aggregate artifact and small-cell/licensing review; (2) immutable version/tag pinning exact artifact bytes; (3) post-deploy public SHA and browser check. **Already author-reported complete:** AR6 UI attribution and modification notice; local PathwaysHub empirical acceptance and mismatched-pin rejection. Publisher authentication and independent I3 scientific review may remain explicitly unresolved if the published deliverable is unambiguously coverage-only. Publisher authentication and independent I3 scientific review can remain openly incomplete **only when declared explicitly**, without presenting coverage as physically verified carbon accounting.
 
