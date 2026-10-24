@@ -21,6 +21,7 @@ The Vercel project is linked to the source GitHub repository with Root Directory
 | Models | 18 source-reported historical CD-LINKS tutorial net-CO2 values | Three model versions; distinct from AR6 vetted cohort; **not gross CO2** |
 | Non-CO2 | N2O GWP100 metric reference pilot | Source masses fixed; original 273 vs corrected 267 is a method change |
 | Modelling | Three author-reported locally solved Westeros cases | Educational model; not an AR6 scenario or independently replicated solver log |
+| Innovation gaps | Twelve citation-linked research hypotheses; searchable by topic and sector | Unreviewed candidate topics, no causal emission shares or certified implementation impacts |
 | Operations | PathwaysHub 25-item author-reported milestone snapshot | Simulation-only is not actual international coordination |
 | Methods | Scientific protocol and CEMICS original source audit | Source-name availability is not an exhaustive, physically disjoint ledger |
 
