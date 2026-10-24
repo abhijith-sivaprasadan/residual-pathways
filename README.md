@@ -259,3 +259,20 @@ The author read the verified `CDRoptions.Rmd` and found **original code-line evi
 The same script explicitly selects `Emissions|CO2|Gross Fossil Fuels and Industry` for a 2020–2050 annualized gross-emissions reduction rate, and treats `Emissions|CO2|Land|Land-use Change|Regrowth` **with a sign reversal** as its afforestation/regrowth CDR proxy. It separately selects Enhanced Weathering, Biomass CCS and Direct Air Capture sequestration series. These original terms are **not automatically mutually exclusive** or an exhaustive total gross/net identity. In particular, author regrowth and the selected ARC24 `Carbon Sequestration|Land Use` are **different source variable names**.
 
 See [ARC24-03 source code semantic review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md#5-actual-author-r-markdown-inspection--first-formula-level-findings-24-october-2026) for exact original code lines and the next bounded inspection of the as-yet unseen `CDRtotal` formula. No scientific I3 is claimed.
+
+##### CEMICS actual author-defined carbon-flow accounting equation identified
+
+The author has inspected **actual MD5-verified Strefler v2 R Markdown source lines 150–156**, not merely a study abstract. Their operational 2050 CO2 accounting is:
+
+    CDRaff   = -Emissions|CO2|Land|Land-use Change|Regrowth
+    CDRtotal = CDRaff + Carbon Sequestration|Enhanced Weathering + Carbon Sequestration|CCS|Biomass + Carbon Sequestration|Direct Air Capture
+    CO2pos   = Emissions|CO2 + CDRtotal
+
+**Neither separate fossil CCS nor `Carbon Sequestration|Land Use` enters this original Rmd four-term CDR formula.** Gross fossil+industrial CO2 is separately selected at Rmd lines 193–194, and cumulative negative net emissions are separately calculated from the negative part of net CO2 at lines 198–202. Thus the author's derived `CO2pos` is a *specific study-defined gross-like remainder*, not demonstrably the directly reported fossil+industry gross series, all-economy emissions or an independently validated physical mass balance.
+
+A new MD5/SHA-locked **`arc24-cemics-author-accounting`** local command tests the original study's exact source variables and units at ARC24-03 2050, computes the operational formula only when all source streams match, and compares `CO2pos` with the distinct fossil+industry gross indicator using **only signed flags and coarse discrepancy bands** (never raw source observations). It refuses unverified/missing streams rather than substituting zero. New tests and real command execution are **pending**:
+
+    python -m pytest -q tests/test_arc24_cemics_author_accounting.py
+    python -m residual_pathways arc24-cemics-author-accounting
+
+Full original line-specific evidence, a complete source-identity caveat and the research next gate are in [ARC24-03 original author carbon flow review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). This does NOT certify anthropogenic additionality, lifecycle net negative emissions, source precision or disjoint physical CDR; independent I3=0.
