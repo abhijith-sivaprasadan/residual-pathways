@@ -62,7 +62,10 @@ def _leader_description(row):
         "exact_reported_decimal": exact,
         "exact_nonzero_reported_decimal": row["source_decimal_nonzero_exact"],
         "comparable_but_not_exact": compared - exact,
-        "unassessed_of_55_source_slots": SLOTS - compared,
+        "unassessed_of_55_possible_source_slots": SLOTS - compared,
+        "ar6_source_variable_unit_slots_enumerated": row["source_slots_enumerated"],
+        "ar6_source_slots_not_enumerated": SLOTS - row["source_slots_enumerated"],
+        "engage_slots_missing_or_noncomparable": row["source_slots_enumerated"] - compared,
         "variables_with_nonzero_exact": row["variables_with_nonzero_exact"],
         "exact_fraction_of_comparable": round(exact / compared, 6) if compared else None,
         "source_alias_or_model_version_verified": False,
@@ -81,6 +84,7 @@ def audit(packet):
         raise AdjudicationError("Private candidate count inconsistent")
     seen=set()
     checked=[]
+    enumerated_source_slots=set()
     for row in cases:
         if not isinstance(row,dict) or not row.get("original_model") or not row.get("original_scenario"):
             raise AdjudicationError("Malformed private candidate identity")
@@ -123,14 +127,21 @@ def audit(packet):
                 if name == "EXACT_REPORTED_DECIMAL" or
                     name.startswith("NONZERO_REPORTED_DECIMAL__")) != compared):
             raise AdjudicationError("Comparable denominator inconsistent with statuses")
-        if sum(v for name,v in status_counts.items()
+        source_slots=sum(v for name,v in status_counts.items()
                if name not in (
                    "EXACT_NONZERO",
                    "DISTINCT_VARIABLES_WITH_EXACT",
                    "DISTINCT_VARIABLES_WITH_NONZERO_EXACT",
-               )) != SLOTS:
-            raise AdjudicationError("Some candidate variable-year slots unaccounted")
+               ))
+        if not 0 < source_slots <= SLOTS or source_slots % len(YEARS) != 0:
+            raise AdjudicationError("AR6 source variable-unit slot coverage requires manual audit")
+        if compared>source_slots:
+            raise AdjudicationError("Compared more source slots than registered")
+        enumerated_source_slots.add(source_slots)
+        row["source_slots_enumerated"]=source_slots
         checked.append(row)
+    if len(enumerated_source_slots)!=1:
+        raise AdjudicationError("Candidates use nonidentical source slot universes")
 
     ranked=sorted(checked,key=_score,reverse=True)
     leader=ranked[0]
@@ -157,7 +168,8 @@ def audit(packet):
         "status":PUBLISH_STATUS,
         "original_engage_v2_local_sha256":USER_OBSERVED_ENGAGE_SHA,
         "candidate_count":len(checked),
-        "source_slots_per_candidate":SLOTS,
+        "maximum_pre_registered_source_slots_per_candidate":SLOTS,
+        "ar6_source_slots_enumerated_per_candidate":next(iter(enumerated_source_slots)),
         "candidate_groups":by_group,
         "ranking_rule":"NONZERO_EXACT_THEN_TOTAL_EXACT_THEN_DISTINCT_NONZERO_VARIABLES_THEN_COMPARABLE_COUNT",
         "top_ranked":_leader_description(leader),
