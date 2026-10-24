@@ -221,3 +221,14 @@ A targeted, source-MD5-locked `arc24-cemics-names` diagnostic now reports the au
     python -m residual_pathways arc24-cemics-names
 
 See [CEMICS original-source reconciliation and negative result](docs/arc24_cemics_v2_original_source_crosswalk.md). **No source-backed gross positive CO2/removal decomposition has been established; I3=0.**
+
+##### Original CEMICS archive inventory and alias-fingerprint gate (24 October 2026)
+
+The author executed the new original MIF name inventory with **24/24 passing tests**: source has **147,534 rows**, one unversioned `REMIND-MAgPIE` Model label, 20 scenarios, **no exact or punctuation-normalized `CEMICS_SSP1-1p5C-minCDR` match**. It does contain SSP1-1p5C `noCDR` and `fullCDR` as distinct cases, each with 7,391 source rows. The published 2021 CDR paper describes a min CDR scenario, but this alone does **not** prove that original author `noCDR` equals AR6 versioned `minCDR` or that model exports are identical.
+
+A new source-hashed **`arc24-cemics-alias-fingerprint`** command tests: author fullCDR versus AR6 fullCDR (control); author noCDR versus AR6 minCDR (hypothesis); and two crossed control pairs. It compares shared original variable names/units across up to nine years at exact reported decimals, while only coded status counts/bands and author scenario labels are publicly recorded. Neither an exact numeric fingerprint nor a textual name resemblance is an author-approved rename or a physically disjoint gross/CDR inventory. The newly committed tests and actual source scan **have not yet been executed locally**.
+
+    python -m pytest -q tests/test_arc24_cemics_alias_fingerprint.py
+    python -m residual_pathways arc24-cemics-alias-fingerprint
+
+Review scientific limitations and all four scenarios in [CEMICS author-archive source crosswalk](docs/arc24_cemics_v2_original_source_crosswalk.md). I3 remains zero.
