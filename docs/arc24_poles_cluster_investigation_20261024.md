@@ -190,3 +190,26 @@ R is the previously reported global total CO2 minus energy/industrial CO2 minus 
 **Next defensible tests:** use privately held exact source values to identify source decimal reporting granularity; check whether the original detailed Energy Demand, Energy Supply and Industrial Processes sum to EIP for the same case-years; document the upstream ENGAGE submission and AR6 transformations. Keep any raw values and absolute residuals local, and run independent model/documentation review before classifying I1-I3.
 
 New `arc24-poles-other-identity` executable implements the direct raw-decimal comparison and reports only case codes, years, signs and coarse descriptive mismatches. New synthetic tests passed in the author's Windows environment. Follow-up model-specific physical accounting remains open.
+## 10. Focused test of the published ENGAGE detailed-sector equation (prepared, not locally executed)
+
+The primary [ENGAGE Netzero Analysis notebook, cell 6](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html) constructs Other from TOTAL minus four explicitly named sector branches: AFOLU, Energy|Demand, Energy|Supply, and Industrial Processes. This is **not the same calculation** as subtracting the World database's pre-aggregated EIP variable. It offers a falsifiable reason why Other closely approximates, but does not exactly equal, the previously defined simple residual.
+
+New source-locked `arc24-poles-eip-mapping` examines two distinct reported-decimal equations in the four original POLES scenarios across the five selected years:
+
+    expanded_gap = Total - AFOLU - Energy|Demand - Energy|Supply - Industrial Processes - Other
+    eip_detail_gap = Energy|Demand + Energy|Supply + Industrial Processes - EIP
+
+Every used observation must be in Mt CO2/yr. Missing branches, missing year values and incompatible units are recorded separately; no missing value is treated as zero. The tool verifies the World CSV hash and the saved original 2050 total/EIP/AFOLU terms. Public output gives only coded case-year exactness, sign/magnitude bands and missing variable names. The source observations, model names and absolute source residuals remain in the original private World CSV and ARC24 packet.
+
+PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_poles_eip_mapping.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-poles-eip-mapping
+    $m = Get-Content 'results/ar6-canonical-gate/arc24_poles_eip_mapping_public.json' -Raw | ConvertFrom-Json
+    $m.expanded_status_counts
+    $m.eip_detail_status_counts
+    $m.availability_counts
+    $m.rows | Select-Object case_id,year,status,expanded_closure,expanded_gap_band,eip_detail,eip_gap_band | Format-Table -AutoSize
+
+**Pending** actual local tests and original source execution. If the expanded equation closes at source decimals while the detailed sum disagrees slightly with EIP, it will distinguish the ENGAGE processing hierarchy from the AR6 World combined EIP series. Otherwise, inspect original model-version output and export handling. None of these outcomes independently validates gross-positive emissions or atmospheric CDR partitions. Scientific I3 remains zero.
