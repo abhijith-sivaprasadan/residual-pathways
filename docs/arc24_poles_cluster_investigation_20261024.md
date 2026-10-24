@@ -70,3 +70,20 @@ Separately, the earlier read-only `arc24-sign-screen` on the same real local pac
 **Evidence-supported:** four POLES ENGAGE cases have 2050 reported-decimal residual magnitudes between 1% and 10% of the largest term; two residuals positive and two negative. **Not evidence-supported:** that POLES reports an incorrect total, that four independent models disagree, that fossil CCS/land removals explain the residual, or that any one case meets I3.
 
 **Scope:** the selected 24 cases only. Not an estimate for all 1,202 vetted scenarios, and not independently externally reproduced.
+
+## 5. Prepared five-year POLES temporal falsification (new code, not yet run locally)
+
+The repository now contains a focused arc24-poles-timeline CLI and synthetic tests (not yet run on the author's machine). It reads the **original** World v1.1 CSV and the protected ARC24 packet, checks the CSV's SHA-256 matches the packet, verifies that the selected 2050 source observations match previous saved values, then examines the four known POLES cases in the years **2030, 2040, 2050, 2060 and 2070**. It reports unavailable year columns and missing observations explicitly, instead of silently treating them as zeros.
+
+Public output contains only coded ARC24 case IDs, year, category, signed relative percentage bands and missing/absent-year statuses. It does not include model names, scenario names, original source values or absolute residual amounts. This is a descriptive source-arithmetic falsification check, not model validation, original source numerical precision or an I3 accounting certification.
+
+Windows PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_poles_timeline.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-poles-timeline
+    $t = Get-Content 'results/ar6-canonical-gate/arc24_poles_timeline_public.json' -Raw | ConvertFrom-Json
+    $t.status
+    $t.observations | Sort-Object case_id,year | Select-Object case_id,category,year,arithmetic_status,signed_residual_band | Format-Table -AutoSize
+
+Expected public output: results/ar6-canonical-gate/arc24_poles_timeline_public.json. **The tool has been committed but has not yet been executed on the user's local source.** If the POLES discrepancy persists across the years, that supports a model-family convention *hypothesis*, not proof. If it appears only at 2050, the 2050-specific scenario/model-reporting hypothesis deserves attention instead.
