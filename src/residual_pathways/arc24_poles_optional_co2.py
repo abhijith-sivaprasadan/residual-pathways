@@ -119,7 +119,7 @@ def optional_sector_presence(world, packet_file, public_output):
         "scope_warning": (
             "The AR6 climate-assessment workflow may reclassify Other, Waste, "
             "Other Capture and Removal and Product Use to EIP in an alternate input "
-            "route. This is NOT an official explanation for raw POLES ENGAGE "
+            "route. This is NOT an official explanation for any source-model "
             "total-EIP-AFOLU discrepancies. Presence does not establish that a "
             "variable is additive or disjoint; absence is not a physical zero. "
             "No source numerical values have been published."
