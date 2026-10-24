@@ -72,6 +72,77 @@ def _source_name_report(target, data):
     }
 
 
+# These buckets are *search filters*, not additive model sectors. A row may
+# appear in more than one group; a nested variable is not assumed a child
+# contribution for a physical emissions sum.
+FAMILY_GROUPS = (
+    "co2_land_reporting",
+    "gross_co2_reporting",
+    "fossil_and_industry_reporting",
+    "afolu_or_other_reporting",
+    "land_sequestration_reporting",
+    "cdr_technology_reporting",
+    "broad_land_emissions_and_cdr",
+)
+MAX_NAMES_PER_GROUP = 180
+
+
+def _within_group(name, group):
+    n = name.casefold()
+    if group == "co2_land_reporting":
+        return n.startswith("emissions|co2|land")
+    if group == "gross_co2_reporting":
+        return n.startswith("emissions|co2") and (
+            "|gross" in n or "gross fossil" in n
+        )
+    if group == "fossil_and_industry_reporting":
+        return (n.startswith("emissions|co2") and
+                ("fossil fuels and industry" in n or
+                 "energy and industrial processes" in n or
+                 "|industry" in n))
+    if group == "afolu_or_other_reporting":
+        return (n.startswith("emissions|co2|afolu")
+                or n.startswith("emissions|co2|other")
+                or n.startswith("emissions|co2|land-use change"))
+    if group == "land_sequestration_reporting":
+        return (n.startswith("carbon sequestration|land")
+                or n.startswith("carbon sequestration|afforestation"))
+    if group == "cdr_technology_reporting":
+        return n.startswith("carbon sequestration|")
+    if group == "broad_land_emissions_and_cdr":
+        return (n.startswith(("emissions|co2", "carbon sequestration"))
+                and any(token in n for token in
+                        ("land", "afolu", "regrowth", "forest",
+                         "afforestation", "deforestation")))
+    raise CaseAuditError("Unknown emissions variable-family filter")
+
+
+def _family_inventory(author, ar6):
+    names = sorted(set(author) | set(ar6))
+    groups = {}
+    for group in FAMILY_GROUPS:
+        selected = [name for name in names if _within_group(name,group)]
+        groups[group] = {
+            "total_distinct_variable_names":len(selected),
+            "shown_name_limit":MAX_NAMES_PER_GROUP,
+            "names_truncated":len(selected)>MAX_NAMES_PER_GROUP,
+            "reported_fields":[{
+                "original_variable_name":name,
+                "author_reported":name in author,
+                "ar6_reported":name in ar6,
+                "author_units":_matching_units(author.get(name,[])),
+                "ar6_units":_matching_units(ar6.get(name,[])),
+                "source_2050_value_reported":(
+                    any(item["year2050_cells_present"] for item in
+                        _matching_units(author.get(name,[])))
+                    or any(item["year2050_cells_present"] for item in
+                        _matching_units(ar6.get(name,[])))
+                ),
+            } for name in selected[:MAX_NAMES_PER_GROUP]],
+        }
+    return groups
+
+
 def inventory(mif_path, world_path, packet_path, rmd_path, public_path):
     mif, world, packet_file, rmd, public = (
         Path(x).resolve() for x in
@@ -144,6 +215,17 @@ def inventory(mif_path, world_path, packet_path, rmd_path, public_path):
             for name in candidates[:120]
         ],
         "context_candidate_count":len(candidates),
+        "expanded_emissions_family_inventory":_family_inventory(
+            authors_fields, ar6_fields
+        ),
+        "family_inventory_warning": (
+            "Overlapping source-name search buckets only, NOT physically "
+            "independent additive emissions sectors, source-defined gross "
+            "taxonomy, exhaustive model export or source net/gross identity. "
+            "Name-level absence in these buckets is not proof a model lacks "
+            "an unreported quantity. Never add parent and nested IAMC "
+            "categories automatically."
+        ),
         "no_source_values_in_output":True,
         "automatic_variable_rename_accepted":False,
         "operational_CDRtotal_computed":False,
