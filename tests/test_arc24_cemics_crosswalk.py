@@ -13,7 +13,7 @@ VARS = (TOTAL,) + tuple(SIX) + ("Emissions|CO2|Other",)
 
 
 def fixture(tmp_path, monkeypatch, *, delimiter=";", region="World",
-            model=cx.MODEL, omit=False, tamper=False):
+            model=cx.MODEL, omit=False, tamper=False, trailing=False):
     private = tmp_path / "data" / "ar6-private"
     private.mkdir(parents=True)
     mif = private / "CDRoptionsAR6_complete.mif"
@@ -31,13 +31,15 @@ def fixture(tmp_path, monkeypatch, *, delimiter=";", region="World",
         f.write("# original scientific source, test fixture only\n")
         f.write("# header below is IAMC-wide form\n")
         writer = csv.writer(f, delimiter=delimiter)
-        writer.writerow(["Model","Scenario","Region","Variable","Unit","2050"])
+        writer.writerow(["Model","Scenario","Region","Variable","Unit","2050"] +
+                        ([""] if trailing else []))
         for v, val in records:
             if omit and v == TOTAL:
                 continue
             # Scientific dataset version may serialize numbers differently.
             writer.writerow([model, cx.SCENARIO, region, v, "Mt CO2/yr",
-                             "0.51" if tamper and v == TOTAL else val])
+                             "0.51" if tamper and v == TOTAL else val] +
+                            ([""] if trailing else []))
     source_md5 = md5(mif.read_bytes()).hexdigest()
     monkeypatch.setattr(cx, "EXPECTED_ARCHIVE_MD5", source_md5)
     cases = []
@@ -81,6 +83,14 @@ def test_exact_source_crosswalk_and_privacy(tmp_path, monkeypatch, delimiter):
     assert '"0.25"' not in raw
     assert '"0.51"' not in raw
     assert "EXTERNAL SCENARIO" not in raw
+
+
+def test_original_mif_trailing_delimiter_format(tmp_path, monkeypatch):
+    mif, world, packet, public = fixture(
+        tmp_path, monkeypatch, trailing=True, delimiter=";")
+    result = cx.crosswalk(mif, world, packet, public)
+    assert result["archive_exact_world_variable_count"] == len(VARS)
+    assert result["overlap_status_counts"]["EXACT_REPORTED_DECIMAL_MATCH"] == len(VARS)
 
 
 def test_nonzero_source_difference_not_claimed_equivalent(tmp_path, monkeypatch):
