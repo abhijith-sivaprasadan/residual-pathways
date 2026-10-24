@@ -49,6 +49,11 @@ def main():
     canonical.add_argument("--packet", default="data/ar6-private/case_audit_review_packet.json", help="Original private RP24 teaching-source review packet")
     canonical.add_argument("--public-output", default="results/ar6-canonical-gate/summary_public.json")
     canonical.add_argument("--private-output", default="data/ar6-private/canonical_rp24_review.json")
+    canonical_select = sub.add_parser("ar6-canonical-select", help="Select a fresh 24-case cohort directly from local official-named v1.1 files; no teaching packet needed")
+    canonical_select.add_argument("--world", required=True, help="User-downloaded IIASA World v1.1 CSV")
+    canonical_select.add_argument("--metadata", required=True, help="User-downloaded IIASA metadata v1.1 XLSX")
+    canonical_select.add_argument("--public-output", default="results/ar6-canonical-gate/selected24_public.json")
+    canonical_select.add_argument("--private-output", default="data/ar6-private/canonical_selected24_packet.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -122,6 +127,15 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "ar6-canonical-select":
+        from .ar6_canonical_gate import select_canonical_24
+        result = select_canonical_24(args.world, args.metadata,
+                                     args.public_output, args.private_output)
+        print("Source-selected 24-case cohort:", result["status"])
+        print("Selected cases:", len(result["cases"]))
+        print("Six-variable-complete cases:", result["six_variable_complete_cases"])
+        print("Official acquisition provenance independently authenticated:", False)
+        print("Expert-reconciled I3 cases:", result["verified_i3_cases"])
     elif args.command == "ar6-canonical-gate":
         from .ar6_canonical_gate import source_gate
         result = source_gate(args.world, args.metadata, args.packet,
