@@ -30,7 +30,9 @@ jobs:
         with:
           node-version: "22"
       - name: Validate dashboard JavaScript
-        run: node --check atlas/app.js
+        run: |
+          node --check atlas/app.js
+          node --check atlas/coverage-release.js
       - name: Check source-derived public data is current
         run: python atlas/build_data.py --check
       - name: Check source-scope boundaries
@@ -50,6 +52,30 @@ jobs:
           for path in Path("atlas").rglob("*"):
               assert not "ar6-private" in path.parts
           print("Atlas publishable source and claims gates: PASS")
+          PY
+      - name: Validate optional four-year public release pair
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+          root=Path("atlas/data")
+          obj=root/"coverage_release.json"
+          digest_file=root/"coverage_release.json.sha256"
+          assert obj.exists() == digest_file.exists(), "Incomplete coverage release; both files required"
+          if obj.exists():
+              raw=obj.read_bytes()
+              sha=hashlib.sha256(raw).hexdigest()
+              assert digest_file.read_text().split()[0]==sha, "Coverage public SHA-256 mismatch"
+              data=json.loads(raw)
+              assert data["schema"]=="residualpathways.coverage-only.v1"
+              assert data["science_review_state"]=="REVIEW_PENDING" and data["i3_verified"]==0
+              assert data["physical_accounting"]=="NOT_ESTABLISHED"
+              assert len(data["years"])==4 and len(data["categories"])==8
+              assert len(data["records"])==len(data["years"])*len(data["categories"])*len(data["variables"])
+              assert all(set(r)=={"category","year","variable","denominator","reporting","model_labels","scenario_fraction","model_label_balanced_fraction","units"} for r in data["records"])
+              print("Optional four-year release present and hash/claim gates passed")
+          else:
+              print("No four-year release published; Atlas fallback is 2050 aggregate snapshot")
           PY
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
