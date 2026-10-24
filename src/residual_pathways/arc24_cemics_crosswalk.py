@@ -22,6 +22,11 @@ CASE_ID = "ARC24-03"
 MODEL = "REMIND-MAgPIE 2.1-4.2"
 SCENARIO = "CEMICS_SSP1-1p5C-minCDR"
 EXPECTED_ARCHIVE_MD5 = "efbc4f82b0163da790f370775a37cfe7"
+AUTHOR_SUPPORT_MD5 = {
+    "authors_rmd": "66923e9fbbeec5113849e2566d486c29",
+    "authors_readme": "e0d133b76db3fd3ccb95f06279197ff0",
+}
+
 KEYS = ("Model", "Scenario", "Region", "Variable", "Unit")
 YEAR = "2050"
 CANDIDATES = (TOTAL,) + tuple(SIX) + ("Emissions|CO2|Other",)
@@ -48,6 +53,35 @@ def _digest(path, algorithm="md5"):
         for block in iter(lambda: stream.read(2**20), b""):
             h.update(block)
     return h.hexdigest()
+
+
+def _read_author_text_lines(path):
+    """Decode an MD5-verified author's text file without character replacement.
+
+    Original scientific R Markdown/README files may contain legacy eight-bit
+    typographic symbols. A successful legacy decode is an *interpretation*,
+    not proof of the original authoring encoding. Retain raw bytes unmodified.
+    """
+    source = Path(path).read_bytes()
+    if b"\x00" in source:
+        raise CaseAuditError("Author supporting text contains NUL bytes; encoding cannot be inferred")
+    for codec in ("utf-8-sig", "cp1252", "latin-1"):
+        try:
+            text = source.decode(codec, errors="strict")
+        except UnicodeDecodeError:
+            continue
+        if "\ufffd" in text:
+            raise CaseAuditError("Text contains replacement markers; do not silently repair source")
+        return text.splitlines(), {
+            "decoded_as": codec,
+            "encoding_certainty": (
+                "UTF8_DECODING_SUCCEEDED_ENCODING_NOT_INDEPENDENTLY_CERTIFIED"
+                if codec == "utf-8-sig"
+                else "LEGACY_SINGLE_BYTE_INTERPRETATION_NOT_SOURCE_CERTIFIED"
+            ),
+            "utf8_strict_success": codec == "utf-8-sig",
+        }
+    raise CaseAuditError("Original author text could not be decoded without replacement")
 
 
 def _headered_archive(path):
@@ -237,17 +271,15 @@ def crosswalk(mif_path, world_path, packet_path, public_path,
         path = Path(path).resolve()
         if not path.is_file() or "ar6-private" not in path.parts:
             raise CaseAuditError("Supporting author methodology source not private or missing")
-        expected = {
-            "authors_rmd": "66923e9fbbeec5113849e2566d486c29",
-            "authors_readme": "e0d133b76db3fd3ccb95f06279197ff0",
-        }[kind]
-        if _digest(path) != expected:
+        if _digest(path) != AUTHOR_SUPPORT_MD5[kind]:
             raise CaseAuditError("Zenodo-listed MD5 mismatch in author supporting source")
-        lines = path.read_text(encoding="utf-8-sig").splitlines()
+        lines, encoding_detail = _read_author_text_lines(path)
         keys = ("gross", "emissions", "BECCS", "DAC", "land", "remov", "SSP1",
                 "CEMICS_SSP1-1p5C-minCDR")
         external_code[kind] = {
-            "source_md5_verified": True, "line_count": len(lines),
+            "source_md5_verified": True,
+            **encoding_detail,
+            "line_count": len(lines),
             "keyword_line_counts": {
                 k: sum(k.lower() in line.lower() for line in lines) for k in keys
             },
