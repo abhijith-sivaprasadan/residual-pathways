@@ -95,3 +95,42 @@ PowerShell after pull:
     $x.author_methodology_code_presence | Format-List
 
 No original archive re-download is needed; all four already exist and passed the publisher's checksums. If the corrected run instead reveals scenario absence, different model naming or variable-level discrepancies, report those scientific blockers directly rather than assuming source equivalence or assigning I3.
+
+## 6. Real ARC24-03 crosswalk result: archive exact scenario ABSENT (24 October 2026)
+
+The author successfully reran the fixed crosswalk using original MD5-verified Strefler/Zenodo v2 files and local World v1.1 data; **18/18 synthetic tests passed**. Unlike the earlier Unicode error, this run finished and created the coded report. Actual result:
+
+| Original-source identity/field diagnostic | Observed result |
+| --- | --- |
+| CLI status | `SCENARIO_NOT_LOCATED_IN_AUTHOR_MIF` |
+| Author MIF rows with exact `Scenario = CEMICS_SSP1-1p5C-minCDR` | **0** |
+| Author MIF rows with both exact model/scenario | **0** |
+| Exact source World/2050 variables in that author MIF scenario | **0** |
+| Shared source variable names eligible for numerical comparison | **0** |
+| Eight nominated CO2/CCS/land candidate variables | **All eight `ARCHIVE_VARIABLE_NOT_REPORTED` under the exact model/scenario key** |
+| Author R Markdown exact string occurrences | **0** |
+| Author R Markdown source text decoding | `cp1252`; legacy single-byte interpretation, not independently certified |
+| Author README source text decoding | `cp1252`; legacy single-byte interpretation, not independently certified |
+| Scientific I3 verification | **0** |
+
+The R Markdown contains substantial keyword hits (BECCS 168 lines, DAC 175, SSP1 35 and gross 10), but those are literal string occurrences **not** source-variable identities, scenario mapping or quantified CDR evidence. The author's MIF file and supporting documents remain verified unmodified by their original MD5 checksums.
+
+**Interpretation correction:** The authors' Zenodo v2 statement about *aligning scenario and variable categories with AR6* does **not** establish that the archive contains every AR6 scenario later associated with CEMICS, or that this exact SSP1 run is included. An exact-name miss is not a reason to inject guessed alternative labels or to declare that the entire published study lacks SSP1 results. The exact ARC24-03 link to the archived source remains **UNVERIFIED**, which blocks numerical crosswalk and any I3 claim via this route.
+
+### Next targeted source-name investigation
+
+A read-only source-locked CLI `arc24-cemics-names` inventories only the **authors' MIF Model/Scenario identifiers** (not original numerical emissions values). It reports unique source model/scenario counts, exact/normalized matches, semantically *unverified* similarly named candidates, and Rmd keyword line numbers. Similarity scores are lexical and **cannot** establish identical runs or physical accounting scopes. Nothing changes the original ARC24-03 selection or original data.
+
+Run:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_name_inventory.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-names
+    $n = Get-Content 'results/ar6-canonical-gate/arc24_cemics_name_inventory_public.json' -Raw | ConvertFrom-Json
+    $n.distinct_models; $n.distinct_scenarios; $n.distinct_model_scenario_pairs
+    $n.model_labels_and_counts | Format-Table -AutoSize
+    $n.normalized_scenario_matches | Format-Table -AutoSize
+    $n.cemics_ssp1_cdr_candidates | Select-Object -First 30 | Format-Table -AutoSize
+    $n.nearest_scenario_labels | Format-Table -AutoSize
+
+The command is **committed but has not been executed against the author's original MIF**. If there is no source-labelled/semantically supported candidate, conclude that exact case-source linkage is presently unavailable and use the peer-reviewed study only for **model-family methodological context**. Independently review original AR6 dataset definitions/metadata, or a different primary scenario submission, rather than substituting similar source runs. Do not pursue near-equality searches across unrelated source scenarios as proof of identity.
