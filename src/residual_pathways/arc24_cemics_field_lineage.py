@@ -247,10 +247,14 @@ def _land_relationship_fingerprint(author, ar6, *, rmd_deleteplus):
     return {
         "status":"ORIGINAL_AUTHOR_LAND_SERIES_RELATIONSHIP_NO_I3",
         "author_rmd_deleteplus_verified":bool(rmd_deleteplus),
-        "regrowth_author_only":True,
+        "regrowth_author_only":(
+            regrowth_raw is not None and regrowth_raw not in ar6
+        ),
         "original_source_terms":term_records,
         "nine_year_comparisons":checks,
-        "authors_regrowth_is_not_AR6_world_export":True,
+        "authors_regrowth_is_not_AR6_world_export":(
+            regrowth_raw is not None and regrowth_raw not in ar6
+        ),
         "raw_carbon_observations_exported":False,
         "disjoint_removal_partition_certified":False,
         "verified_i3":0,
