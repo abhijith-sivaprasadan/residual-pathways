@@ -22,6 +22,7 @@ from .arc24_cemics_alias_fingerprint import (
     _unique_compatible_pair, _outcome,
 )
 from .case_audit import CaseAuditError, TOTAL, SIX, UNIT
+from .arc24_cemics_field_lineage import remove_hierarchy_markers
 from .stratify import sha_file
 
 REGROWTH = "Emissions|CO2|Land|Land-use Change|Regrowth"
@@ -116,18 +117,66 @@ def derive_source_worksheet(mif_path, world_path, packet_path, rmd_path,
 
     report_rows = []
     author_values = {}
+    provenance = {}
     for name in TERMS:
         author_rows, ar6_rows = author.get(name, []), ar6.get(name, [])
+        raw_author_key = name
+        raw_marker_candidates = []
+        if name == REGROWTH:
+            raw_marker_candidates = [
+                v for v in author
+                if v != REGROWTH and remove_hierarchy_markers(v) == REGROWTH
+            ]
+            # The Rmd calls deletePlus() before looking up REGROWTH.
+            # If several source keys would collapse to the same name, the
+            # transformed selector is ambiguous, even if records look equal.
+            if raw_marker_candidates and "data <- deletePlus(data)" not in stripped:
+                raise CaseAuditError("Original author Rmd lacks source deletePlus preprocessing")
+            if not author_rows and len(raw_marker_candidates) == 1:
+                raw_author_key = raw_marker_candidates[0]
+                author_rows = author[raw_author_key]
         row = {
             "variable": name,
+            "original_author_raw_variable": raw_author_key,
+            "raw_author_regrowth_hierarchy_candidate_count": (
+                len(raw_marker_candidates) if name == REGROWTH else 0
+            ),
             "author_source_present": bool(author_rows),
             "ar6_source_present": bool(ar6_rows),
             "expected_unit": UNIT,
             "author_units_reported": sorted({r[0] for r in author_rows}),
             "ar6_units_reported": sorted({r[0] for r in ar6_rows}),
+            "provenance": "NOT_VERIFIED",
         }
-        if not author_rows:
+        alias_ambiguous = (
+            name == REGROWTH and bool(raw_marker_candidates)
+            and (len(raw_marker_candidates) > 1 or raw_author_key == name)
+        )
+        if alias_ambiguous:
+            status = "AMBIGUOUS_AFTER_AUTHOR_DELETEPLUS"
+        elif not author_rows:
             status = "AUTHOR_SERIES_NOT_REPORTED"
+        elif not ar6_rows and name in (REGROWTH, GROSS_FI):
+            # These two streams are expressly selected in the original Rmd
+            # but not published as comparable World variables in the
+            # registered AR6 source. We may reproduce the *authors'* study
+            # formula, never claim the missing AR6 value is equal or zero.
+            unit_rows = [record for record in author_rows if record[0] == UNIT]
+            if len(unit_rows) != 1:
+                status = "AUTHOR_ONLY_UNIQUE_EXPECTED_UNIT_NOT_FOUND"
+            else:
+                a = unit_rows[0][1].get(YEAR)
+                if a is None:
+                    status = "AUTHOR_ONLY_MISSING_YEAR_VALUE"
+                else:
+                    author_values[name] = a
+                    if name == REGROWTH:
+                        status = "AUTHOR_ONLY_REGROWTH_AFTER_DELETEPLUS_AR6_ABSENT"
+                        row["provenance"] = "AUTHOR_MIF_RMD_DELETEPLUS_ONLY"
+                    else:
+                        status = "AUTHOR_ONLY_GROSS_FOSSIL_INDUSTRY_AR6_ABSENT"
+                        row["provenance"] = "AUTHOR_MIF_RMD_DIRECT_SELECTOR_ONLY"
+                    provenance[name] = row["provenance"]
         elif not ar6_rows:
             status = "AR6_SERIES_NOT_REPORTED"
         else:
@@ -144,6 +193,12 @@ def derive_source_worksheet(mif_path, world_path, packet_path, rmd_path,
                     status = _outcome((UNIT, a), (UNIT, b))
                     if status == "EXACT_REPORTED_DECIMAL_MATCH":
                         author_values[name] = a
+                        row["provenance"] = (
+                            "AUTHOR_PREPROCESSED_RMD_AND_AR6_EXACT_MATCH"
+                            if name == REGROWTH and raw_author_key != name
+                            else "AUTHOR_AR6_EXACT_REPORTED_DECIMAL_MATCH"
+                        )
+                        provenance[name] = row["provenance"]
         row["source_comparison_status"] = status
         row["source_value_sign"] = (
             _sign(author_values[name]) if name in author_values else "UNVERIFIED"
@@ -156,6 +211,12 @@ def derive_source_worksheet(mif_path, world_path, packet_path, rmd_path,
         "status": "NOT_COMPUTABLE_MISSING_OR_UNVERIFIED_SOURCE_TERM" if missing
                   else "AUTHORS_EXPLICIT_FORMULA_COMPUTABLE_NOT_I3",
         "missing_or_unverified_operational_terms": missing,
+        "operational_term_provenance": {name: provenance.get(name, "NOT_VERIFIED")
+                                         for name in requisite},
+        "regrowth_ar6_independently_reported": bool(ar6.get(REGROWTH)),
+        "source_author_preprocessing_confirmed": (
+            "data <- deletePlus(data)" in stripped
+        ),
         "formula_verified_in_original_Rmd": True,
         "formula_total_CDR": "(-regrowth_emissions)+enhanced_weathering+biomass_CCS+DAC",
         "formula_positive_side": "net_CO2 + operational_CDRtotal",
@@ -189,7 +250,12 @@ def derive_source_worksheet(mif_path, world_path, packet_path, rmd_path,
             relation, sign, band = _difference_band(
                 positive, author_values[GROSS_FI])
             comparison.update({
-                "status": "DIFFERENT_SCOPES_NUMERIC_COMPARISON_ONLY",
+                "status": (
+                    "DIFFERENT_SCOPES_AUTHOR_GROSS_ONLY_COMPARISON"
+                    if provenance.get(GROSS_FI) == "AUTHOR_MIF_RMD_DIRECT_SELECTOR_ONLY"
+                    else "DIFFERENT_SCOPES_NUMERIC_COMPARISON_ONLY"
+                ),
+                "gross_fossil_industry_source_provenance": provenance.get(GROSS_FI),
                 "source_decimal_relation": relation,
                 "CO2pos_minus_gross_fossil_industry_sign": sign,
                 "absolute_gap_relative_band": band,
@@ -211,6 +277,8 @@ def derive_source_worksheet(mif_path, world_path, packet_path, rmd_path,
             "The author-derived CO2pos equation is algebraically true by "
             "definition. Its equality does not prove physically exhaustive "
             "positive gross emissions nor net durable and nonoverlapping CDR. "
+            "The author-only plus-marked Regrowth and gross fossil/industry "
+            "series are not present under those source variable names in AR6 World. "
             "Regrowth emissions and Carbon Sequestration|Land Use are distinct "
             "reported variables. Fossil CCS is not included in the author's "
             "four CDR source terms. No original numeric observations released."
