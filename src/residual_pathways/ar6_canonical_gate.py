@@ -14,7 +14,9 @@ import csv
 import json
 import math
 
-from .case_audit import CATEGORIES, CaseAuditError, SIX, TOTAL, UNIT
+from .case_audit import (CATEGORIES, CaseAuditError, SIX, TOTAL, UNIT,
+                         metadata_population, scan_source, choose_24, score,
+                         arithmetic_diagnostic)
 from .stratify import metadata_rows, sha_file
 
 WORLD_FILE = "AR6_Scenarios_Database_World_v1.1.csv"
@@ -235,5 +237,111 @@ def source_gate(world, metadata, private_packet, public_output, private_output, 
     public_output.write_text(json.dumps(public, indent=2, sort_keys=True)+"\n",
                              encoding="utf-8")
     private_output.write_text(json.dumps(private, indent=2, sort_keys=True)+"\n",
+                              encoding="utf-8")
+    return public
+
+
+def select_canonical_24(world, metadata, public_output, private_output, *,
+                        year=2050, sheet=REVIEW_SHEET):
+    """Select a new 24-case cohort using the locally provided official-named files.
+
+    This does NOT require the prior teaching-source RP24 packet. The returned
+    population remains author-supplied/unverified, NOT an officially authenticated
+    AR6 release, and no I1/I2/I3 grade is granted.
+    """
+    world, metadata = Path(world).resolve(), Path(metadata).resolve()
+    if world.name != WORLD_FILE or metadata.name != META_FILE:
+        raise CaseAuditError("Canonical file selection requires both exact official filenames")
+    if not world.is_file() or not metadata.is_file():
+        raise CaseAuditError("Official-named World and metadata files must be locally present")
+    if year != 2050 or sheet != REVIEW_SHEET:
+        raise CaseAuditError("Canonical 24-case cohort fixed to 2050 and climate-vetted sheet")
+
+    public_output = Path(public_output).resolve()
+    private_output = Path(private_output).resolve()
+    if (public_output == private_output or
+            "ar6-private" not in private_output.parts or
+            "ar6-private" in public_output.parts or
+            private_output.parent == public_output.parent):
+        raise CaseAuditError("Private canonical packet must be under ar6-private, away from public output")
+    if public_output in (world, metadata) or private_output in (world, metadata):
+        raise CaseAuditError("Cannot overwrite either canonical source input")
+
+    population = metadata_population(metadata, sheet)
+    observed, source_rows = scan_source(world, population, set(SIX + (TOTAL,)), year)
+    chosen = choose_24(observed, population)
+    source_hash, metadata_hash = sha_file(world), sha_file(metadata)
+    public_cases, private_cases = [], []
+    for i, (pair, category, slot) in enumerate(chosen, 1):
+        obs = observed[pair]
+        diag = arithmetic_diagnostic(obs)
+        case_id = f"ARC24-{i:02d}"
+        public_cases.append({
+            "case_id": case_id, "category": category, "selection_slot": slot,
+            "six_valid_unit_count": score(obs),
+            "six_present_count": sum(name in obs for name in SIX),
+            "arithmetic_diagnostic_possible": diag["difference_mt"] is not None,
+            "human_review": "NOT_REVIEWED", "accounting_grade": "NOT_DETERMINED",
+            "i3_verified": False,
+        })
+        private_cases.append({
+            "case_id": case_id, "model": pair[0], "scenario": pair[1],
+            "category": category, "selection_slot": slot, "year": year,
+            "source_observations": obs, "arithmetic_diagnostic": diag,
+            "review": {
+                "status": "NOT_REVIEWED",
+                "model_specific_definition_refs": [],
+                "positive_emissions_partition_status": "UNKNOWN",
+                "atmospheric_removal_partition_status": "UNKNOWN",
+                "fossil_ccs_vs_cdr_status": "UNKNOWN",
+                "land_sector_gross_net_status": "UNKNOWN",
+                "source_export_precision_status": "UNKNOWN",
+                "source_documentation": [],
+                "reviewer": None, "review_date": None,
+                "conclusion": "NOT_DETERMINED", "rationale": None,
+            },
+        })
+    public = {
+        "schema": "residualpathways.ar6_canonical_selected24.v1",
+        "status": "CANONICAL_NAMED_LOCAL_COHORT_SELECTED_ORIGIN_UNVERIFIED",
+        "origin_authentication": "NOT_ESTABLISHED_FILENAME_AND_HASH_NOT_PROOF",
+        "source_url": SOURCE_HOME,
+        "source_sha256": source_hash,
+        "metadata_sha256": metadata_hash,
+        "source_bytes": world.stat().st_size,
+        "metadata_bytes": metadata.stat().st_size,
+        "metadata_sheet": sheet,
+        "year": year, "region": "World",
+        "source_rows_scanned": source_rows,
+        "metadata_cohort_count": len(population),
+        "source_matched_cohort_count": len(observed),
+        "selection": {
+            "method": "THREE_PER_C1_TO_C8_LOW_MEDIAN_HIGH_SIX_NAME_UNIT_COVERAGE",
+            "source_reselection": True, "sampling_type": "PURPOSIVE_NOT_PROBABILITY",
+            "identical_to_prior_teaching_cohort": "NOT_EVALUATED",
+        },
+        "reviewed_cases": 0, "verified_i3_cases": 0,
+        "six_variable_complete_cases": sum(c["six_valid_unit_count"] == 6 for c in public_cases),
+        "cases": public_cases,
+        "limitations": [
+            "Official name alone cannot authenticate acquisition from IIASA",
+            "No source-specific scientific review or I1-I3 assessment performed",
+            "Six candidate variable values do not establish nonoverlapping gross or CDR partitions",
+            "No private Model or Scenario names or values published",
+            "The deterministic, purposive 24-case cohort cannot estimate population I3 frequency",
+            "This is a new canonical-named sample, not the original teaching-source RP24 sample",
+        ],
+    }
+    private = {
+        "schema": "residualpathways.ar6_canonical_selected24.private.v1",
+        "handling": "LOCAL_ONLY_DO_NOT_PUBLISH",
+        "source_sha256": source_hash, "metadata_sha256": metadata_hash,
+        "cases": private_cases,
+    }
+    public_output.parent.mkdir(parents=True, exist_ok=True)
+    private_output.parent.mkdir(parents=True, exist_ok=True)
+    public_output.write_text(json.dumps(public, sort_keys=True, indent=2) + "\n",
+                             encoding="utf-8")
+    private_output.write_text(json.dumps(private, sort_keys=True, indent=2) + "\n",
                               encoding="utf-8")
     return public
