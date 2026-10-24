@@ -75,6 +75,12 @@ def test_source_unavailable_is_not_equivalence(tmp_path):
     res=evaluate(ar,en,packet,expected_world_sha256=_digest(ar))
     assert res["status"]=="ENGAGE_V2_EXACT_MODEL_SCENARIO_NOT_FOUND"
     assert res["engage_v2_source_rows_for_case"]==0
+    assert res["source_reported_decimal_status_counts"]=={}
+    assert res["derived_notebook_other_status_counts"]=={}
+    assert res["rows"]==[]
+    assert res["unassessed_comparison_slots"]==55
+    assert res["unassessed_notebook_years"]==5
+    assert res["matching_basis"]=="EXACT_PAIR_ABSENT_NO_COMPARISON_PERFORMED"
 
 
 def test_incorrect_ar6_hash_rejected(tmp_path):
