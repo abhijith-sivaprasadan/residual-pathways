@@ -86,6 +86,12 @@ This produces **11 unfilled evidence gates per case**, plus source-document lead
 
 11 evidence gates: (1) original run/model/version; (2) World/2050 units, sign and scope; (3) gross positive processes; (4) net/gross AFOLU land baseline; (5) BECCS biogenic uptake and nonoverlap; (6) fossil CCS exclusion; (7) DAC/EW durable atmospheric removal; (8) exhaustiveness and disjointness; (9) **source-documented** numerical precision; (10) dual numerical/physical reconciliations; (11) independent second reviewer. A correct arithmetic result *cannot* substitute for physical source semantics.
 
+## Reviewed source evidence for the two priority cases
+
+The source-by-source verdict is now documented in [ARC24-03 / ARC24-06 primary accounting review](arc24_03_06_source_accounting_review_20261024.md). The authors' archived CEMICS `noCDR` series and AR6 `minCDR` World series already have **4,653/4,653 exact same-unit original-source decimal matches**, with crossed controls distinguishing `fullCDR`; this establishes strong *numerical source-series correspondence* for the tested scope, **not** a complete physical carbon ledger. The Strefler original Rmd explicitly defines four operational CDR categories (signed regrowth, enhanced weathering, biomass CCS and direct air capture) and `CO2pos = net + CDRtotal`; its output is derived by construction, not proof of independently exhaustive gross positives.
+
+For ARC24-06 the original ENGAGE notebook's `Other` is a **computed postprocessing residual** in a separate v2.0 snapshot, not known to be an independently measured POLES source stream or directly mapped to the AR6 v1.1 `Other`. A new optional original-World v2.0 source bridge [`arc24_engage_v2_probe.py`](../../src/residual_pathways/arc24_engage_v2_probe.py) validates exact identity and units with the original AR6 file, otherwise fails without claiming an alias. The user's v2.0 dataset is not yet present in this conversation; execution requires a licensed original v2.0 download and leaves I3 = 0.
+
 ## Explicit stop rules
 
 1. No physical gross emissions or atmospheric removals are reconstructed from the aggregate release. The finished coverage paper is a reporting-availability result, not a complete carbon mass balance.
