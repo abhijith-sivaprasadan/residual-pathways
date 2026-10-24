@@ -200,3 +200,13 @@ Local-only workflow:
     & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-crosswalk
 
 Source MIF (with trailing semicolon support), author Rmd/README and region crosswalk remain in ignored data/ar6-private/cemics-v2. The command validates the Zenodo author-file MD5 checksums, World SHA and saved ARC24-03 2050 observations, then writes a redacted variable-name/unit/status comparison to results/ar6-canonical-gate/arc24_cemics_source_crosswalk_public.json. **The new tests and actual source comparison have not yet been executed by the author.** Read the [study-source and carbon-flow evidence protocol](docs/arc24_cemics_v2_original_source_crosswalk.md) for blockers to any I3 classification.
+
+##### Author R Markdown source-encoding fix (2026-10-24)
+
+The original CEMICS v2 Zenodo download **succeeded locally** and verified all four archive MD5s. The 12 original synthetic tests passed, but the first real source crosswalk aborted while decoding the authors' Rmd or README using strict UTF-8; **no report was written**. The crosswalk now retains checksum verification and supports audited strict UTF-8, then legacy cp1252/latin-1 decoding for textual supporting sources, with explicit output encoding uncertainty and added regression tests. **The corrected crosswalk and added tests have not yet been run locally.** There is no reason to re-download verified original files.
+
+    git pull --ff-only
+    python -m pytest -q tests/test_arc24_cemics_crosswalk.py
+    python -m residual_pathways arc24-cemics-crosswalk
+
+Only a successful rerun can establish whether the exact author-archive ARC24-03 Model×Scenario×World×2050 source pair exists, what matches AR6 variable by variable, and what scientific semantic gaps remain. See the [CEMICS research crosswalk audit](docs/arc24_cemics_v2_original_source_crosswalk.md).
