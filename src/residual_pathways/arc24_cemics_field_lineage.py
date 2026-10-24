@@ -9,13 +9,14 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from collections import Counter
 
 from .arc24_cemics_crosswalk import (
     CASE_ID, MODEL, SCENARIO, EXPECTED_ARCHIVE_MD5,
     AUTHOR_SUPPORT_MD5, _digest, _read_author_text_lines,
 )
 from .arc24_cemics_alias_fingerprint import (
-    AUTHOR_NO, _load_authors, _load_ar6,
+    AUTHOR_NO, _load_authors, _load_ar6, _outcome,
 )
 from .case_audit import CaseAuditError
 from .stratify import sha_file
@@ -143,6 +144,119 @@ def _family_inventory(author, ar6):
     return groups
 
 
+AFFORESTATION = "Carbon Sequestration|Land Use|Afforestation"
+LAND_YEARS = (2020,2030,2040,2050,2060,2070,2080,2090,2100)
+REQUIRED_LAND_UNIT = "Mt CO2/yr"
+
+
+def _only_author_unit_record(source, name):
+    rows = [r for r in source.get(name, []) if r[0] == REQUIRED_LAND_UNIT]
+    return rows[0][1] if len(rows) == 1 else None
+
+
+def _land_relationship_fingerprint(author, ar6, *, rmd_deleteplus):
+    """Numerical source correspondence, never a physical carbon-flow identity.
+
+    Signed regrowth is inverted solely because the original authors' Rmd
+    explicitly does so. Treat duplicate names that deletePlus would collapse
+    as ambiguous. AR6 matches for published land aggregate/afforestation are
+    reported separately; the author-only regrowth is never marked AR6-matched.
+    """
+    aliases = [
+        name for name in author
+        if name != REGROWTH and remove_hierarchy_markers(name) == REGROWTH
+    ]
+    if (rmd_deleteplus and REGROWTH not in author and len(aliases) == 1):
+        regrowth_raw = aliases[0]
+    elif REGROWTH in author and not aliases:
+        regrowth_raw = REGROWTH
+    else:
+        regrowth_raw = None
+    source_names = {"rmd_regrowth_removal":regrowth_raw,
+                    "land_use_afforestation":AFFORESTATION,
+                    "land_use_aggregate":LAND}
+    verified = {}
+    term_records = []
+    for code,name in source_names.items():
+        record = (_only_author_unit_record(author,name) if name else None)
+        value2050 = None if record is None else record.get(2050)
+        status = ("AMBIGUOUS_OR_ABSENT_AUTHOR_SOURCE" if record is None
+                  else "AUTHOR_2050_VALUE_MISSING" if value2050 is None
+                  else "AUTHOR_SOURCE_AVAILABLE")
+        if record is not None and value2050 is not None:
+            verified[code] = ({
+                year:(-value if code == "rmd_regrowth_removal" and value is not None
+                      else value)
+                for year,value in record.items()
+            })
+        cross = "AR6_NOT_REPORTED_UNDER_SOURCE_NAME"
+        if name in ar6 and record is not None:
+            other = _only_author_unit_record(ar6,name)
+            if other is None:
+                cross = "AR6_AMBIGUOUS_OR_UNEXPECTED_UNIT"
+            else:
+                match2050 = _outcome(
+                    (REQUIRED_LAND_UNIT, value2050),
+                    (REQUIRED_LAND_UNIT, other.get(2050))
+                )
+                cross = match2050
+        sign = "UNVERIFIED"
+        if code in verified:
+            a = verified[code].get(2050)
+            sign = ("ZERO" if a == 0 else "POSITIVE" if a > 0
+                    else "NEGATIVE") if a is not None else "UNVERIFIED"
+        term_records.append({
+            "operational_source_term":code,
+            "original_author_source_variable":name,
+            "year2050_source_status":status,
+            "year2050_source_sign":sign,
+            "year2050_ar6_crosswalk_status":cross,
+        })
+    pairs = (
+        ("NEGATED_REGROWTH_VS_REPORTED_AFFORESTATION",
+         "rmd_regrowth_removal","land_use_afforestation"),
+        ("NEGATED_REGROWTH_VS_LAND_USE_AGGREGATE",
+         "rmd_regrowth_removal","land_use_aggregate"),
+        ("AFFORESTATION_VS_LAND_USE_AGGREGATE",
+         "land_use_afforestation","land_use_aggregate"),
+    )
+    checks = []
+    for label,a,b in pairs:
+        counts = Counter()
+        if a in verified and b in verified:
+            for year in LAND_YEARS:
+                x,y = verified[a].get(year),verified[b].get(year)
+                if x is None or y is None:
+                    counts["MISSING_SHARED_SOURCE_YEAR_VALUE"] += 1
+                else:
+                    counts[_outcome((REQUIRED_LAND_UNIT,x),
+                                    (REQUIRED_LAND_UNIT,y))] += 1
+        else:
+            counts["UNVERIFIED_SOURCE_COMPONENT"] = len(LAND_YEARS)
+        checks.append({
+            "comparison":label,
+            "original_author_world_years_checked":len(LAND_YEARS),
+            "source_comparison_status_counts":dict(counts),
+            "observations_compared":sum(
+                n for k,n in counts.items() if k not in
+                ("UNVERIFIED_SOURCE_COMPONENT",
+                 "MISSING_SHARED_SOURCE_YEAR_VALUE")
+            ),
+            "source_data_interpretation":"EMPIRICAL_RELATIONSHIP_ONLY_NOT_FLOW_EQUIVALENCE",
+        })
+    return {
+        "status":"ORIGINAL_AUTHOR_LAND_SERIES_RELATIONSHIP_NO_I3",
+        "author_rmd_deleteplus_verified":bool(rmd_deleteplus),
+        "regrowth_author_only":True,
+        "original_source_terms":term_records,
+        "nine_year_comparisons":checks,
+        "authors_regrowth_is_not_AR6_world_export":True,
+        "raw_carbon_observations_exported":False,
+        "disjoint_removal_partition_certified":False,
+        "verified_i3":0,
+    }
+
+
 def inventory(mif_path, world_path, packet_path, rmd_path, public_path):
     mif, world, packet_file, rmd, public = (
         Path(x).resolve() for x in
@@ -217,6 +331,10 @@ def inventory(mif_path, world_path, packet_path, rmd_path, public_path):
         "context_candidate_count":len(candidates),
         "expanded_emissions_family_inventory":_family_inventory(
             authors_fields, ar6_fields
+        ),
+        "source_land_relationship_fingerprint":_land_relationship_fingerprint(
+            authors_fields, ar6_fields,
+            rmd_deleteplus="data <- deletePlus(data)" in stripped
         ),
         "family_inventory_warning": (
             "Overlapping source-name search buckets only, NOT physically "
