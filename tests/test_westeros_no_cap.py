@@ -213,14 +213,17 @@ def test_isolated_control_solves_only_one_scenario(tmp_path, mock_platforms):
 
 def test_intended_parameter_deletion_preserves_emissions_factors():
     platform = FakePlatform("source")
+    destination = FakePlatform("isolated")
     bounded = FakeScenario(platform, MODEL, "emission_bound")
     with pytest.raises(NotImplementedError, match="Cross-platform clone"):
         bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="unsupported",
-                      keep_solution=False, platform=FakePlatform("isolated"))
+                      keep_solution=False, platform=destination)
     c = bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="controlled",
-                      keep_solution=True, platform=FakePlatform("isolated"))
+                      keep_solution=True, platform=destination)
     assert c.has_solution()
-    assert c.platform is not platform, "Weak proxy is not source Platform object"
+    assert c.platform is not destination, "ixmp returns a proxy, not the same Platform object"
+    assert c.platform._backend is destination._backend
+    assert c.platform._backend is not platform._backend
     with pytest.raises(AssertionError, match="Must remove copied solution"):
         c.check_out()
     c.remove_solution()
