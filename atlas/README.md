@@ -47,7 +47,7 @@ Review the generated public JSON changes before committing. This optional read d
 
 The .github/workflows/atlas-pages.yml workflow checks JavaScript syntax, re-generates the public bundle for a deterministic equality check, verifies reporting denominators and claim boundaries, and stores the validated static files as a GitHub Actions artifact. Production publishing is handled through the separate Git-connected Vercel deployment; the repository has not enabled GitHub Pages.
 
-The source-status banner deliberately distinguishes the initial publicly redistributed teaching-labelled AR6 input from direct publisher provenance. The user's independently obtained official-named World CSV was byte-identical at its SHA, but publisher-side acquisition receipt and the semantic equivalence of metadata workbooks are not yet checked. Co-reporting does not establish a complete source account.
+The source-status banner distinguishes the earlier publicly redistributed teaching-labelled AR6 input from direct publisher provenance. The author's downloaded original-named World CSV matched the earlier source SHA. The workbook identity-joined `Model + Scenario` records matched in both 2,304-row and 1,202-row metadata sheets, although cell-coordinate differences and other non-cohort sheets remain unresolved. Publisher acquisition receipt/authentication is not independently verified. Co-reporting does not establish a complete source account.
 
 ## Scientific stop rules
 
@@ -58,12 +58,18 @@ The source-status banner deliberately distinguishes the initial publicly redistr
 5. Zero currently verified I3 records is not proof that no real scenario could qualify after semantic review.
 6. A GWP100 conversion change in N2O CO2e is not a physical emissions decline.
 
+## Published four-year coverage-only candidate — 24 October 2026
+
+The C1–C8, 2030/2050/2070/2100 exact-source-variable reporting-presence aggregate is [version-tagged](https://github.com/abhijith-sivaprasadan/residual-pathways/tree/ar6-coverage-only-v0.1.0-candidate) at commit `e64156b7429441836d1fa3b1879d40d9aa814bb0`, with SHA-256 `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`. The artifact contains 352 aggregate rows (8 climate categories × 4 years × 11 variables), drawn from a locally matched cohort of 1,202 scenarios. The author's Vercel HTTP download matched the tagged SHA; Vercel separately reported the production deployment as READY for that commit. The independent PathwaysHub intake of the real candidate returned `ACCEPTED_COVERAGE_ONLY_UNREVIEWED`; a wrong pin was rejected. No original AR6 source rows or model–scenario identities are published as part of this candidate.
+
+This is an **author-reviewed public reporting-coverage candidate**, not publisher-authenticated source provenance or independently reviewed physical gross/CDR accounting. `REVIEW_PENDING`, `i3_verified=0`, and `physical_accounting=NOT_ESTABLISHED` remain explicit. The six low missingness counts repeated across years were documented in the [audit](../docs/ar6_coverage_publication_audit_20261024.md). The annotated Git tag exists; a separate GitHub Releases entry has not been created, and tag mutation requires repository protections to prevent it.
+
 ## Planned follow-on releases
 
-1. Multi-year vetted coverage explorer (2030/2050/2070/2100) with model-family weighting, denominator disclosure and explicit non-coverage.
-2. Reconciled source-provenance and metadata-workbook concordance audit; I0 data insufficiency and scientific REVIEW_PENDING as distinct fields.
-3. Public, immutable coverage-only research release artifact accepted through PathwaysHub's exact-hash scientific contract.
-4. Reviewed model-specific semantic explainers and fully versioned working paper / policy brief, without fabricating gross or removal totals.
+1. Evolve the published 2030–2100 exact-name coverage explorer with explicit missingness and robust model-**family** weighting, distinct from the existing exact-name model-label-balanced view.
+2. Independently authenticate publisher provenance, reconcile remaining non-cohort metadata differences, and review the distinction between scientific I0 and REVIEW_PENDING.
+3. Protect the existing annotated release tag, and make later releases reproducible with recorded upstream receipts and public acceptance checks.
+4. Publish reviewed model-specific semantic explainers, a working paper and a policy brief without fabricating gross or atmospheric-removal totals.
 
 This is a functional v1 atlas, not yet a complete final research paper or independently certified gross/CDR decomposition.
 
@@ -73,4 +79,4 @@ Coverage graphics and tables are independently derived from the **AR6 Scenarios 
 
 ## Optional 2030–2100 coverage bundle
 
-The 2026-10-24 release-gate branch adds a separate four-year, exact-variable presence explorer. It displays only a SHA-256-checked public coverage-only artifact, and remains unavailable until the author's local original-named v1.1 dataset audit produces and clears that artifact. It does not reinterpret unreviewed records as I0 or grant I3 status. See [local canonical release runbook](../docs/ar6_coverage_release_handoff.md).
+The four-year exact-variable reporting-presence explorer is now active whenever the browser fetches both the [published artifact](data/coverage_release.json) and its [SHA-256 sidecar](data/coverage_release.json.sha256), verifies the checksum and confirms the scientific scope. This does not reinterpret `REVIEW_PENDING` as I0 or grant I3 status. See the [source/runbook](../docs/ar6_coverage_release_handoff.md) and [release audit](../docs/ar6_coverage_publication_audit_20261024.md).

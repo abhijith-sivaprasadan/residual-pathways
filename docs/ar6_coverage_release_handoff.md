@@ -46,7 +46,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Coverage release gate failed' }
 
 The last command creates two local outputs: atlas/data/coverage_release.json and atlas/data/coverage_release.json.sha256. The Atlas loads them only when both are present and their checksums agree.
 
-## Remaining release gate
+## Historical pre-publication checklist (completed for the candidate unless expressly marked open)
 
 1. Inspect workbook differences across sheets and source-joined Model+Scenario records. Hash differences alone do not determine category concordance.
 2. Verify direct publisher acquisition receipt privately, source fingerprints, 1,202 source-matched climate-vetted model/scenario pairs and exact count integrity.
@@ -54,6 +54,6 @@ The last command creates two local outputs: atlas/data/coverage_release.json and
 4. Commit both outputs together, create an immutable release tag, then test an actual PathwaysHub hash-verified handoff and browser rendering.
 5. Run the Atlas locally using: python -m http.server 8765 --directory atlas . Visit http://localhost:8765/#coverage .
 
-The author has now reported a successful **local** four-year candidate build (1,202 matched, 352 records, checksum `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`) and passed six localhost browser checks. PathwaysHub subsequently **accepted the locally generated candidate** with the previously recorded SHA-256 and **blocked the deliberately incorrect SHA-256**. This does **not** mean the file has been committed, publicly deployed, cleared for redistribution or independently validated for scientific carbon accounting. See [publication readiness audit](ar6_coverage_publication_audit_20261024.md). Until the reviewed candidate is published, the public Atlas continues to show the separate 2050 snapshot and the four-year public explorer remains unavailable.
+The author has now reported a successful **local** four-year candidate build (1,202 matched, 352 records, checksum `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`) and passed six localhost browser checks. PathwaysHub subsequently **accepted the locally generated candidate** with the previously recorded SHA-256 and **blocked the deliberately incorrect SHA-256**. After the user explicitly approved public dissemination, the two reviewed aggregate files were committed, annotated-tagged and pushed. The author's HTTP download returned SHA-256 `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`; production Vercel deployment for commit `e64156b7429441836d1fa3b1879d40d9aa814bb0` reports READY. The artifact remains **coverage-only, scientifically REVIEW_PENDING, zero verified I3**, without independently authenticated publisher origin or physical gross/CDR accounting. See [publication readiness audit](ar6_coverage_publication_audit_20261024.md). Until the reviewed candidate is published, the public Atlas continues to show the separate 2050 snapshot and the four-year public explorer remains unavailable.
 
 **Scientific status:** zero independently verified I3 cases; REVIEW_PENDING is not the same as insufficient data (I0). Presence counts cannot establish a physically exhaustive, nonoverlapping gross/CDR partition. Equal weighting by exact model names is **not** independent model-family weighting.
