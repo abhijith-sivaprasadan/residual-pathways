@@ -147,3 +147,71 @@ def test_field_lineage_cli_uses_real_json_field_name(tmp_path, monkeypatch, caps
     assert "hierarchy candidates: 1" in printed
     assert "No substitution or derived CDR; I3: 0" in printed
     assert args[4].is_file()
+
+
+
+def test_expanded_family_inventory_sees_land_and_gross_not_in_old_narrow_context(
+        tmp_path, monkeypatch):
+    args = source_fixture(tmp_path, monkeypatch)
+    # Populate the original source with multiple reporting leaves which the
+    # old search only matching Regrowth, LUC and Gross Fossil omitted.
+    original_source_extra = [
+        ("Emissions|CO2|Land|Forest Conversion", "12.3"),
+        ("Emissions|CO2|Land|+|Deforestation", "7.8"),
+        ("Emissions|CO2|Industry|Process", "6.1"),
+        ("Carbon Sequestration|Land Use", "3.4"),
+        ("Carbon Sequestration|CCS|Biomass", "2.5"),
+    ]
+    with args[0].open("a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter=";")
+        for name, value in original_source_extra:
+            writer.writerow(["REMIND-MAgPIE", "CEMICS_SSP1-1p5C-noCDR",
+                             "World", name, "Mt CO2/yr", value, ""])
+    monkeypatch.setattr(
+        fl, "EXPECTED_ARCHIVE_MD5", md5(args[0].read_bytes()).hexdigest()
+    )
+    result = fl.inventory(*args)
+    groups = result["expanded_emissions_family_inventory"]
+    assert groups["co2_land_reporting"]["total_distinct_variable_names"] >= 3
+    assert groups["gross_co2_reporting"]["total_distinct_variable_names"] == 1
+    assert groups["fossil_and_industry_reporting"]["total_distinct_variable_names"] >= 2
+    assert groups["land_sequestration_reporting"]["total_distinct_variable_names"] == 1
+    land = {
+        row["original_variable_name"]
+        for row in groups["co2_land_reporting"]["reported_fields"]
+    }
+    assert "Emissions|CO2|Land|Forest Conversion" in land
+    assert "Emissions|CO2|Land|+|Deforestation" in land
+    assert "Emissions|CO2|Land|Land-use Change|+|Regrowth" in land
+    assert result["operational_CDRtotal_computed"] is False
+    assert not result["automatic_variable_rename_accepted"]
+    assert result["verified_i3"] == 0
+    public = args[-1].read_text(encoding="utf-8")
+    for private_cell in ('"12.3"', '"7.8"', '"6.1"', '"3.4"', '"2.5"'):
+        assert private_cell not in public
+
+
+def test_family_name_buckets_not_interpreted_as_additive_partition():
+    assert fl._within_group("Emissions|CO2|Land|Regrowth", "co2_land_reporting")
+    assert fl._within_group(
+        "Emissions|CO2|Land|Regrowth", "broad_land_emissions_and_cdr")
+    assert not fl._within_group(
+        "Carbon Sequestration|CCS|Fossil", "co2_land_reporting")
+    assert not fl._within_group("Emissions|CO2|AFOLU", "co2_land_reporting")
+    assert fl._within_group("Emissions|CO2|AFOLU", "afolu_or_other_reporting")
+    with pytest.raises(CaseAuditError, match="Unknown emissions"):
+        fl._within_group("Some name", "unknown")
+
+
+def test_emissions_family_name_inventory_limit_reports_truncation():
+    original = {}
+    for n in range(fl.MAX_NAMES_PER_GROUP + 3):
+        original[f"Emissions|CO2|Land|Synthetic Branch {n:04d}"] = [
+            ("Mt CO2/yr", {2050: None})
+        ]
+    groups = fl._family_inventory(original, {})
+    land = groups["co2_land_reporting"]
+    assert land["total_distinct_variable_names"] == fl.MAX_NAMES_PER_GROUP + 3
+    assert len(land["reported_fields"]) == fl.MAX_NAMES_PER_GROUP
+    assert land["names_truncated"]
+    assert all(not item["source_2050_value_reported"] for item in land["reported_fields"])
