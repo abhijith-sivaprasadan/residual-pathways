@@ -134,3 +134,9 @@ Run:
     $n.nearest_scenario_labels | Format-Table -AutoSize
 
 The command is **committed but has not been executed against the author's original MIF**. If there is no source-labelled/semantically supported candidate, conclude that exact case-source linkage is presently unavailable and use the peer-reviewed study only for **model-family methodological context**. Independently review original AR6 dataset definitions/metadata, or a different primary scenario submission, rather than substituting similar source runs. Do not pursue near-equality searches across unrelated source scenarios as proof of identity.
+
+### Scientific interpretation and software correction to the initial field statuses
+
+The user-observed initial candidate-variable rows each read `ARCHIVE_VARIABLE_NOT_REPORTED`, but **this was a consequence of an absent exact scenario key**, not proof that the authors' entire MIF did not report total CO2, CCS, DAC or AFOLU variables in other scenarios. Crosswalk code has been amended: a missing scenario now yields `CASE_SCENARIO_ABSENT_FIELDS_NOT_ASSESSED`; a matching scenario with unverified model yields `EXACT_MODEL_UNVERIFIED_FIELDS_NOT_ASSESSED`; and absent World region yields `WORLD_REGION_ABSENT_FIELDS_NOT_ASSESSED`. The existing `ARCHIVE_VARIABLE_NOT_REPORTED` status remains valid only after an exact Model/Scenario/World source record was found and a particular variable is missing.
+
+Author-source model/scenario name inventory implementation added with synthetic tests and separate checksums for both MIF and R Markdown source. **These newest code changes are not yet confirmed by a real local rerun.** The actual completed earlier run still definitively establishes the zero exact-scenario-labelled rows.
