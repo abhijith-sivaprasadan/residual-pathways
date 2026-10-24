@@ -29,6 +29,9 @@ def sources(tmp_path, monkeypatch, *, wrong_digest=False):
     monkeypatch.setattr(inv, "EXPECTED_ARCHIVE_MD5", src.EXPECTED_ARCHIVE_MD5)
     rmd = private / "CDRoptions.Rmd"
     rmd.write_bytes(b"SSP1\nminCDR\nGross emissions \xc2 BECCS\n")
+    monkeypatch.setattr(inv, "AUTHOR_SUPPORT_MD5", {
+        "authors_rmd": md5(rmd.read_bytes()).hexdigest(),
+    })
     out = tmp_path / "results" / "name_inventory.json"
     return mif, rmd, out
 
@@ -74,3 +77,11 @@ def test_missing_scenario_alias_no_scientific_promotion(tmp_path, monkeypatch):
     assert result["normalized_scenario_matches"] == []
     assert result["exact_original_model_scenario_label"] is False
     assert result["verified_i3"] == 0
+
+
+def test_author_rmd_md5_mismatch_prevents_keyword_claims(tmp_path, monkeypatch):
+    mif, rmd, out = sources(tmp_path, monkeypatch)
+    rmd.write_bytes(rmd.read_bytes() + b"unverified new content\n")
+    with pytest.raises(CaseAuditError, match="authors Rmd MD5 mismatch"):
+        inv.inspect_source_names(mif, out, rmd_path=rmd)
+    assert not out.exists()
