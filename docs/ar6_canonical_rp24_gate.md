@@ -13,6 +13,25 @@ The previously audited public data at https://zenodo.org/records/20056332 are ex
 
 The official explorer uses JavaScript. When necessary, use its guest login and email-delivered download process where offered. A matching filename or local SHA256 can check integrity, **not certify original provenance**. Record the direct download route and release privately.
 
+## Recommended: canonical-native selection (does not need old teaching packet)
+
+The newly added **ar6-canonical-select** command creates a *new* deterministic, purposive 24-case sample directly from the locally obtained canonical-named v1.1 World and climate-vetted metadata files (three each from C1-C8, low/median/high by six-variable reporting availability). It uses the official-name files as its sole data inputs and **does not require** the old teaching-source case_audit_review_packet.json file.
+
+PowerShell from the repository after downloading the two original IIASA files:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_ar6_canonical_gate.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways ar6-canonical-select --world 'data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv' --metadata 'data/ar6-private/AR6_Scenarios_Database_metadata_indicators_v1.1.xlsx'
+
+Default derived outputs:
+
+- Public, coded selection register: results/ar6-canonical-gate/selected24_public.json
+- **Private** review packet with Model/Scenario identities, source observations and blank documentation fields: data/ar6-private/canonical_selected24_packet.json
+
+Expected status: CANONICAL_NAMED_LOCAL_COHORT_SELECTED_ORIGIN_UNVERIFIED. This denotes checked local file structure and selection **only**, not provenance authentication, human review, a verified gross/CDR accounting partition or I3. Record the direct portal download route privately.
+
+The pre-existing **ar6-canonical-gate** command further down is now **optional**: use it to compare a recreated teaching-derived RP24 cohort against this locally downloaded release if both earlier teaching input and metadata are available. Do not substitute a teaching source for the official World file or treat the two samplings as statistically identical.
+
 ## Execute the prepared gate
 
 In Windows PowerShell, first update and test:
