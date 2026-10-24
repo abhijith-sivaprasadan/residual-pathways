@@ -1,4 +1,4 @@
-name: Residual Pathways Atlas — public evidence website
+name: Residual Pathways Atlas — reproducible static artifact checks
 on:
   workflow_dispatch:
   push:
@@ -12,8 +12,6 @@ on:
       - ".github/workflows/atlas-pages.yml"
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
   group: "atlas-pages"
   cancel-in-progress: false
@@ -77,19 +75,9 @@ jobs:
           else:
               print("No four-year release published; Atlas fallback is 2050 aggregate snapshot")
           PY
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload static atlas
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload validated static Atlas artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: validated-atlas-static
           path: ./atlas
-  deploy:
-    needs: prepare
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy public atlas
-        id: deployment
-        uses: actions/deploy-pages@v4
+          retention-days: 30
