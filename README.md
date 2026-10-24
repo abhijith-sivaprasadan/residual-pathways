@@ -188,3 +188,15 @@ Conserve analysis effort: summarize the already public EIP/detail residual magni
 Final user-run public EIP-versus-detail size bins: **10 negative** and **9 positive** source-decimal differences, each less than 0.001% of the largest compared term; **1 exact** across 20 POLES case-years. The source-reported CO2 Other series accounts for nearly all earlier multi-percent 3-term CO2 arithmetic discrepancies; all 20 five-sector expanded results are likewise nonzero but less than 0.001%. **This closes the exploratory POLES arithmetic investigation.** No source-declared numeric quantization or physically disjoint positive gross-emissions/CDR decomposition has been verified.
 
 A new [ARC24 gross emissions and atmospheric-removal scientific source dossier](docs/arc24_gross_cdr_source_review_dossier_20261024.md) prioritizes REMIND-MAgPIE ARC24-03 and POLES ARC24-06. Critically, Strefler et al. (2021), [*Carbon dioxide removal technologies are not born equal*](https://doi.org/10.1088/1748-9326/ac0a11), has authors' [AR6-aligned source dataset and analysis code](https://zenodo.org/records/5103024). The authors explicitly say they updated scenario names and variable categories to match AR6; **this is a promising independent source, not yet verified as the exact ARC24-03 SSP1 minCDR scenario**. Gross/net land sequestration, BECCS versus fossil CCS, DAC, physical overlap, original precision and independent I3 scientific review remain open.
+
+#### Primary REMIND-MAgPIE ARC24-03 author's source crosswalk (prepared)
+
+The next research stage moves beyond the completed POLES numeric near-reconciliation to a **source-version-checked gross emissions/CDR semantic review** of ARC24-03, REMIND-MAgPIE 2.1-4.2, CEMICS_SSP1-1p5C-minCDR. The [original authors' CEMICS Zenodo v2 archive](https://zenodo.org/records/5103024) explicitly notes its scenario and variable names were brought into alignment with AR6. An [independent pathway methodology](https://1p5ndc-pathways.climateanalytics.org/methodology) corroborates this exact model/scenario pair. The source file must still be compared **record by record** to AR6 World v1.1; a matching paper title or scenario name is not enough.
+
+Local-only workflow:
+
+    & .\scripts\fetch_cemics_v2.ps1
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_crosswalk.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-crosswalk
+
+Source MIF (with trailing semicolon support), author Rmd/README and region crosswalk remain in ignored data/ar6-private/cemics-v2. The command validates the Zenodo author-file MD5 checksums, World SHA and saved ARC24-03 2050 observations, then writes a redacted variable-name/unit/status comparison to results/ar6-canonical-gate/arc24_cemics_source_crosswalk_public.json. **The new tests and actual source comparison have not yet been executed by the author.** Read the [study-source and carbon-flow evidence protocol](docs/arc24_cemics_v2_original_source_crosswalk.md) for blockers to any I3 classification.
