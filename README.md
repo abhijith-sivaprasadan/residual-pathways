@@ -164,3 +164,13 @@ To directly test the proposed original reported-decimal identity without publish
     python -m residual_pathways arc24-poles-other-identity
 
 Details and scientific limits: [POLES longitudinal accounting investigation](docs/arc24_poles_cluster_investigation_20261024.md). All I3 determinations still pending.
+#### POLES CO2 Other hypothesis: near-closure confirmed, exact decimal closure not found
+
+On 2026-10-24 the author ran the corrected optional-sector and exact CO2 Other identity tests (**13/13 synthetic tests passed**). In the four POLES ENGAGE trajectories, **20/20** original-source case-years have the **same sign** for `Total−EIP−AFOLU` and reported `CO2|Other`. None closes at exact reported decimals, but **all 20** have a remaining difference below 0.001% of the largest compared source term. Combined with the preceding observation that each original residual was at least 1% of its major component scale, **Other explains the overwhelming share of the reported aggregate difference**. This is numerical evidence of an additional reported bookkeeping category, not a disjoint physical positive-gross/CDR accounting identity or original source-export precision certification.
+
+The [ENGAGE Netzero Analysis source notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html) explicitly computes Other as total minus AFOLU, **Energy Demand**, **Energy Supply**, and **Industrial Processes**—not the World AR6 combined Energy and Industrial Processes (EIP) series. A new **source-locked** `arc24-poles-eip-mapping` command tests both the notebook's *expanded* equation and whether the three detailed categories sum to reported EIP; results are pending local execution:
+
+    python -m pytest -q tests/test_arc24_poles_eip_mapping.py
+    python -m residual_pathways arc24-poles-eip-mapping
+
+See [original-data investigation and full caveats](docs/arc24_poles_cluster_investigation_20261024.md).
