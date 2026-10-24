@@ -153,6 +153,40 @@ def evaluate(world, engage, packet, *, expected_world_sha256=WORLD_SHA):
         values=ar.get((name,entry.get("unit")))
         if not values or values[2050]!=_decimal(entry.get("raw")):
             raise EngageSourceError("Canonical 2050 source values disagree with private packet")
+    # An absent case key is NOT a missing variable measurement. A source
+    # comparison is undefined until model/scenario/region identity matches.
+    if ne == 0:
+        return {
+            "schema":"residualpathways.arc24.engage_v2_vs_ar6_source_probe.v1",
+            "status":"ENGAGE_V2_EXACT_MODEL_SCENARIO_NOT_FOUND",
+            "ar6_world_sha256":expected_world_sha256,
+            "engage_v2_user_source_sha256":_digest(engage),
+            "engage_v2_file_origin":"USER_SUPPLIED_FILENAME_AND_SHA_NOT_PUBLISHER_AUTHENTICATED",
+            "ar6_source_rows_for_case":na,
+            "engage_v2_source_rows_for_case":0,
+            "case_id":CASE_ID,
+            "year_labels":list(YEARS),
+            "exact_variables":list(FOCUS),
+            "matching_basis":"EXACT_PAIR_ABSENT_NO_COMPARISON_PERFORMED",
+            "source_reported_decimal_status_counts":{},
+            "derived_notebook_other_status_counts":{},
+            "rows":[],
+            "unassessed_comparison_slots":len(YEARS)*len(FOCUS),
+            "unassessed_notebook_years":len(YEARS),
+            "independent_physical_gross_partition":"NOT_ESTABLISHED",
+            "independent_physical_removal_partition":"NOT_ESTABLISHED",
+            "ar6_source_processing_lineage":"NOT_ESTABLISHED",
+            "science_review_state":"REVIEW_PENDING",
+            "verified_i3":0,
+            "limitations":[
+                "The exact model/scenario/World record is missing from this ENGAGE snapshot; this is NOT evidence of 55 absent reported measurements.",
+                "No source-variable or notebook arithmetic comparison can be made without documented scenario equivalence.",
+                "Alternative model or scenario labels may exist; lexical similarity cannot establish an alias.",
+                "The user's ENGAGE file hash is a local fingerprint, NOT independently publisher-authenticated.",
+            ],
+            "notebook_primary_source":"https://github.com/iiasa/ENGAGE-netzero-analysis/blob/2d2be452dceed13b9671941fe5af7094a0e12956/assessment/1_categorization.ipynb",
+            "external_dataset_doi":"https://doi.org/10.5281/zenodo.5553976",
+        }
     comparisons=[]
     by_status=Counter()
     derived_status=Counter()
