@@ -199,7 +199,7 @@ def compare_author_aliases(mif_path, world_path, packet_path, public_path,
         attempted=sum(counts.values())
         excluded = sum(counts[label] for label in (
             "NO_SHARED_UNIT", "AMBIGUOUS_MULTIPLE_SHARED_UNITS",
-            "AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT"))
+            "AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT", "MISSING_VALUE"))
         compared=attempted-excluded
         exact=counts["EXACT_REPORTED_DECIMAL_MATCH"]
         reports.append({
