@@ -256,3 +256,27 @@ def test_objective_mismatch_not_silently_classified_as_cap_effect(tmp_path, mock
 def test_three_case_comparison_refuses_missing_scenario():
     with pytest.raises(WesterosAnalysisError, match="incomplete"):
         build_three_case_comparison({}, "example", 1, {})
+
+def test_reject_clone_bound_to_source_backend_before_any_changes(
+    tmp_path, mock_platforms, monkeypatch
+):
+    source_manifest = create_private(tmp_path)
+
+    def wrongly_attached_clone(self, *, model, scenario, annotation,
+                               keep_solution, platform):
+        # Simulate a faulty backend that returns a wrapper attached to the
+        # SOURCE instead of the destination; verify fail-closed handling.
+        assert keep_solution is True
+        bad = FakeScenario(self.platform, model, scenario, version=1)
+        bad.solved = True
+        return bad
+
+    monkeypatch.setattr(FakeScenario, "clone", wrongly_attached_clone)
+    with pytest.raises(WesterosAnalysisError, match="isolated destination backend"):
+        run_control(source_manifest, tmp_path / "output")
+    assert FakeScenario.solve_count == 0
+    assert FakeScenario.copied_solution_clear_count == 0
+    assert all(p.closed for p in mock_platforms)
+    journal = json.loads(next((tmp_path / "output").glob("*/manifest.private.json")).read_text())
+    assert journal["status"] == "FAILED_NOT_VERIFIED"
+    assert journal["licensed_gams_solve_performed"] is False
