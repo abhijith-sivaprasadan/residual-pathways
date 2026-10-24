@@ -128,3 +128,43 @@ Run on the author's Windows PowerShell:
 **No actual four-case result has yet been observed for this new utility.** If these terms are not reported, the directly reported optional-sector hypothesis cannot explain the discrepancy without further source-specific documentation. If present, their overlap, inclusion in EIP, and original model units still require source verification before arithmetic corrections.
 
 Reference: [AR6 WGIII climate assessment workflow](https://climate-assessment.readthedocs.io/en/latest/general.html), [associated 2022 methodology](https://doi.org/10.5194/gmd-15-9075-2022).
+## 8. Actual optional-sector screen and primary ENGAGE accounting lead (24 October 2026)
+
+**Author's real local run:** arc24-poles-optional-co2 succeeded on the source-locked 4 POLES ENGAGE scenarios and five years, despite one synthetic test failing on an over-strict text privacy assertion. The failed assertion matched the literal phrase 'POLES ENGAGE' in an explanatory warning, not a model/scenario field. The public warning has been revised to omit that literal model label, and the test strengthened to inspect observation fields. Re-run is pending.
+
+| Optional original-CSV variable | 20 source case-years |
+| --- | --- |
+| Emissions&#124;CO2&#124;Other | **13 positive, 7 negative, 0 missing** |
+| Emissions&#124;CO2&#124;Waste | Series not reported in **20/20** |
+| Emissions&#124;CO2&#124;Other Capture and Removal | Series not reported in **20/20** |
+| Emissions&#124;CO2&#124;Product Use | Series not reported in **20/20** |
+
+The original four-scenario total-minus-EIP-minus-net-AFOLU residual series is also **13 positive and 7 negative** across the same twenty time points. The aggregate sign counts match, but **per-row sign agreement and numerical equality have not been verified**. A matching count is not an accounting proof.
+
+### More direct primary model-project methodology
+
+The [ENGAGE Netzero Analysis, 1. Scenario categorization](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html), for ENGAGE Global Scenarios v2.0 (Zenodo 5553976), includes an explicit pyam data manipulation in section **Closure of CO2 emissions regional & sectoral hierarchy**. It constructs the variable **Emissions&#124;CO2&#124;Other** by subtracting **AFOLU**, **Energy&#124;Demand**, **Energy&#124;Supply** and **Industrial Processes** emissions from **total CO2**. The [figure analysis notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/2.3_ENGAGE_Figure_3_netzero_emissions_systems.html) then aggregates this with the separate Energy Demand Other series for plotting.
+
+These sources provide evidence of a **project-level residual-sector construction convention**. They are not proof that the four original AR6 World v1.1 POLES ENGAGE records use the same processed snapshot, or that their reported EIP series exactly equals Energy Demand + Energy Supply + Industrial Processes. Model/project dataset versions and pipeline stage must be checked. The [AR6 climate-assessment option B workflow](https://climate-assessment.readthedocs.io/en/latest/general.html) separately documents the optional other sectors and a **different postprocessing reclassification into EIP**. Do not conflate the two pipelines.
+
+### Next falsifiable relationship
+
+For the four cases and five years, compare original reported source decimals directly:
+
+    R = Emissions|CO2 - Emissions|CO2|Energy and Industrial Processes - Emissions|CO2|AFOLU
+    R_minus_Other = R - Emissions|CO2|Other
+
+A dedicated source-hashed and 2050-crosschecked local command, **arc24-poles-other-identity**, is now committed. It publishes only a per-case/year coded status of exact reported-decimal equality, nonzero mismatch bands, and sign agreement. Neither absolute source observations nor residual magnitudes nor original model/scenario names are published. Model-physics/I3 review stays open.
+
+PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_poles_optional_co2.py tests/test_arc24_poles_other_identity.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-poles-other-identity
+    $c = Get-Content 'results/ar6-canonical-gate/arc24_poles_other_identity_public.json' -Raw | ConvertFrom-Json
+    $c.identity_status_counts
+    $c.sign_matches
+    $c.sign_mismatches
+    $c.rows | Select-Object case_id,year,status,residual_sign,other_sign,mismatch_band | Format-Table -AutoSize
+
+**Actual source result of this new numeric identity command is pending.** If equality holds, it would explain the *reported aggregate arithmetic* for these cases, not establish disjoint gross emission and atmospheric removal inventories, emission-source attribution within Other, or whether the model/export convention was applied before or after climate-assessment processing. Zero verified I3 still.
