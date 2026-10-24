@@ -190,7 +190,7 @@ def main():
                 print(term["requested_postprocessed_rmd_name"],
                       "exact:", term["raw_exact_name_present"],
                       "hierarchy candidates:",
-                      term["hierarchy_marker_candidate_count"])
+                      term["marker_candidate_count"])
         print("No substitution or derived CDR; I3:", result["verified_i3"])
     elif args.command == "arc24-cemics-author-accounting":
         from .arc24_cemics_author_accounting import derive_source_worksheet
