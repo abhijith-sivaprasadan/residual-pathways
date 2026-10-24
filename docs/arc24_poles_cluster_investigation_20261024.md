@@ -213,3 +213,37 @@ PowerShell:
     $m.rows | Select-Object case_id,year,status,expanded_closure,expanded_gap_band,eip_detail,eip_gap_band | Format-Table -AutoSize
 
 **Pending** actual local tests and original source execution. If the expanded equation closes at source decimals while the detailed sum disagrees slightly with EIP, it will distinguish the ENGAGE processing hierarchy from the AR6 World combined EIP series. Otherwise, inspect original model-version output and export handling. None of these outcomes independently validates gross-positive emissions or atmospheric CDR partitions. Scientific I3 remains zero.
+## 11. Actual detailed hierarchy comparison — author-executed 24 October 2026
+
+**Execution status:** `arc24-poles-eip-mapping` succeeded against the original locally held World v1.1 source and ARC24 packet, and **7/7 synthetic regression tests passed**. The 4 target POLES ENGAGE Model×Scenario pairs were checked over 2030/2040/2050/2060/2070 (20 observations), each with all seven needed fields and compatible source units.
+
+| Diagnostic | Actual source-backed result |
+| --- | ---: |
+| Expanded ENGAGE structure: `Total − AFOLU − Energy Demand − Energy Supply − Industrial Processes − Other` exactly zero in reported decimal strings | **0 / 20** |
+| Expanded structure **nonzero** in reported decimal strings | **20 / 20** |
+| Expanded-structure mismatch **under 0.001%** of largest absolute source term in the comparison | **20 / 20** |
+| Detailed Energy Demand + Energy Supply + Industrial Processes **exactly equals** separately reported EIP | **1 / 20** |
+| Detailed Energy/Industrial sector sum **not exactly equal** to EIP | **19 / 20** |
+| All required source data available and units compatible | **20 / 20** |
+| Source-verified physically disjoint gross positive emissions versus atmospheric-removal I3 reviews | **0** |
+
+The expanded residual signs vary between scenario and year, as expected from a small, nonzero reported-decimal remainder. The author-shared table omitted most `eip_gap_band` cells owing to PowerShell width truncation. **Do not infer the quantitative magnitude** of the 19 EIP-detail mismatches from these status counts; the check's original output records those bands and can be summarized locally without sharing source observations.
+
+### Reproducible source-methodology interpretation
+
+The primary [ENGAGE Netzero Analysis scenario-categorization notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html), under **Closure of CO2 emissions regional & sectoral hierarchy** (cell 6), calculates `Emissions|CO2|Other` by subtracting AFOLU, Energy Demand, Energy Supply and Industrial Processes from reported total CO2. It states this is to ensure consistent data. This is direct evidence of an explicit **ENGAGE v2.0 post-processing residual-category definition**, not proof of a separate, independently measured source of physical CO2 emissions. The notebook is tied to an ENGAGE scenario snapshot and not necessarily the identical processing snapshot of AR6 World v1.1.
+
+The [AR6 climate-assessment workflow, maximum emissions Option B](https://climate-assessment.readthedocs.io/en/latest/general.html), instead describes a separate reclassification mechanism that folds Other/Waste/Other Capture and Removal/Product Use into EIP subject to nonoverlap and not-AFOLU assumptions. That processing-route description cannot be used as an exact-v1.1-source identity either.
+
+**Best-supported provisional finding:** the originally observed multi-percent `Total−EIP−AFOLU` residuals in all four studied POLES trajectories are numerically dominated by the separately reported `Other` series. The original-v1.1 source's expanded category equation also nearly closes (all relative discrepancies below 0.001%), but **never exactly at serialized decimal precision** for these 20 cases. The source's declared export/processing quantization has not been independently obtained; near-zero residuals must **not** automatically be labelled rounding, omitted physical emissions, or data errors. The EIP-vs-details reported equality fails exactly in 19 cases, and its relative error sizes still need summary.
+
+### One compact remaining numerical check; then return to physical gross/CDR semantics
+
+Run the following PowerShell on the already saved **public coded** output to summarize EIP mismatch bands; it does not expose Model/Scenario identifiers or any numerical CO2 observations:
+
+    $m = Get-Content 'results/ar6-canonical-gate/arc24_poles_eip_mapping_public.json' -Raw | ConvertFrom-Json
+    $m.rows | Group-Object eip_gap_band | Sort-Object Count -Descending | Select-Object Name, Count | Format-Table -AutoSize
+
+After that, **do not generate additional narrowly repetitive closure checks** without new source facts. Research ROI is higher for exact POLES-ENGAGE source-variable semantics, the role of model-reported/constructed Other, and gross/net/land/BECCS/fossil-CCS/DAC overlap. Revisit the REMIND-MAgPIE ARC24-03 primary model/year accounting next, to ensure this remains a cross-model study rather than four POLES scenarios.
+
+**Scientific claim boundary:** this is a source-verified arithmetic near-closure and a documented processing-convention lead, **not an expert-reviewed exhaustive, nonoverlapping gross-emissions and atmospheric-removal reconstruction**. Status remains NOT_DETERMINED, verified I3=0.
