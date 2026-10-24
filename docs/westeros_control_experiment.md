@@ -39,3 +39,15 @@ The script **does not rerun the two original optimizations**. If the new solver 
 Keep the actual result private until `three_case_comparison.json` is inspected. A passing result is not a carbon shadow price, global IAM result, independent reproduction or source-authenticated scientific publication.
 
 Docs: [ixmp clone across platforms](https://docs.messageix.org/projects/ixmp/en/stable/api.html) and [MESSAGEix model core](https://docs.messageix.org/en/v3.11.1/model/MESSAGE/model_core.html).
+
+## ixmp 3.11.1 cross-platform clone compatibility (2026-10-24)
+
+The first real control attempt **failed before GAMS execution** with:
+
+```text
+NotImplementedError: Cross-platform clone of message_ix.Scenario with `keep_solution=False`
+```
+
+This is an explicit ixmp JDBC backend limitation. The runner is now fixed to perform `clone(..., platform=dst, keep_solution=True)`, call `clone.remove_solution()` **on the isolated destination**, assert the saved solution was actually cleared, and only then `check_out()`. It also calls `remove_par("bound_emission", existing_rows)` to remove **parameter rows only**. Passing no rows (`remove_par("bound_emission")`) would delete the parameter definition and is unsafe for MESSAGEix.
+
+The regression fixture now models the JDBC rejection of `keep_solution=False` and tests the copy-clear-edit ordering. **The corrected cross-platform path still needs to pass a real local GAMS attempt**. The earlier failed attempt has `FAILED_NOT_VERIFIED` status in its own timestamped private folder; do not interpret it as a solver failure. Each retry creates a different timestamped directory, leaving original scenarios untouched.
