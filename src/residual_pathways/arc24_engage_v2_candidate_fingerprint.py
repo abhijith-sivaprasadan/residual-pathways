@@ -21,6 +21,7 @@ import csv
 from decimal import Decimal
 from hashlib import sha256
 import json
+import re
 from pathlib import Path
 
 from .arc24_engage_v2_probe import (
@@ -35,6 +36,11 @@ class FingerprintError(ValueError):
     pass
 
 
+def is_poles_model(model):
+    # Token match, not a substring: NONPOLES must not count as POLES.
+    return re.search(r'(?<![a-z])poles(?![a-z])', model.casefold()) is not None
+
+
 def candidate_groups(pairs):
     """Register all exact-scenario controls and all source POLES family pairs."""
     pairset=set(pairs)
@@ -45,7 +51,7 @@ def candidate_groups(pairs):
         )
         for pair in pairset
         for model, scenario in (pair,)
-        if scenario == SCENARIO or "poles" in model.casefold()
+        if scenario == SCENARIO or is_poles_model(model)
     }
 
 
@@ -126,7 +132,7 @@ def fingerprint(original, candidates, pairs):
             "original_scenario":pair[1],
             "candidate_group":groups[pair],
             "exact_scenario_name":pair[1]==SCENARIO,
-            "poles_model_label":"poles" in pair[0].casefold(),
+            "poles_model_label":is_poles_model(pair[0]),
             "source_decimal_compared":compared,
             "source_decimal_exact":exact,
             "source_decimal_nonzero_exact":nonzero,
