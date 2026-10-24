@@ -4,3 +4,15 @@
 @media(max-width:1100px){.shell{grid-template-columns:218px minmax(0,1fr)}.sidebar{padding-left:10px;padding-right:10px}.layout-main{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.level-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout-two{grid-template-columns:1fr}}
 @media(max-width:720px){.shell{display:block}.sidebar{position:relative;height:auto;padding:12px 15px;display:block}.logo{padding:5px 4px 12px}.side-label,.sidebar .second,.external,.side-footer{display:none}.sidebar nav{display:flex;overflow:auto;padding-bottom:4px;scrollbar-width:thin}.nav{min-width:max-content;padding:9px}.nav b{display:none}.top{height:auto;padding:12px 18px;gap:10px;flex-wrap:wrap}.top-end{gap:12px;flex-wrap:wrap}.context-strip{flex-wrap:wrap}.context-strip small{margin-left:0;width:100%}main{padding:27px 17px 50px}.kpi-grid,.layout-two,.layout-main,.level-grid,.variables{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi{padding:15px;min-height:125px}.kpi strong{font-size:29px}.card{padding:19px}.hero h1{font-size:46px}.hero p{font-size:13px}.bar-row{grid-template-columns:26px 1fr 59px;gap:7px}.horizontal-bars .record{grid-template-columns:1fr;gap:5px}.record .rec-value{text-align:left}.n2o-row{grid-template-columns:23px 1fr 59px}.tabs button{font-size:10px}.card-heading{flex-wrap:wrap}.crumb{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+/* Source-linked innovation hypothesis library */
+.filters input[type="search"]{width:100%;height:43px;border:1px solid #dbe5ef;border-radius:5px;background:#f9fbfd;color:#274c6e;padding:0 13px;font-size:12px;font-weight:600;min-width:200px}
+.innovation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin-bottom:19px}
+.innovation-card{display:flex;flex-direction:column;min-height:285px}
+.innovation-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;color:#4b87ac;font-size:10px;letter-spacing:.11em;font-weight:800}
+.innovation-card h2{font-family:"DM Serif Display",Georgia,serif;font-size:25px;font-weight:400;line-height:1.22;margin:19px 0 11px;color:#274e70}
+.innovation-card>p{margin:0 0 20px;font-size:12px;color:#6d8196;line-height:1.7}
+.innovation-caution{border-top:1px solid #e8eff5;padding:14px 0;display:grid;gap:6px;margin-top:auto}
+.innovation-caution strong{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#4a718e}
+.innovation-caution span{font-size:11px;color:#8294a5;line-height:1.6}
+.innovation-card .linklike{margin-top:4px}
+@media(max-width:720px){.innovation-grid{grid-template-columns:1fr}}
