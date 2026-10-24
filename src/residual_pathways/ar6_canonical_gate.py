@@ -173,6 +173,11 @@ def source_gate(world, metadata, private_packet, public_output, private_output, 
     world_hash = sha_file(world)
     metadata_hash = sha_file(metadata)
     source_origin = "USER_SUPPLIED_LOCAL_FILES_ORIGIN_NOT_INDEPENDENTLY_VERIFIED"
+    teaching_origin_hash = packet.get("source_sha256")
+    teaching_metadata_hash = packet.get("metadata_sha256")
+    if teaching_origin_hash is not None and (
+            type(teaching_origin_hash) is not str or len(teaching_origin_hash) != 64):
+        raise CaseAuditError("Invalid teaching-source digest in original private packet")
     public = {
         "schema": "residualpathways.ar6_canonical_rp24_gate.v1",
         "status": "LOCAL_FILE_HASHED_ORIGIN_NOT_AUTHENTICATED",
@@ -181,6 +186,9 @@ def source_gate(world, metadata, private_packet, public_output, private_output, 
         "source_home": SOURCE_HOME,
         "world_sha256": world_hash,
         "metadata_sha256": metadata_hash,
+        "teaching_source_sha256": teaching_origin_hash,
+        "teaching_metadata_sha256": teaching_metadata_hash,
+        "private_rp24_packet_sha256": sha_file(packet_file),
         "world_bytes": world.stat().st_size,
         "metadata_bytes": metadata.stat().st_size,
         "source_rows_read": rows,
