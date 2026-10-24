@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f9fc"><meta name="description" content="A source-grounded atlas of global mitigation pathway reporting, uncertainty and model evidence.">
 <title>Residual Pathways Atlas</title>
-<link rel="stylesheet" href="./styles.css"><script type="module" src="./app.js"></script>
+<link rel="stylesheet" href="./styles.css"><script type="module" src="./app.js"></script><script type="module" src="./coverage-release.js"></script>
 </head><body>
 <a class="skip" href="#content">Skip to content</a>
 <div class="shell">
@@ -44,6 +44,12 @@
 </section>
 <section class="view" id="coverage" hidden><div class="page-head"><div class="eyebrow"><span></span> IPCC AR6 / WORLD REGION</div><h1>Scenario coverage</h1><p>Climate-vetted model–scenario records with explicit reported values in 2050. Zero is counted as reported; missing remains missing.</p></div>
 <div class="filters card"><label>REPORTED VARIABLES <select id="coverage-metric"><option value="dac">Direct air capture</option><option value="six">Six candidate variables together</option><option value="eipLand">EIP / AFOLU / land / BECCS / DAC</option><option value="sixPlus">Previous set and fossil CCS</option><option value="co2">Net CO₂</option></select></label><label>DISPLAY <select id="coverage-mode"><option value="percentage">Reporting share (%)</option><option value="count">Reporting count</option></select></label><button class="outline-btn" id="coverage-download">↓ DOWNLOAD CSV</button></div>
+<article class="card" id="coverage-release-panel" aria-label="Four-year scientific coverage release">
+<div class="card-heading"><div><div class="eyebrow tiny">OPTIONAL REPRODUCIBLE COVERAGE / 2030–2100</div><h2>Four-year reporting explorer</h2><p>Read from a checksummed coverage-only artifact when a source-audited release is available</p></div><span class="pill">REVIEW PENDING</span></div>
+<p id="coverage-release-status" class="fine" aria-live="polite">Checking for a frozen, checksum-verified public coverage release…</p>
+<div class="filters" id="coverage-release-controls" hidden><label>YEAR <select id="release-year"></select></label><label>EXACT REPORTED VARIABLE <select id="release-variable"></select></label><label>WEIGHTING <select id="release-weighting"><option value="scenario">Scenario-weighted</option><option value="model">Exact model-label-balanced</option></select></label></div>
+<div class="coverage-bars" id="release-chart"></div><p class="fine" id="release-detail">No independent physical I3 classification is inferred from variable presence.</p>
+</article>
 <div class="layout-main"><article class="card"><div class="card-heading"><div><div class="eyebrow tiny">C1–C8 / 2050</div><h2 id="coverage-title">Reporting coverage</h2></div></div><div id="coverage-bars" class="coverage-bars tall"></div></article><article class="card"><div class="eyebrow tiny">SELECTED METRIC</div><div id="coverage-big" class="massive numerical">—</div><h2 id="coverage-description">Cases reporting field</h2><div class="progress-bg"><span id="coverage-progress"></span></div><p class="muted">Share of 1,202 climate-vetted World model–scenario pairs.</p><p class="fine">Reported presence is never a physical gross/CDR accounting pass.</p></article></div>
 <article class="card"><div class="card-heading"><div><div class="eyebrow tiny">ORIGINAL CATEGORY COUNTS</div><h2>Source-data table</h2></div></div><div class="tablewrap"><table><thead><tr><th>Category</th><th>Eligible</th><th>Reported</th><th>Not reported</th><th>Share</th></tr></thead><tbody id="coverage-table"></tbody></table></div></article>
 <article class="card"><div class="card-heading"><div><div class="eyebrow tiny">SOURCE INVENTORY</div><h2>Available variable labels</h2><p>Across all 2,298 World scenario pairs, including non-vetted records</p></div></div><div id="variables" class="variables"></div></article></section>

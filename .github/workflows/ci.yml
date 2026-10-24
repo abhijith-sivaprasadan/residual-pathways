@@ -25,6 +25,10 @@ jobs:
           p=Path("results/environment/installed_packages.txt")
           Path("results/environment/sha256.txt").write_text(hashlib.sha256(p.read_bytes()).hexdigest()+"\n")
           PY
+      - name: Validate Atlas JavaScript (including optional four-year view)
+        run: |
+          node --check atlas/app.js
+          node --check atlas/coverage-release.js
       - name: Unit tests
         run: python -m pytest -q
       - name: Fetch official revision-pinned IAMC tutorial data
