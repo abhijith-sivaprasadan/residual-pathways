@@ -282,3 +282,38 @@ $a.study_CO2pos_vs_separate_gross_fossil_industry | Format-List
 ```
 
 **Interpretation criterion:** a successful new run may establish the authors' operational study CDR basket numerically at 2050 while still **not** establishing an exhaustive mutually exclusive physical total-emissions/CDR partition. No I3 promotion is permitted from the arithmetic definition alone.
+## 10. REAL original authors' 2050 `CDRtotal` and `CO2pos` successfully computed — 24 October 2026
+
+**Local execution evidence, not synthetic fixture:** user pulled GitHub commit `40e64e3`; **20/20 regression tests passed** across field lineage + operational accounting. Both real source-locked commands finished successfully; the earlier field-lineage reporting-only KeyError is fixed. No original raw source emissions or privately selected 2050 figures were exported.
+
+| Real 2050 source input or derived study measure | Original source provenance | Observed sign or status |
+| --- | --- | --- |
+| `Emissions|CO2` (`CO2tot`) | **Authors' MD5-verified MIF + AR6 World SHA-verified** original Decimal match | POSITIVE |
+| Rmd `CDRaff = -Regrowth` | Unique authors' raw `Emissions|CO2|Land|Land-use Change|+|Regrowth`, transformed by original Rmd `deletePlus` (absent AR6 World) | Raw signed source NEGATIVE; *derived regrowth removal* POSITIVE |
+| Enhanced weathering | Source-author and AR6 originally reported series exactly match | ZERO |
+| Biomass CCS | Source-author and AR6 originally reported series exactly match | POSITIVE |
+| Direct air capture | Source-author and AR6 originally reported series exactly match | ZERO |
+| Authors' `CDRtotal` = `-Regrowth+EW+BiomassCCS+DAC` | **All five formula operands now source-backed**; source code lines 150–155; one operand author-only | POSITIVE; `AUTHORS_EXPLICIT_FORMULA_COMPUTABLE_NOT_I3` |
+| Authors' `CO2pos` = `CO2tot+CDRtotal` | Original analysis-code line 156; now reproducible | POSITIVE |
+| `Emissions|CO2|Gross Fossil Fuels and Industry` | Unique authors' MIF original 2050 record and original Rmd source lines 193–194; **absent in AR6 World** | POSITIVE |
+| `Emissions|CO2|AFOLU` | Authors' MIF + AR6 reported-decimal matched | POSITIVE |
+| `Carbon Sequestration|Land Use` | Authors' MIF + AR6 matched; **not substituted for regrowth** | POSITIVE |
+| `Carbon Sequestration|CCS|Fossil` | Authors' MIF + AR6 matched; **not treated as atmospheric CDR** | POSITIVE |
+
+### High-value, nonzero boundary finding
+
+`study_CO2pos_vs_separate_gross_fossil_industry` status **`DIFFERENT_SCOPES_AUTHOR_GROSS_ONLY_COMPARISON`**; derived authors' `CO2pos` is **greater than** original authors' `Emissions|CO2|Gross Fossil Fuels and Industry` for ARC24-03/World/2050. Reported-decimal **difference is nonzero and at least 10%** of `max(1, abs(CO2pos), abs(gross fossil industry))`. This is a **coarse relative band**, not a share of one named gross component and not a publication of restricted numeric quantities. Both derived positive-side emissions and source Gross Fossil/Industry are positive.
+
+**Scientific reading:** The two metrics have **different declared scopes**, so equality is **not** a source-imposed equation; the ≥10% difference is **not evidence of non-closure, source rounding or a mass-conservation failure**. The boundary difference is large enough to justify an independent source-taxonomy review before ever describing `CO2pos` as physical economy-wide gross. The 2021 REMIND2.1 model description separately includes emissions from energy/industry, land use and other categories, and allows distinct CDR options; see Baumstark et al., *Geosci. Model Dev.* 14, 6571–6603 (2021), https://doi.org/10.5194/gmd-14-6571-2021, §3.4. Gross fossil-industrial CO2 by its name does not exhaust potential positive land-use emissions; however **this specific gap has NOT been decomposed into land/other source components**.
+
+Contemporaneous MAgPIE-related scientific literature, https://doi.org/10.1038/s41467-022-32540-9 (verify paper/DOI before using in publication), describes signed regrowth fluxes and positive gross land conversion emissions as distinct components. For citation-ready model attribution, verify exactly which 2021 land reporting version was used, the AFOLU netting convention and original gross fossil-sector construction from model reporting code. Do not import a later MAgPIE version's exact formulas as if author-run 2021 source semantics were independently proven.
+
+### Clear gates
+
+- **Source-series identity:** verified for the selected matching World records (the previous 4,653/4,653 author-noCDR ↔ AR6-minCDR crosswalk).
+- **Original study's operation:** **reproduced numerically** for World 2050 using primary MIF, exact Rmd formula and confirmed source-only regrowth field.
+- **Original study `CO2pos` vs independent fossil+industry gross:** numerically compared; **different boundaries, >10% positive gap**, not a required equality.
+- **Physical gross/removals closure:** **NOT VERIFIED**; anthropogenic land-regrowth additionality, gross land emissions, lifecycle/storage permanence, overlap with BECCS and carbon from fuels and other sectors require source-definition checks.
+- **Independent external I3 review:** **0**, no promotion.
+
+**Stop rule:** Do not rerun the same near-identity or broaden the scope of source-data arithmetic without new independent model/reporting definitions. The next high-ROI work is source-taxonomy investigation of `Emissions|CO2|Gross Fossil Fuels and Industry` and positive land gross fluxes, and how AFOLU net emissions and biomass/land regrowth are combined. A manuscript should report `CO2pos` as **authors' operational positive-side measure**, not certified physical economy-wide gross.
