@@ -75,6 +75,10 @@ def main():
     control = sub.add_parser("westeros-no-cap-control", help="Solve one isolated CO2-accounting control without the emissions cap")
     control.add_argument("--manifest", required=True, help="Successful original private two-scenario manifest")
     control.add_argument("--output", default="results/westeros_control_private")
+    study = sub.add_parser("westeros-case-study", help="Publish validated derived-only three-scenario figures/report (no GAMS)")
+    study.add_argument("--control-json", required=True, help="Successful private three_case_comparison.json")
+    study.add_argument("--cap-json", required=True, help="Saved cap_reconciliation.json plus adjacent SHA-256")
+    study.add_argument("--output", default="results/westeros_case_study")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -112,6 +116,14 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "westeros-case-study":
+        from .westeros_case_study import publish_case_study
+        result, inventory = publish_case_study(args.control_json, args.cap_json, args.output)
+        print("Publication gate:", result["status"])
+        print("Cap objective penalty:", result["cap_effect"]["difference_native"])
+        print("Baseline/control ACT matches:", result["baseline_control_activity_parity"])
+        print("Hashed derived files:", len(inventory["files"]))
+        print("No GAMS or ixmp used.")
     elif args.command == "westeros-no-cap-control":
         from .westeros_no_cap import run_control
         result, output_dir = run_control(args.manifest, args.output)
