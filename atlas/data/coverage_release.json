@@ -1,0 +1,4635 @@
+{
+  "categories": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8"
+  ],
+  "cohort_size": 1202,
+  "evidence": "EXACT_VARIABLE_REPORTING_PRESENCE_ONLY",
+  "i3_verified": 0,
+  "limitations": [
+    "Reporting availability is not a complete disjoint gross/negative carbon ledger",
+    "Zero independently verified I3 cases does not mean zero scientifically eligible cases",
+    "No IPCC/IIASA official authentication inferred from matching file digests",
+    "Unreviewed reporting coverage must not be renamed I0 without a source-based insufficiency determination",
+    "Underlying source rows and named Model/Scenario identities excluded from this artifact"
+  ],
+  "metadata_concordance_status": "DIFFERENCES_RECORDED",
+  "metadata_sheet": "meta_Ch3vetted_withclimate",
+  "physical_accounting": "NOT_ESTABLISHED",
+  "records": [
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.6513888888888889,
+      "model_labels": 24,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9002923976608187,
+      "model_labels": 24,
+      "reporting": 81,
+      "scenario_fraction": 0.8350515463917526,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 95,
+      "scenario_fraction": 0.979381443298969,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.27456140350877195,
+      "model_labels": 24,
+      "reporting": 38,
+      "scenario_fraction": 0.3917525773195876,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5324195906432749,
+      "model_labels": 24,
+      "reporting": 64,
+      "scenario_fraction": 0.6597938144329897,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.1912280701754386,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.32989690721649484,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.6967592592592592,
+      "model_labels": 24,
+      "reporting": 110,
+      "scenario_fraction": 0.8270676691729323,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.798611111111111,
+      "model_labels": 24,
+      "reporting": 112,
+      "scenario_fraction": 0.8421052631578947,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 123,
+      "scenario_fraction": 0.924812030075188,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.38888888888888884,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.24060150375939848,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.5925925925925927,
+      "model_labels": 24,
+      "reporting": 82,
+      "scenario_fraction": 0.6165413533834586,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.2222222222222222,
+      "model_labels": 24,
+      "reporting": 22,
+      "scenario_fraction": 0.16541353383458646,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.6654040404040404,
+      "model_labels": 32,
+      "reporting": 266,
+      "scenario_fraction": 0.8553054662379421,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.96875,
+      "model_labels": 32,
+      "reporting": 308,
+      "scenario_fraction": 0.9903536977491961,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.8360628342245989,
+      "model_labels": 32,
+      "reporting": 269,
+      "scenario_fraction": 0.864951768488746,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 298,
+      "scenario_fraction": 0.9581993569131833,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.2775735294117647,
+      "model_labels": 32,
+      "reporting": 127,
+      "scenario_fraction": 0.40836012861736337,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 305,
+      "scenario_fraction": 0.9807073954983923,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.4607564616755794,
+      "model_labels": 32,
+      "reporting": 198,
+      "scenario_fraction": 0.6366559485530546,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.15257352941176472,
+      "model_labels": 32,
+      "reporting": 66,
+      "scenario_fraction": 0.21221864951768488,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.6952380952380953,
+      "model_labels": 24,
+      "reporting": 132,
+      "scenario_fraction": 0.8301886792452831,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.8250000000000001,
+      "model_labels": 24,
+      "reporting": 147,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9166666666666666,
+      "model_labels": 24,
+      "reporting": 150,
+      "scenario_fraction": 0.9433962264150944,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.25,
+      "model_labels": 24,
+      "reporting": 57,
+      "scenario_fraction": 0.3584905660377358,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 156,
+      "scenario_fraction": 0.9811320754716981,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.42949735449735443,
+      "model_labels": 24,
+      "reporting": 109,
+      "scenario_fraction": 0.6855345911949685,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.041666666666666664,
+      "model_labels": 24,
+      "reporting": 6,
+      "scenario_fraction": 0.03773584905660377,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.6833333333333332,
+      "model_labels": 24,
+      "reporting": 182,
+      "scenario_fraction": 0.8584905660377359,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9564014202172096,
+      "model_labels": 24,
+      "reporting": 196,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 207,
+      "scenario_fraction": 0.9764150943396226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.24780701754385967,
+      "model_labels": 24,
+      "reporting": 87,
+      "scenario_fraction": 0.41037735849056606,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.5275793650793651,
+      "model_labels": 24,
+      "reporting": 158,
+      "scenario_fraction": 0.7452830188679245,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.08114035087719297,
+      "model_labels": 24,
+      "reporting": 25,
+      "scenario_fraction": 0.1179245283018868,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.7391304347826086,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8200483091787439,
+      "model_labels": 23,
+      "reporting": 84,
+      "scenario_fraction": 0.865979381443299,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8913043478260869,
+      "model_labels": 23,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.30434782608695654,
+      "model_labels": 23,
+      "reporting": 42,
+      "scenario_fraction": 0.4329896907216495,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5434782608695652,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.13043478260869565,
+      "model_labels": 23,
+      "reporting": 13,
+      "scenario_fraction": 0.13402061855670103,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6615942028985506,
+      "model_labels": 40,
+      "reporting": 96,
+      "scenario_fraction": 0.5853658536585366,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.975,
+      "model_labels": 40,
+      "reporting": 156,
+      "scenario_fraction": 0.9512195121951219,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6481266469038207,
+      "model_labels": 40,
+      "reporting": 106,
+      "scenario_fraction": 0.6463414634146342,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.8125,
+      "model_labels": 40,
+      "reporting": 151,
+      "scenario_fraction": 0.9207317073170732,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.240625,
+      "model_labels": 40,
+      "reporting": 32,
+      "scenario_fraction": 0.1951219512195122,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.95,
+      "model_labels": 40,
+      "reporting": 153,
+      "scenario_fraction": 0.9329268292682927,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.4141304347826087,
+      "model_labels": 40,
+      "reporting": 86,
+      "scenario_fraction": 0.524390243902439,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.140625,
+      "model_labels": 40,
+      "reporting": 19,
+      "scenario_fraction": 0.11585365853658537,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.9090909090909091,
+      "model_labels": 11,
+      "reporting": 26,
+      "scenario_fraction": 0.896551724137931,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.7402597402597402,
+      "model_labels": 11,
+      "reporting": 19,
+      "scenario_fraction": 0.6551724137931034,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.37662337662337664,
+      "model_labels": 11,
+      "reporting": 8,
+      "scenario_fraction": 0.27586206896551724,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2030
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2030
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.6513888888888889,
+      "model_labels": 24,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9002923976608187,
+      "model_labels": 24,
+      "reporting": 81,
+      "scenario_fraction": 0.8350515463917526,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 95,
+      "scenario_fraction": 0.979381443298969,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.27456140350877195,
+      "model_labels": 24,
+      "reporting": 38,
+      "scenario_fraction": 0.3917525773195876,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5324195906432749,
+      "model_labels": 24,
+      "reporting": 64,
+      "scenario_fraction": 0.6597938144329897,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.1912280701754386,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.32989690721649484,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.6967592592592592,
+      "model_labels": 24,
+      "reporting": 110,
+      "scenario_fraction": 0.8270676691729323,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.798611111111111,
+      "model_labels": 24,
+      "reporting": 112,
+      "scenario_fraction": 0.8421052631578947,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 123,
+      "scenario_fraction": 0.924812030075188,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.38888888888888884,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.24060150375939848,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.5925925925925927,
+      "model_labels": 24,
+      "reporting": 82,
+      "scenario_fraction": 0.6165413533834586,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.2222222222222222,
+      "model_labels": 24,
+      "reporting": 22,
+      "scenario_fraction": 0.16541353383458646,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.6654040404040404,
+      "model_labels": 32,
+      "reporting": 266,
+      "scenario_fraction": 0.8553054662379421,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.96875,
+      "model_labels": 32,
+      "reporting": 308,
+      "scenario_fraction": 0.9903536977491961,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.8360628342245989,
+      "model_labels": 32,
+      "reporting": 269,
+      "scenario_fraction": 0.864951768488746,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 298,
+      "scenario_fraction": 0.9581993569131833,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.2775735294117647,
+      "model_labels": 32,
+      "reporting": 127,
+      "scenario_fraction": 0.40836012861736337,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 305,
+      "scenario_fraction": 0.9807073954983923,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.4607564616755794,
+      "model_labels": 32,
+      "reporting": 198,
+      "scenario_fraction": 0.6366559485530546,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.15257352941176472,
+      "model_labels": 32,
+      "reporting": 66,
+      "scenario_fraction": 0.21221864951768488,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.6952380952380953,
+      "model_labels": 24,
+      "reporting": 132,
+      "scenario_fraction": 0.8301886792452831,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.8250000000000001,
+      "model_labels": 24,
+      "reporting": 147,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9166666666666666,
+      "model_labels": 24,
+      "reporting": 150,
+      "scenario_fraction": 0.9433962264150944,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.25,
+      "model_labels": 24,
+      "reporting": 57,
+      "scenario_fraction": 0.3584905660377358,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 156,
+      "scenario_fraction": 0.9811320754716981,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.42949735449735443,
+      "model_labels": 24,
+      "reporting": 109,
+      "scenario_fraction": 0.6855345911949685,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.041666666666666664,
+      "model_labels": 24,
+      "reporting": 6,
+      "scenario_fraction": 0.03773584905660377,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.6833333333333332,
+      "model_labels": 24,
+      "reporting": 182,
+      "scenario_fraction": 0.8584905660377359,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9564014202172096,
+      "model_labels": 24,
+      "reporting": 196,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 207,
+      "scenario_fraction": 0.9764150943396226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.24780701754385967,
+      "model_labels": 24,
+      "reporting": 87,
+      "scenario_fraction": 0.41037735849056606,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.5275793650793651,
+      "model_labels": 24,
+      "reporting": 158,
+      "scenario_fraction": 0.7452830188679245,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.08114035087719297,
+      "model_labels": 24,
+      "reporting": 25,
+      "scenario_fraction": 0.1179245283018868,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.7391304347826086,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8200483091787439,
+      "model_labels": 23,
+      "reporting": 84,
+      "scenario_fraction": 0.865979381443299,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8913043478260869,
+      "model_labels": 23,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.30434782608695654,
+      "model_labels": 23,
+      "reporting": 42,
+      "scenario_fraction": 0.4329896907216495,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5434782608695652,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.13043478260869565,
+      "model_labels": 23,
+      "reporting": 13,
+      "scenario_fraction": 0.13402061855670103,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6615942028985506,
+      "model_labels": 40,
+      "reporting": 96,
+      "scenario_fraction": 0.5853658536585366,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.975,
+      "model_labels": 40,
+      "reporting": 156,
+      "scenario_fraction": 0.9512195121951219,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6481266469038207,
+      "model_labels": 40,
+      "reporting": 106,
+      "scenario_fraction": 0.6463414634146342,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.8125,
+      "model_labels": 40,
+      "reporting": 151,
+      "scenario_fraction": 0.9207317073170732,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.240625,
+      "model_labels": 40,
+      "reporting": 32,
+      "scenario_fraction": 0.1951219512195122,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.95,
+      "model_labels": 40,
+      "reporting": 153,
+      "scenario_fraction": 0.9329268292682927,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.4141304347826087,
+      "model_labels": 40,
+      "reporting": 86,
+      "scenario_fraction": 0.524390243902439,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.140625,
+      "model_labels": 40,
+      "reporting": 19,
+      "scenario_fraction": 0.11585365853658537,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.9090909090909091,
+      "model_labels": 11,
+      "reporting": 26,
+      "scenario_fraction": 0.896551724137931,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.7402597402597402,
+      "model_labels": 11,
+      "reporting": 19,
+      "scenario_fraction": 0.6551724137931034,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.37662337662337664,
+      "model_labels": 11,
+      "reporting": 8,
+      "scenario_fraction": 0.27586206896551724,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2050
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2050
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.6513888888888889,
+      "model_labels": 24,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9002923976608187,
+      "model_labels": 24,
+      "reporting": 81,
+      "scenario_fraction": 0.8350515463917526,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 95,
+      "scenario_fraction": 0.979381443298969,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.27456140350877195,
+      "model_labels": 24,
+      "reporting": 38,
+      "scenario_fraction": 0.3917525773195876,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5324195906432749,
+      "model_labels": 24,
+      "reporting": 64,
+      "scenario_fraction": 0.6597938144329897,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.1912280701754386,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.32989690721649484,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.6967592592592592,
+      "model_labels": 24,
+      "reporting": 110,
+      "scenario_fraction": 0.8270676691729323,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.798611111111111,
+      "model_labels": 24,
+      "reporting": 112,
+      "scenario_fraction": 0.8421052631578947,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 123,
+      "scenario_fraction": 0.924812030075188,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.38888888888888884,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.24060150375939848,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.5925925925925927,
+      "model_labels": 24,
+      "reporting": 82,
+      "scenario_fraction": 0.6165413533834586,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.2222222222222222,
+      "model_labels": 24,
+      "reporting": 22,
+      "scenario_fraction": 0.16541353383458646,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.6654040404040404,
+      "model_labels": 32,
+      "reporting": 266,
+      "scenario_fraction": 0.8553054662379421,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.96875,
+      "model_labels": 32,
+      "reporting": 308,
+      "scenario_fraction": 0.9903536977491961,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.8360628342245989,
+      "model_labels": 32,
+      "reporting": 269,
+      "scenario_fraction": 0.864951768488746,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 298,
+      "scenario_fraction": 0.9581993569131833,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.2775735294117647,
+      "model_labels": 32,
+      "reporting": 127,
+      "scenario_fraction": 0.40836012861736337,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 305,
+      "scenario_fraction": 0.9807073954983923,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.4607564616755794,
+      "model_labels": 32,
+      "reporting": 198,
+      "scenario_fraction": 0.6366559485530546,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.15257352941176472,
+      "model_labels": 32,
+      "reporting": 66,
+      "scenario_fraction": 0.21221864951768488,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.6952380952380953,
+      "model_labels": 24,
+      "reporting": 132,
+      "scenario_fraction": 0.8301886792452831,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.8250000000000001,
+      "model_labels": 24,
+      "reporting": 147,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9166666666666666,
+      "model_labels": 24,
+      "reporting": 150,
+      "scenario_fraction": 0.9433962264150944,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.25,
+      "model_labels": 24,
+      "reporting": 57,
+      "scenario_fraction": 0.3584905660377358,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 156,
+      "scenario_fraction": 0.9811320754716981,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.42949735449735443,
+      "model_labels": 24,
+      "reporting": 109,
+      "scenario_fraction": 0.6855345911949685,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.041666666666666664,
+      "model_labels": 24,
+      "reporting": 6,
+      "scenario_fraction": 0.03773584905660377,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.6833333333333332,
+      "model_labels": 24,
+      "reporting": 182,
+      "scenario_fraction": 0.8584905660377359,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9564014202172096,
+      "model_labels": 24,
+      "reporting": 196,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 207,
+      "scenario_fraction": 0.9764150943396226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.24780701754385967,
+      "model_labels": 24,
+      "reporting": 87,
+      "scenario_fraction": 0.41037735849056606,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.5275793650793651,
+      "model_labels": 24,
+      "reporting": 158,
+      "scenario_fraction": 0.7452830188679245,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.08114035087719297,
+      "model_labels": 24,
+      "reporting": 25,
+      "scenario_fraction": 0.1179245283018868,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.7391304347826086,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8200483091787439,
+      "model_labels": 23,
+      "reporting": 84,
+      "scenario_fraction": 0.865979381443299,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8913043478260869,
+      "model_labels": 23,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.30434782608695654,
+      "model_labels": 23,
+      "reporting": 42,
+      "scenario_fraction": 0.4329896907216495,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5434782608695652,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.13043478260869565,
+      "model_labels": 23,
+      "reporting": 13,
+      "scenario_fraction": 0.13402061855670103,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6615942028985506,
+      "model_labels": 40,
+      "reporting": 96,
+      "scenario_fraction": 0.5853658536585366,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.975,
+      "model_labels": 40,
+      "reporting": 156,
+      "scenario_fraction": 0.9512195121951219,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6481266469038207,
+      "model_labels": 40,
+      "reporting": 106,
+      "scenario_fraction": 0.6463414634146342,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.8125,
+      "model_labels": 40,
+      "reporting": 151,
+      "scenario_fraction": 0.9207317073170732,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.240625,
+      "model_labels": 40,
+      "reporting": 32,
+      "scenario_fraction": 0.1951219512195122,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.95,
+      "model_labels": 40,
+      "reporting": 153,
+      "scenario_fraction": 0.9329268292682927,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.4141304347826087,
+      "model_labels": 40,
+      "reporting": 86,
+      "scenario_fraction": 0.524390243902439,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.140625,
+      "model_labels": 40,
+      "reporting": 19,
+      "scenario_fraction": 0.11585365853658537,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.9090909090909091,
+      "model_labels": 11,
+      "reporting": 26,
+      "scenario_fraction": 0.896551724137931,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.7402597402597402,
+      "model_labels": 11,
+      "reporting": 19,
+      "scenario_fraction": 0.6551724137931034,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.37662337662337664,
+      "model_labels": 11,
+      "reporting": 8,
+      "scenario_fraction": 0.27586206896551724,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2070
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2070
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.6513888888888889,
+      "model_labels": 24,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9002923976608187,
+      "model_labels": 24,
+      "reporting": 81,
+      "scenario_fraction": 0.8350515463917526,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 95,
+      "scenario_fraction": 0.979381443298969,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.27456140350877195,
+      "model_labels": 24,
+      "reporting": 38,
+      "scenario_fraction": 0.3917525773195876,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5324195906432749,
+      "model_labels": 24,
+      "reporting": 64,
+      "scenario_fraction": 0.6597938144329897,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C1",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.1912280701754386,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.32989690721649484,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.6967592592592592,
+      "model_labels": 24,
+      "reporting": 110,
+      "scenario_fraction": 0.8270676691729323,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.798611111111111,
+      "model_labels": 24,
+      "reporting": 112,
+      "scenario_fraction": 0.8421052631578947,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 123,
+      "scenario_fraction": 0.924812030075188,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.38888888888888884,
+      "model_labels": 24,
+      "reporting": 32,
+      "scenario_fraction": 0.24060150375939848,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 133,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.5925925925925927,
+      "model_labels": 24,
+      "reporting": 82,
+      "scenario_fraction": 0.6165413533834586,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C2",
+      "denominator": 133,
+      "model_label_balanced_fraction": 0.2222222222222222,
+      "model_labels": 24,
+      "reporting": 22,
+      "scenario_fraction": 0.16541353383458646,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.6654040404040404,
+      "model_labels": 32,
+      "reporting": 266,
+      "scenario_fraction": 0.8553054662379421,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.96875,
+      "model_labels": 32,
+      "reporting": 308,
+      "scenario_fraction": 0.9903536977491961,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.8360628342245989,
+      "model_labels": 32,
+      "reporting": 269,
+      "scenario_fraction": 0.864951768488746,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 298,
+      "scenario_fraction": 0.9581993569131833,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.2775735294117647,
+      "model_labels": 32,
+      "reporting": 127,
+      "scenario_fraction": 0.40836012861736337,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 32,
+      "reporting": 311,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.9375,
+      "model_labels": 32,
+      "reporting": 305,
+      "scenario_fraction": 0.9807073954983923,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.4607564616755794,
+      "model_labels": 32,
+      "reporting": 198,
+      "scenario_fraction": 0.6366559485530546,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C3",
+      "denominator": 311,
+      "model_label_balanced_fraction": 0.15257352941176472,
+      "model_labels": 32,
+      "reporting": 66,
+      "scenario_fraction": 0.21221864951768488,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.6952380952380953,
+      "model_labels": 24,
+      "reporting": 132,
+      "scenario_fraction": 0.8301886792452831,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.8250000000000001,
+      "model_labels": 24,
+      "reporting": 147,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9166666666666666,
+      "model_labels": 24,
+      "reporting": 150,
+      "scenario_fraction": 0.9433962264150944,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.25,
+      "model_labels": 24,
+      "reporting": 57,
+      "scenario_fraction": 0.3584905660377358,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 159,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 156,
+      "scenario_fraction": 0.9811320754716981,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.42949735449735443,
+      "model_labels": 24,
+      "reporting": 109,
+      "scenario_fraction": 0.6855345911949685,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C4",
+      "denominator": 159,
+      "model_label_balanced_fraction": 0.041666666666666664,
+      "model_labels": 24,
+      "reporting": 6,
+      "scenario_fraction": 0.03773584905660377,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.6833333333333332,
+      "model_labels": 24,
+      "reporting": 182,
+      "scenario_fraction": 0.8584905660377359,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9564014202172096,
+      "model_labels": 24,
+      "reporting": 196,
+      "scenario_fraction": 0.9245283018867925,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.9583333333333334,
+      "model_labels": 24,
+      "reporting": 207,
+      "scenario_fraction": 0.9764150943396226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.24780701754385967,
+      "model_labels": 24,
+      "reporting": 87,
+      "scenario_fraction": 0.41037735849056606,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 24,
+      "reporting": 212,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.5275793650793651,
+      "model_labels": 24,
+      "reporting": 158,
+      "scenario_fraction": 0.7452830188679245,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C5",
+      "denominator": 212,
+      "model_label_balanced_fraction": 0.08114035087719297,
+      "model_labels": 24,
+      "reporting": 25,
+      "scenario_fraction": 0.1179245283018868,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.7391304347826086,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8200483091787439,
+      "model_labels": 23,
+      "reporting": 84,
+      "scenario_fraction": 0.865979381443299,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.8913043478260869,
+      "model_labels": 23,
+      "reporting": 92,
+      "scenario_fraction": 0.9484536082474226,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.30434782608695654,
+      "model_labels": 23,
+      "reporting": 42,
+      "scenario_fraction": 0.4329896907216495,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 23,
+      "reporting": 97,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.9565217391304348,
+      "model_labels": 23,
+      "reporting": 96,
+      "scenario_fraction": 0.9896907216494846,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.5434782608695652,
+      "model_labels": 23,
+      "reporting": 78,
+      "scenario_fraction": 0.8041237113402062,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C6",
+      "denominator": 97,
+      "model_label_balanced_fraction": 0.13043478260869565,
+      "model_labels": 23,
+      "reporting": 13,
+      "scenario_fraction": 0.13402061855670103,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6615942028985506,
+      "model_labels": 40,
+      "reporting": 96,
+      "scenario_fraction": 0.5853658536585366,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.975,
+      "model_labels": 40,
+      "reporting": 156,
+      "scenario_fraction": 0.9512195121951219,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.6481266469038207,
+      "model_labels": 40,
+      "reporting": 106,
+      "scenario_fraction": 0.6463414634146342,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.8125,
+      "model_labels": 40,
+      "reporting": 151,
+      "scenario_fraction": 0.9207317073170732,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.240625,
+      "model_labels": 40,
+      "reporting": 32,
+      "scenario_fraction": 0.1951219512195122,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 40,
+      "reporting": 164,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.95,
+      "model_labels": 40,
+      "reporting": 153,
+      "scenario_fraction": 0.9329268292682927,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.4141304347826087,
+      "model_labels": 40,
+      "reporting": 86,
+      "scenario_fraction": 0.524390243902439,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C7",
+      "denominator": 164,
+      "model_label_balanced_fraction": 0.140625,
+      "model_labels": 40,
+      "reporting": 19,
+      "scenario_fraction": 0.11585365853658537,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.9090909090909091,
+      "model_labels": 11,
+      "reporting": 26,
+      "scenario_fraction": 0.896551724137931,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|AFOLU",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.7402597402597402,
+      "model_labels": 11,
+      "reporting": 19,
+      "scenario_fraction": 0.6551724137931034,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Fossil",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|CCS|Biomass",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Direct Air Capture",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CH4/yr"
+      ],
+      "variable": "Emissions|CH4",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "kt N2O/yr"
+      ],
+      "variable": "Emissions|N2O",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 1.0,
+      "model_labels": 11,
+      "reporting": 29,
+      "scenario_fraction": 1.0,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Emissions|CO2|Energy and Industrial Processes",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.37662337662337664,
+      "model_labels": 11,
+      "reporting": 8,
+      "scenario_fraction": 0.27586206896551724,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Land Use",
+      "year": 2100
+    },
+    {
+      "category": "C8",
+      "denominator": 29,
+      "model_label_balanced_fraction": 0.18181818181818182,
+      "model_labels": 11,
+      "reporting": 7,
+      "scenario_fraction": 0.2413793103448276,
+      "units": [
+        "Mt CO2/yr"
+      ],
+      "variable": "Carbon Sequestration|Enhanced Weathering",
+      "year": 2100
+    }
+  ],
+  "schema": "residualpathways.coverage-only.v1",
+  "science_review_state": "REVIEW_PENDING",
+  "scope": "World / climate-vetted C1-C8 / four years",
+  "sha256": {
+    "metadata_xlsx": "fd1bc32db8463769e18f0560ced603a49598c12e1abfa06787ff763c55f06716",
+    "world_csv": "4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977"
+  },
+  "source_authentication": "LOCAL_FINGERPRINT_ONLY_PUBLISHER_RECEIPT_NOT_INDEPENDENTLY_VERIFIED",
+  "variables": [
+    "Emissions|CO2",
+    "Emissions|CO2|Energy",
+    "Emissions|CO2|AFOLU",
+    "Carbon Sequestration|CCS|Fossil",
+    "Carbon Sequestration|CCS|Biomass",
+    "Carbon Sequestration|Direct Air Capture",
+    "Emissions|CH4",
+    "Emissions|N2O",
+    "Emissions|CO2|Energy and Industrial Processes",
+    "Carbon Sequestration|Land Use",
+    "Carbon Sequestration|Enhanced Weathering"
+  ],
+  "version": "0.1.0-candidate",
+  "weighting": {
+    "model_label_balanced": "Mean of within-exact-model-label reporting fractions. NOT a model-family estimate.",
+    "scenario": "Share of model-scenario records in the selected climate category"
+  },
+  "years": [
+    2030,
+    2050,
+    2070,
+    2100
+  ]
+}
