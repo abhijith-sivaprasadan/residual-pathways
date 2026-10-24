@@ -152,3 +152,43 @@ $review | Select-Object candidate_count, top_numerical_score_tie_count, top_two_
 ~~~
 
 **Evidence policy:** If one source candidate is numerically distinctive with substantial *nonzero* matched fields across 2050 and surrounding years, label it `NUMERICAL_CORRESPONDENCE_CANDIDATE` only. Obtain an original model-author or export-metadata confirmation to validate the label/version transition. The source-defined `Emissions|CO2|Other` may be algebraic; source-series correspondence does not establish independent gross-positive sector flows, storage net durability, original rounding precision or I3 physical accounting.
+
+## G. Real-source adjudication: 52/55 exact, decisive control gap (author-run 24 October 2026)
+
+The author's subsequent local `arc24_engage_v2_fingerprint_adjudication` run passed **all five tests** and examined the 76 registered original ENGAGE v2.0 candidates. Unlike the preliminary aggregated fingerprint, this result includes the actual comparable source denominator and crossed-control separation.
+
+| Source fingerprint field | Numerically leading source pair | Next-highest pair |
+| --- | ---: | ---: |
+| Original-decimal cells with matching Variable/Unit/Year | 55 | 55 |
+| Exactly equal reported-decimal values | **52** | **2** |
+| Exactly equal **nonzero** values | **51** | **1** |
+| Numerically different comparable observations | **3** | **53** |
+| AR6 or ENGAGE source cells unavailable/noncomparable | 0 | 0 |
+| Original scenario label equal to AR6? | **Yes** | No |
+| POLES-token model label? | **Yes** | Yes |
+
+The leading original source pair is the **only** candidate with at least 40 exact nonzero observations, and its ranking is unique (no numerical tie). The top result is `EXACT_SCENARIO_OTHER_MODEL`, meaning the same exact scenario label is present under a **different POLES-containing model label**. The matched 51 nonzero observations occur across all eleven examined source-variable names. There is a 50-cell gap in both total exact and nonzero exact matches to the next-closest candidate.
+
+**Evidence interpretation:** the two registered datasets contain a uniquely strong **numerical-correspondence candidate** for ARC24-06, across the specifically defined 11 variables and 5 selected years. This is not a statistical probability, a confirmed historical model rename, or proof of identical export settings. Even 52 exact reported decimals can reflect shared underlying scenario data with three version, postprocessing, reporting-precision or other differences. The exact causes of the three differences are **not yet known** and must not be assumed to be rounding.
+
+[Publicly maintained IAMC-Documentation POLES model page](https://www.iamcdocumentation.eu/index.php/POLES) explicitly uses `POLES ENGAGE` as a named version and notes other versions are used in other applications. [European Commission JRC's POLES model inventory](https://web.jrc.ec.europa.eu/policy-model-inventory/explore/models/model-poles/) confirms multiple separately operated or research versions. These support the necessity of an exact run/export crosswalk, but neither source independently authenticates the specific source Model-name transition observed between these two user-held files.
+
+### Next reproducible gate: inspect the three differing cells privately
+
+A source-pinned [difference inspector](../../src/residual_pathways/arc24_06_difference_review.py) rereads only the exact leading candidate's original ENGAGE v2.0 World values and the original AR6 World case, after verifying the original SHA digests and rechecking the **private 76-candidate fingerprint**. It finds the three differing Variable–Unit–Year combinations and their original-decimal difference bands and sign transitions. **No numeric emissions, original Model/Scenario identifiers or per-cell Variable–Year labels are emitted in public output.** A strictly ignored `data/ar6-private/arc24_06_differences_private.json` contains source variable names/year/sign/band labels, but no emissions quantities.
+
+~~~powershell
+git switch main
+git pull --ff-only
+$py = ".\.venv-messageix\Scripts\python.exe"
+& $py -m pytest -q tests/test_arc24_06_difference_review.py
+if ($LASTEXITCODE -ne 0) { throw "Source difference tests failed" }
+
+& $py -m residual_pathways.arc24_06_difference_review
+if ($LASTEXITCODE -ne 0) { throw "Original source difference review failed" }
+
+$report = Get-Content "results/ar6-canonical-gate/arc24_06_difference_review_public.json" -Raw | ConvertFrom-Json
+$report | Select-Object source_case_compared_cells,exact_reported_decimal_matches,exact_nonzero_matches,different_reported_decimal_cells,difference_precision_bands,difference_sign_retain_count,difference_zero_transition_count,difference_sign_flip_count,verified_i3 | Format-List
+~~~
+
+If all three differences fall in small relative bands and preserve signs, the appropriate description is **minor nonidentical printed values**; without the original model export quantization the causal label `rounding` cannot be granted. If the differences concern net land, fossil CCS, CO₂ Other or gross/removal fields, investigate original branch definitions and source-specific postprocessing **before** using them in physical accounting. Scientific I0–I3 review remains open, `verified_i3=0`.
