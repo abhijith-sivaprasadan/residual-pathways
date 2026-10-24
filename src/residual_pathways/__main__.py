@@ -94,6 +94,12 @@ def main():
     fp.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     fp.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
     fp.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_alias_fingerprint_public.json")
+    ac = sub.add_parser("arc24-cemics-author-accounting", help="Evaluate source-verified 2050 original author CDRtotal and CO2pos definitions; compare distinct gross fossil-industry scope, no I3")
+    ac.add_argument("--mif", default="data/ar6-private/cemics-v2/CDRoptionsAR6_complete.mif")
+    ac.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    ac.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    ac.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
+    ac.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_author_accounting_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -167,6 +173,18 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-cemics-author-accounting":
+        from .arc24_cemics_author_accounting import derive_source_worksheet
+        result = derive_source_worksheet(args.mif, args.world, args.packet,
+                                         args.rmd, args.output)
+        print("Author CEMICS 2050 formula study:", result["status"])
+        print("Operational source CDR identity:",
+              result["operational_study_accounting"]["status"])
+        print("Unverified operational source terms:",
+              result["operational_study_accounting"]["missing_or_unverified_operational_terms"])
+        print("CO2pos versus independent gross fossil+industry:",
+              result["study_CO2pos_vs_separate_gross_fossil_industry"]["status"])
+        print("Verified physical I3:", result["verified_i3"])
     elif args.command == "arc24-cemics-alias-fingerprint":
         from .arc24_cemics_alias_fingerprint import write_author_alias_fingerprints
         result = write_author_alias_fingerprints(
