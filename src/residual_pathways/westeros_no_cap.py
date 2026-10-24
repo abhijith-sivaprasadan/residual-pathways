@@ -186,13 +186,27 @@ def run_control(private_manifest, output_root="results/westeros_control_private"
                         f"{label} objective differs from original manifest")
             journal["status"] = "CLONING_INPUTS"
             persist()
+            # ixmp JDBCBackend 3.11.1 explicitly forbids cross-platform
+            # clone(keep_solution=False). The supported two-step equivalent is
+            # a full cross-platform clone, followed by clearing its copied
+            # solution on the destination *before* checking out parameters.
             clone = bounded.clone(model=MODEL, scenario=CONTROL_NAME,
                                   annotation="Isolated emissions accounting without cap",
-                                  keep_solution=False, platform=dst)
-            require(not clone.has_solution(), "Clone unexpectedly contains an old solution")
+                                  keep_solution=True, platform=dst)
+            require(clone.platform is dst, "Clone did not land on isolated destination")
+            require(clone.has_solution(), "Cross-platform clone did not copy the solution")
+            clone.remove_solution()
+            require(not clone.has_solution(), "Copied source solution was not cleared")
+            journal["clone_method"] = "CROSS_PLATFORM_KEEP_SOLUTION_THEN_REMOVE_SOLUTION"
+            persist()
             clone.check_out()
-            clone.remove_par("bound_emission")
-            clone.commit(comment="Remove CO2 bound only; retain emission factors")
+            # ixmp.Scenario.remove_par(name) *deletes the entire parameter*.
+            # Pass the saved parameter rows as key to delete ONLY their values,
+            # keeping the empty bound_emission item defined for MESSAGEix/GAMS.
+            old_bound_rows = clone.par("bound_emission")
+            require(len(old_bound_rows) == 1, "Expected exactly one bound to remove")
+            clone.remove_par("bound_emission", old_bound_rows)
+            clone.commit(comment="Remove CO2 bound values only; retain parameter and emission factors")
             parity = verify_clone_inputs(bounded, clone)
             journal["status"] = "SOLVING_CONTROL"
             journal["input_parity"] = parity
