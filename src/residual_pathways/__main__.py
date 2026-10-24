@@ -61,6 +61,10 @@ def main():
     aa.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     aa.add_argument("--public-output", default="results/ar6-canonical-gate/arc24_arithmetic_public.json")
     aa.add_argument("--private-output", default="data/ar6-private/arc24_arithmetic_private.json")
+    tl = sub.add_parser("arc24-poles-timeline", help="Check four POLES source cases at 2030/2040/2050/2060/2070; public bands only, no I3")
+    tl.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    tl.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    tl.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_timeline_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -134,6 +138,14 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-poles-timeline":
+        from .arc24_poles_timeline import write_timeline
+        result = write_timeline(args.world, args.packet, args.output)
+        print("POLES temporal diagnostic:", result["status"])
+        print("Selected scenarios:", result["cases"])
+        print("Case/year observations:", len(result["observations"]))
+        print("Verified scientific I3:", result["reviewed_i3_cases"])
+        print("Only coded signed bands are published; source values remain local.")
     elif args.command == "arc24-arithmetic":
         from .arc24_aggregate_arithmetic import write_aggregate_screen
         result = write_aggregate_screen(args.packet, args.public_output, args.private_output)
