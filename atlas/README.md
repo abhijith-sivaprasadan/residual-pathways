@@ -45,7 +45,7 @@ Review the generated public JSON changes before committing. This optional read d
 
 ## Release checks
 
-The .github/workflows/atlas-pages.yml workflow checks JavaScript syntax, re-generates the public bundle for a deterministic equality check, verifies reporting denominators and claim boundaries, and publishes static files through GitHub Pages when Pages Actions is enabled in repository settings. Vercel has a separate Git-connected production deployment.
+The .github/workflows/atlas-pages.yml workflow checks JavaScript syntax, re-generates the public bundle for a deterministic equality check, verifies reporting denominators and claim boundaries, and stores the validated static files as a GitHub Actions artifact. Production publishing is handled through the separate Git-connected Vercel deployment; the repository has not enabled GitHub Pages.
 
 The source-status banner deliberately distinguishes the initial publicly redistributed teaching-labelled AR6 input from direct publisher provenance. The user's independently obtained official-named World CSV was byte-identical at its SHA, but publisher-side acquisition receipt and the semantic equivalence of metadata workbooks are not yet checked. Co-reporting does not establish a complete source account.
 
