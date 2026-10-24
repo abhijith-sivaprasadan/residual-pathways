@@ -79,3 +79,23 @@ $a.derived_notebook_other_status_counts
 The essential evidence is a **case/version-specific physical process accounting map**, not more aggregate equality checks: explicitly identified independent positive emissions streams; signed AFOLU/net land baseline; biomass atmospheric uptake and storage/energy-lifecycle boundaries; fossil CCS avoided emissions excluded from CDR; durable DACCS and weathering accounted without nested overlap; completeness proof of all residual process streams; primary export precision (not just CSV trailing decimals); and external independent scientific review. [IAMC variable names are semi-hierarchical and may be nonadditive](https://docs.ece.iiasa.ac.at/standards/variables.html). A case may remain **REVIEW_PENDING** because evidence is missing; this must not be silently classified I0.
 
 The next source-specific dependency for ARC24-03 is the dated original model reporting and `Emi`→`Emissions` export transformation used in the Strefler v2 MIF. For ARC24-06, the next decisive empirical comparison is ENGAGE v2.0 primary World case/variable concordance with AR6 v1.1, or a source-team original export declaration. Neither task requires inventing physical gross totals.
+
+## D. Original ENGAGE v2.0 World file obtained: exact AR6 source case absent (user-run 24 October 2026)
+
+The project author downloaded an original-named `ENGAGE_scenario_data_world_r2.0.csv` to ignored `data/ar6-private` (94,560,538 bytes; author-observed SHA-256 `c92b8944b1d2a71eed7a07702c42e48f6f3e3eee59a4404d145d0babc61315da`). This is a **local file fingerprint**, not an independently authenticated IIASA acquisition checksum.
+
+Five synthetic probe tests passed. The actual `arc24_engage_v2_probe` run confirmed **508 original AR6 rows** for `POLES ENGAGE` / `EN_NPi2020_400f` but **zero ENGAGE v2.0 World rows under that exact Model+Scenario identity**. The earlier probe printed 55 `ENGAGE_V2_SOURCE_VARIABLE_ABSENT` checks (11 variables × 5 years) and five incomplete derived-`Other` years. **Correct interpretation: these are 55 unassessed comparison slots because the entire source pair was missing**, not proof that the 11 variables were physically or statistically absent in related ENGAGE scenarios. The probe now emits `unassessed_comparison_slots=55` and `unassessed_notebook_years=5`, with empty per-variable comparison arrays whenever the source pair is absent. No numeric source matching occurred.
+
+The negative finding could mean a model label variant, changed scenario label, an AR6-only run, or a different ENGAGE release. No one of these is established. New `src/residual_pathways/arc24_engage_v2_identity_inventory.py` scans only `World` case names in the exact 94.56 MB author-held file, verifies its author-observed SHA and the previously selected private ARC24-06 packet, and reports **aggregate counts** for exact-model, exact-scenario, casefold, normalized-punctuation, POLES-family prefix and lexical candidates. Up to 12 candidate source identities are written **only** to ignored `data/ar6-private/engage_v2_candidate_identities_private.json`, without any numeric observations. Do **not** treat lexical similarities or matching prefixes as an author-approved alias or numerical origin.
+
+~~~powershell
+$py = '.\\.venv-messageix\\Scripts\\python.exe'
+& $py -m pytest -q tests/test_arc24_engage_v2_probe.py tests/test_arc24_engage_v2_identity_inventory.py
+if ($LASTEXITCODE -ne 0) { throw 'Identity inventory regression tests failed' }
+& $py -m residual_pathways.arc24_engage_v2_identity_inventory
+if ($LASTEXITCODE -ne 0) { throw 'ENGAGE source identity inventory failed' }
+$identity = Get-Content 'results/ar6-canonical-gate/engage_v2_identity_inventory_public.json' -Raw | ConvertFrom-Json
+$identity | Select-Object status,exact_model_label_found,exact_scenario_pairs_across_all_model_labels,distinct_world_model_scenario_pairs,poles_containing_model_label_count,poles_scenario_prefix_matches,poles_scenario_lexical_similarity_at_least_0_75,verified_i3 | Format-List
+~~~
+
+Only if the name inventory uncovers an interesting source identity should a separately registered, source-specific original-decimal comparison be designed, with positive/negative controls as for CEMICS. **No automatic aliases; no physical gross or durable CDR I3 promotion.**
