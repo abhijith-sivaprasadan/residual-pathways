@@ -129,3 +129,21 @@ def test_private_report_location_refused(tmp_path,monkeypatch):
     args=source_fixture(tmp_path,monkeypatch)
     with pytest.raises(CaseAuditError,match="must stay under ar6-private"):
         fl.inventory(*(list(args[:-1])+[args[0].parent/"bad.json"]))
+
+
+
+def test_field_lineage_cli_uses_real_json_field_name(tmp_path, monkeypatch, capsys):
+    """Regression for user-observed KeyError after successfully written JSON."""
+    args = source_fixture(tmp_path, monkeypatch)
+    from residual_pathways.__main__ import main
+    monkeypatch.setattr("sys.argv", [
+        "residual_pathways", "arc24-cemics-field-lineage",
+        "--mif", str(args[0]), "--world", str(args[1]),
+        "--packet", str(args[2]), "--rmd", str(args[3]),
+        "--output", str(args[4]),
+    ])
+    main()
+    printed = capsys.readouterr().out
+    assert "hierarchy candidates: 1" in printed
+    assert "No substitution or derived CDR; I3: 0" in printed
+    assert args[4].is_file()
