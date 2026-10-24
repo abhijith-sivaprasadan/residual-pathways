@@ -5,6 +5,7 @@ import os
 import sys
 from pathlib import Path
 from types import SimpleNamespace
+from weakref import proxy
 
 import pytest
 
@@ -68,6 +69,7 @@ class FakePlatform:
     def __init__(self, kind):
         self.kind = kind
         self.closed = False
+        self._backend = object()  # Distinct backend per platform, like real ixmp.
 
     def close_db(self):
         self.closed = True
@@ -81,7 +83,8 @@ class FakeScenario:
     source_mutations = 0
     def __init__(self, platform, model, scenario, version=None):
         assert model == MODEL
-        self.platform = platform
+        # Mirror ixmp.TimeSeries.__init__: this is a weakref proxy, not mp.
+        self.platform = proxy(platform)
         self.name = scenario
         self.version = version or 1
         self.solved = scenario in ("baseline", "emission_bound")
@@ -197,6 +200,9 @@ def test_isolated_control_solves_only_one_scenario(tmp_path, mock_platforms):
     assert FakeScenario.solve_count == 1
     assert FakeScenario.copied_solution_clear_count == 1
     assert p.read_bytes() == original_bytes
+    # The real ixmp API uses a weak proxy; identity with the Platform fails,
+    # but the underlying destination backend identity must match exactly.
+    assert mock_platforms[0]._backend is not mock_platforms[1]._backend
     assert journal_cloned_solution_method(out) == "CROSS_PLATFORM_KEEP_SOLUTION_THEN_REMOVE_SOLUTION"
     assert (out / "three_case_comparison.json").is_file()
     journal = json.loads((out / "manifest.private.json").read_text())
@@ -214,6 +220,7 @@ def test_intended_parameter_deletion_preserves_emissions_factors():
     c = bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="controlled",
                       keep_solution=True, platform=FakePlatform("isolated"))
     assert c.has_solution()
+    assert c.platform is not platform, "Weak proxy is not source Platform object"
     with pytest.raises(AssertionError, match="Must remove copied solution"):
         c.check_out()
     c.remove_solution()
