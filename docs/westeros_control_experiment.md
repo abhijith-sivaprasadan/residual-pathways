@@ -64,7 +64,7 @@ The author supplied the actual third-attempt Windows PowerShell execution transc
 
 - `pytest -q tests/test_westeros_no_cap.py`: **5 passed**.
 - Local source scenario/database opened correctly; cross-platform clone and destination solution removal proceeded past both earlier API limitations.
-- GAMS **54.6.0** + CPLEX reported **LP status optimal**, `Optimal solution found`, and **normal completion**; console objective: **159025.830480** (native units).
+- GAMS **54.6.0** + CPLEX reported **LP status optimal**, `Optimal solution found`, and **normal completion**; console objective: **159025.830480** (native units). The emissions-accounting/no-cap LP contained **90 rows and 79 columns**; the earlier capped LP had **91 rows and 79 columns**, consistent with one additional emissions-bound equation.
 - Runner finished with **`ACTUAL_MESSAGEIX_GAMS_CONTROL_SOLVED`**, `Baseline and control numerically equivalent: True`, and `Isolated cap objective effect (native units): 32484.96875`.
 - New, separate private destination: `results/westeros_control_private/20261024T002431Z_f8428b42`.
 
