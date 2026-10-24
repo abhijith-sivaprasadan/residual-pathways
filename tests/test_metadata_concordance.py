@@ -20,13 +20,13 @@ def workbook(path, *, data, extra=None):
 
 def test_byte_distinct_but_normalized_cell_equivalence(tmp_path):
     a, b = tmp_path / "official.xlsx", tmp_path / "earlier.xlsx"
-    workbook(a, data=[["M", "S", "C1", 1]])
-    workbook(b, data=[["M", "S", "C1", 1.0]])
+    workbook(a, data=[["ConfidentialModel27", "SecretScenario27", "C1", 1]])
+    workbook(b, data=[["ConfidentialModel27", "SecretScenario27", "C1", 1.0]])
     result = compare(a, b)
     assert result["status"] == "EQUIVALENT_NORMALIZED_CELLS"
     assert result["sheets"][0]["identity_join"]["shared_model_scenarios"] == 1
-    assert "M" not in json.dumps(result)
-    assert "C1" not in json.dumps(result)
+    assert "ConfidentialModel27" not in json.dumps(result)
+    assert "SecretScenario27" not in json.dumps(result)
 
 
 def test_reordered_rows_differ_by_cells_not_identity(tmp_path):
