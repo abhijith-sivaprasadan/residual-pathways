@@ -9,6 +9,12 @@ Independent open-source research on IAM scenario reporting, residual-emissions i
 
 **Independent project, not affiliated with or endorsed by IIASA or IPCC.** Variable availability is not the same thing as an exhaustive, verified gross/net/removal accounting identity.
 
+## Four-year AR6 reporting results, provenance and scientific review (2026-10-24)
+
+The [frozen public World/C1–C8 four-year coverage candidate](https://github.com/abhijith-sivaprasadan/residual-pathways/tree/ar6-coverage-only-v0.1.0-candidate) contains 1,202 source-matched scenarios and 352 reporting-presence aggregates, with `REVIEW_PENDING`, 0 verified I3 and no physical gross/CDR reconstruction. The **reproducible formal results section**, 352-row tabulation and three SVG figures are built offline from the SHA-pinned candidate using `python -m residual_pathways.coverage_findings` and validated/uploaded by the [dedicated GitHub Actions research workflow](.github/workflows/ar6-research-findings.yml).
+
+The research workstream also provides a *local-only* [worksheet-semantic metadata classifier](src/residual_pathways/metadata_sheet_review.py), a cautious [IIASA acquisition-evidence inventory](src/residual_pathways/source_provenance_receipt.py), and a [private 24-case ARC24 review docket](src/residual_pathways/arc24_review_docket.py) with eleven evidence checks per case. None can infer publisher authentication or I0/I1/I2/I3 grades from filenames, workbook hashes, variable presence or arithmetic alone. **Runbooks, actual descriptive findings, exact commands and open scientific decisions:** [three-track research handoff](docs/research/ar6_20261024_research_handoff.md).
+
 ## Verified empirical research to date
 
 - Publicly published IIASA-labelled AR6 World **teaching release** (Zenodo 20056332): 693,299 source IAMC series; 2,298 World model-scenario pairs; 1,202 match the separately republished v1.1 climate-vetted metadata; 422 vetted scenarios report a 2050 direct-air-capture variable and 330 simultaneously report the first six CO2/CCS/DAC candidate names. **No gross emissions have been reconstructed.**
