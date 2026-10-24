@@ -1,0 +1,74 @@
+name: AR6 four-year reporting-coverage paper and figures
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/residual_pathways/coverage_findings.py"
+      - "src/residual_pathways/metadata_sheet_review.py"
+      - "src/residual_pathways/arc24_review_docket.py"
+      - "src/residual_pathways/source_provenance_receipt.py"
+      - "tests/test_coverage_findings.py"
+      - "tests/test_metadata_sheet_review.py"
+      - "tests/test_arc24_review_docket.py"
+      - "tests/test_source_provenance_receipt.py"
+      - "atlas/data/coverage_release.json"
+      - "atlas/data/coverage_release.json.sha256"
+      - ".github/workflows/ar6-research-findings.yml"
+  pull_request:
+    paths:
+      - "src/residual_pathways/coverage_findings.py"
+      - "src/residual_pathways/metadata_sheet_review.py"
+      - "src/residual_pathways/arc24_review_docket.py"
+      - "src/residual_pathways/source_provenance_receipt.py"
+      - "tests/test_coverage_findings.py"
+      - "tests/test_metadata_sheet_review.py"
+      - "tests/test_arc24_review_docket.py"
+      - "tests/test_source_provenance_receipt.py"
+      - ".github/workflows/ar6-research-findings.yml"
+permissions:
+  contents: read
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal research test dependencies
+        run: |
+          python -m pip install -e .
+          python -m pip install "pytest>=8,<10" "openpyxl>=3.1,<4"
+      - name: Check real pinned aggregate, workbook classifiers and private review controls
+        run: |
+          python -m pytest -q tests/test_coverage_findings.py tests/test_metadata_sheet_review.py tests/test_arc24_review_docket.py tests/test_source_provenance_receipt.py
+      - name: Generate AR6 reporting-presence manuscript, table and SVG figures
+        run: |
+          python -m residual_pathways.coverage_findings \
+            --check-input atlas/data/coverage_release.json \
+            --output-dir docs/research/coverage_20261024
+      - name: Reject unreviewed I3/gross claims and missing deliverables
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('docs/research/coverage_20261024')
+          required=[
+              'ar6_reporting_coverage_results.md','ar6_presence_table.csv',
+              'figures/ar6_world_variable_coverage.svg',
+              'figures/ar6_category_coverage_heatmap.svg',
+              'figures/ar6_weighting_contrast.svg',
+          ]
+          for name in required:
+              assert (root/name).stat().st_size>100, name
+          s=(root/'ar6_reporting_coverage_results.md').read_text()
+          assert 'REVIEW_PENDING' in s and 'NOT_ESTABLISHED' in s
+          assert '422/1,202' in s and '190/1,202' in s
+          print('Reproducible AR6 four-year research outputs validated')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ar6-four-year-coverage-paper-and-figures
+          path: docs/research/coverage_20261024
+          retention-days: 90
