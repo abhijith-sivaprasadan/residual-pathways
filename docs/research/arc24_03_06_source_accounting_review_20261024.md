@@ -123,3 +123,32 @@ $pub | Select-Object candidate_total, exact_scenario_other_model_candidates, pol
 ~~~
 
 **Decision rule:** If an original source case gives a strongly discriminating source fingerprint across nonzero variables, record it as `NUMERICAL_CORRESPONDENCE_CANDIDATE` only, then obtain dated model-authored source-model, scenario/version or export-pipeline confirmation. If no case has a discriminating fingerprint, close this **v2.0 World dataset** as inadequate for identifying the precise ARC24-06 AR6 export; seek original submitted AR6 source run documentation. In both outcomes, physical gross/CDR partitions and independent I3 remain `NOT_ESTABLISHED` / zero.
+
+
+## F. ARC24-06 controlled ENGAGE source fingerprint — author's local run (24 October 2026)
+
+The author executed the [registered controlled fingerprint](../../src/residual_pathways/arc24_engage_v2_candidate_fingerprint.py) on the original AR6 World v1.1 and the original-named ENGAGE v2.0 World file. All **five regression tests passed**. The resulting output reports **76 distinct candidate World pairs**: seven under the *identical scenario name but non-identical model label* and 69 other scenarios under the POLES-family source label. An exact scenario-name record under a POLES-containing model label is present. All 76 have at least some comparable recorded decimals.
+
+The best observed original-decimal aggregate scores are **52 exact** and **51 exact nonzero** against a pre-registered design of 11 source variables × five years = 55 *possible* slots. No candidate was an exact match in all 55 slots. **The first public summary did not show if the 52-exact leader also has the 51-nonzero maximum; whether the leader has 52/52, 52/53 or 52/55 comparable slots; which of the remaining slots are missing vs numerically unequal; whether the highest-ranked source pair is unique; or how close the strongest POLES-family crossed control is.** Do not write “52/55 observations matched” or “the model was renamed” until the comparable denominator and candidate separation are audited. No original emissions values were published. `verified_i3=0`.
+
+The companion [status-only adjudication](../../src/residual_pathways/arc24_engage_v2_fingerprint_adjudication.py) consumes only the already generated **private** candidate-status docket. It does **not reread original World emissions**. It checks each candidate's exact/nonzero counts and reports the leader's *actual comparable count*, missing/unassessed slots, exact fraction among comparable cells, source-label group, top-two separation and ties. It distinguishes the best exact-match candidate from the best nonzero-match candidate if they differ. All original source Model/Scenario strings, private candidate IDs and per-candidate statuses remain protected in `data/ar6-private`. The public summary provides aggregated status counts only and may be shared for technical scientific discussion.
+
+~~~powershell
+git switch main
+git pull --ff-only
+$py = ".\.venv-messageix\Scripts\python.exe"
+
+& $py -m pytest -q tests/test_arc24_engage_v2_fingerprint_adjudication.py
+if ($LASTEXITCODE -ne 0) { throw "Adjudication regression tests failed" }
+
+& $py -m residual_pathways.arc24_engage_v2_fingerprint_adjudication
+if ($LASTEXITCODE -ne 0) { throw "Private candidate-status audit failed" }
+
+$review = Get-Content "results/ar6-canonical-gate/engage_v2_fingerprint_adjudication_public.json" -Raw | ConvertFrom-Json
+$review.top_ranked | Format-List
+$review.runner_up | Format-List
+$review.candidate_groups | Format-List
+$review | Select-Object candidate_count, top_numerical_score_tie_count, top_two_nonzero_exact_gap, top_two_total_exact_gap, max_exact_and_max_nonzero_same_candidate, candidates_with_at_least_40_nonzero_exact, verified_i3 | Format-List
+~~~
+
+**Evidence policy:** If one source candidate is numerically distinctive with substantial *nonzero* matched fields across 2050 and surrounding years, label it `NUMERICAL_CORRESPONDENCE_CANDIDATE` only. Obtain an original model-author or export-metadata confirmation to validate the label/version transition. The source-defined `Emissions|CO2|Other` may be algebraic; source-series correspondence does not establish independent gross-positive sector flows, storage net durability, original rounding precision or I3 physical accounting.
