@@ -193,7 +193,12 @@ def run_control(private_manifest, output_root="results/westeros_control_private"
             clone = bounded.clone(model=MODEL, scenario=CONTROL_NAME,
                                   annotation="Isolated emissions accounting without cap",
                                   keep_solution=True, platform=dst)
-            require(clone.platform is dst, "Clone did not land on isolated destination")
+            # ixmp.TimeSeries.__init__ stores platform as weakref.proxy(mp);
+            # therefore `clone.platform is dst` is False even for the correct
+            # destination. Check the underlying backend objects instead.
+            require(clone.platform._backend is dst._backend
+                    and clone.platform._backend is not src._backend,
+                    "Clone is not attached to the isolated destination backend")
             require(clone.has_solution(), "Cross-platform clone did not copy the solution")
             clone.remove_solution()
             require(not clone.has_solution(), "Copied source solution was not cleared")
