@@ -43,6 +43,12 @@ def main():
     cases.add_argument("--public-output", default="results/ar6-teaching-pilot/case_audit_24_public.json")
     cases.add_argument("--private-output", default="data/ar6-private/case_audit_review_packet.json")
     cases.add_argument("--year", type=int, default=2050)
+    canonical = sub.add_parser("ar6-canonical-gate", help="Hash local official v1.1 files and compare 24 teaching-source cases; NEVER certifies origin or I3")
+    canonical.add_argument("--world", required=True, help="Locally downloaded official World v1.1 CSV")
+    canonical.add_argument("--metadata", required=True, help="Locally downloaded official metadata workbook")
+    canonical.add_argument("--packet", default="data/ar6-private/case_audit_review_packet.json", help="Original private RP24 teaching-source review packet")
+    canonical.add_argument("--public-output", default="results/ar6-canonical-gate/summary_public.json")
+    canonical.add_argument("--private-output", default="data/ar6-private/canonical_rp24_review.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -116,6 +122,15 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "ar6-canonical-gate":
+        from .ar6_canonical_gate import source_gate
+        result = source_gate(args.world, args.metadata, args.packet,
+                             args.public_output, args.private_output)
+        print("Canonical source evidence gate:", result["status"])
+        print("Local World SHA-256:", result["world_sha256"])
+        print("Matched RP24 cases in World:", result["source_matched_rp24_cases"])
+        print("Matched RP24 cases in vetted metadata:", result["metadata_matched_rp24_cases"])
+        print("No original model IDs/observations published. I3 cases:", result["verified_i3_cases"])
     elif args.command == "westeros-case-study":
         from .westeros_case_study import publish_case_study
         result, inventory = publish_case_study(args.control_json, args.cap_json, args.output)
