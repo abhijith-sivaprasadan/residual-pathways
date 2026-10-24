@@ -16,3 +16,9 @@
 .innovation-caution span{font-size:11px;color:#8294a5;line-height:1.6}
 .innovation-card .linklike{margin-top:4px}
 @media(max-width:720px){.innovation-grid{grid-template-columns:1fr}}
+
+/* Optional four-year release controls stay hidden until checksum verification. */
+#coverage-release-controls[hidden]{display:none!important}
+#coverage-release-panel{margin:18px 0}
+#coverage-release-status{overflow-wrap:anywhere}
+#coverage-release-panel .bar-row{margin:7px 0}
