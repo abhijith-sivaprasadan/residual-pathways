@@ -186,3 +186,30 @@ Windows PowerShell:
 The [open-access 2021 Strefler et al. article at IOPscience](https://doi.org/10.1088/1748-9326/ac0a11), main text, explicitly defines a **minimum-CDR** experiment as permitting residual carbon-removal contributions associated with then-current policies and **industry BECCS** while excluding unrestricted deployment of the full CDR portfolio. This is important: **min CDR cannot be safely interpreted as literally zero carbon removal**, and conversely an archive scenario *labelled* `noCDR` need not mathematically have no CDR. The paper's main-text configuration is SSP2; SSP1 is covered in supplementary material, so main-text SSP2 quantities cannot be carried over to ARC24-03's SSP1 output.
 
 This supports a semantic reason to investigate `noCDR` versus AR6 `minCDR` without assuming equivalence. The study author's original Rmd and the independent controlled source fingerprint must be reconciled first; **the literature does not itself attest that the two strings name the identical released model run**. Fossil and industrial CCS are also allowed in the study designs; fossil CO2 capture therefore must not be counted as atmospheric removals.
+
+## 8. Real-source alias-fingerprint run blocked by repeated World scenario-variable names (24 October 2026)
+
+After the author's archive name inventory (24/24 tests passed), the first `arc24-cemics-alias-fingerprint` run passed **7/7 earlier synthetic tests** but stopped in `_load_authors` with `CaseAuditError: Duplicate authors' scenario/variable`. This happened when the source-locked original MIF presented a second `Model=REMIND-MAgPIE`, `Scenario` in the two target source runs, `Region=World`, `Variable` entry. The error occurred before any fingerprint comparisons or redacted result were written. No `noCDR`→`minCDR` inference or model-version equivalence is possible from that failure.
+
+**Root cause in our code:** the first seven synthetic tests assumed that each original MIF Model/Scenario/World/Variable had exactly one row. That is an unjustified key assumption. The [PIK magclass MIF specification](https://pik-piam.r-universe.dev/magclass/doc/manual.html) permits **additional columns** beyond five standard IAMC metadata columns, as well as a Unit column. Multiple rows with the same abbreviated Variable name could therefore reflect separate reported units or additional reporting dimensions; our exception does **not** reveal which applies in the original source. No records should be discarded, averaged, or summed to force matching.
+
+### Guarded correction committed — real results pending
+
+The author and AR6 loaders now preserve **all** original source rows for each Variable. Source pairing is permitted only when the two files share exactly one Unit label and have **exactly one record each for that Unit**. Other author rows with different units remain counted, not selected as substitutes. If units do not overlap, the comparison reports `NO_SHARED_UNIT`; if multiple unit matches are possible it reports `AMBIGUOUS_MULTIPLE_SHARED_UNITS`; and if multiple same-unit rows exist it reports `AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT` and excludes them from numerical comparisons, even when the rows' serialized values look the same. Missing-year values are excluded from the exact-match fraction denominator. Original 2050 ARC24-03 packet-to-World observations still require unique source identity.
+
+Public output now distinguishes `year_variable_attempted` versus `year_variable_compared`, `excluded_from_numerical_comparison`, `author_multi_unit_variable_count`, and `ambiguous_shared_variable_count` with original **variable names only**, not model observations. The result is explicitly a source fingerprint—not a documented alias, physically disjoint gross emissions, original source rounding certification or I3.
+
+**New regression tests** reproduce different units under one variable, repeated same-unit duplicates that must stay ambiguous, and duplicate AR6 reference observations that must fail the 2050 source lock. Committed, **not yet run locally**.
+
+PowerShell:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_alias_fingerprint.py
+    if ($LASTEXITCODE -ne 0) { throw 'Fingerprint regression tests failed' }
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-alias-fingerprint
+    if ($LASTEXITCODE -ne 0) { throw 'Source-locked CEMICS comparison failed' }
+    $f = Get-Content 'results/ar6-canonical-gate/arc24_cemics_alias_fingerprint_public.json' -Raw | ConvertFrom-Json
+    $f.comparisons | Select-Object comparison,shared_variable_names,year_variable_attempted,year_variable_compared,excluded_from_numerical_comparison,exact_decimal_matches,exact_decimal_match_fraction,author_multi_unit_variable_count,ambiguous_shared_variable_count | Format-Table -AutoSize
+    $f.comparisons | ForEach-Object { $_.comparison; $_.status_counts | Format-List; $_.ambiguous_shared_variable_names }
+
+If the original archive has meaningful **same-unit** duplicates, this conservative comparison will report those ambiguities rather than resolve them. The next step would be to read the original MIF's additional column structure (and the corresponding project submission mapping), not to force a `noCDR` alias. No data have been altered and all I3 grades remain unverified.
