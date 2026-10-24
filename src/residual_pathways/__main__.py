@@ -73,6 +73,10 @@ def main():
     oi.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
     oi.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     oi.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_other_identity_public.json")
+    em = sub.add_parser("arc24-poles-eip-mapping", help="Compare expanded ENGAGE source CO2 hierarchy to combined EIP in four POLES scenarios; redacted, no I3")
+    em.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    em.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    em.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_eip_mapping_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -146,6 +150,15 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-poles-eip-mapping":
+        from .arc24_poles_eip_mapping import write_eip_mapping
+        result = write_eip_mapping(args.world, args.packet, args.output)
+        print("POLES detailed hierarchy:", result["status"])
+        print("Expanded ENGAGE total hierarchy statuses:", result["expanded_status_counts"])
+        print("Detailed energy+industrial versus EIP statuses:", result["eip_detail_status_counts"])
+        print("Availability:", result["availability_counts"])
+        print("Verified I3:", result["verified_i3"])
+        print("Source numbers and model identities remain local.")
     elif args.command == "arc24-poles-other-identity":
         from .arc24_poles_other_identity import write_other_comparison
         result = write_other_comparison(args.world, args.packet, args.output)
