@@ -74,12 +74,15 @@ def _records(cells):
     if len(header) != len(row_1):
         raise ConcordanceError("Duplicate metadata headers")
     rows = {}
-    indices = sorted({r for r, _ in cells if r > 1})
-    for r in indices:
+    row_columns = {}
+    for (r, col) in cells:
+        if r > 1:
+            row_columns.setdefault(r, set()).add(col)
+    for r in sorted(row_columns):
         model = cells.get((r, model_col))
         scenario = cells.get((r, scenario_col))
         if not model or not scenario:
-            if any(col not in (model_col, scenario_col) for rr, col in cells if rr == r):
+            if any(col not in (model_col, scenario_col) for col in row_columns[r]):
                 raise ConcordanceError("Metadata data row missing Model or Scenario")
             continue
         key = (json.dumps(model, ensure_ascii=False), json.dumps(scenario, ensure_ascii=False))
