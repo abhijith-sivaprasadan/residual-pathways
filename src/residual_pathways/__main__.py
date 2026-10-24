@@ -77,6 +77,13 @@ def main():
     em.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
     em.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     em.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_eip_mapping_public.json")
+    cx = sub.add_parser("arc24-cemics-crosswalk", help="Source-locked CEMICS v2 author's AR6-aligned dataset versus ARC24-03; no gross/CDR I3 claim")
+    cx.add_argument("--mif", default="data/ar6-private/cemics-v2/CDRoptionsAR6_complete.mif")
+    cx.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    cx.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    cx.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
+    cx.add_argument("--readme", default="data/ar6-private/cemics-v2/readme_zenodo.txt")
+    cx.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_source_crosswalk_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -150,6 +157,16 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-cemics-crosswalk":
+        from .arc24_cemics_crosswalk import crosswalk
+        result = crosswalk(args.mif, args.world, args.packet, args.output,
+                           rmd_path=args.rmd, readme_path=args.readme)
+        print("CEMICS author source crosswalk:", result["status"])
+        print("Exact Model/Scenario rows:", result["archive_exact_model_scenario_row_count"])
+        print("Exact World variable series:", result["archive_exact_world_variable_count"])
+        print("Shared source variable names:", result["overlapping_variable_names"])
+        print("Source comparison statuses:", result["overlap_status_counts"])
+        print("No source CO2 values exported; I3:", result["verified_i3"])
     elif args.command == "arc24-poles-eip-mapping":
         from .arc24_poles_eip_mapping import write_eip_mapping
         result = write_eip_mapping(args.world, args.packet, args.output)
