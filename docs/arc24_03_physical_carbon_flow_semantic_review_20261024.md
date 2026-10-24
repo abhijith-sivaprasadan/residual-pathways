@@ -152,3 +152,30 @@ An exact algebraic source identity of the form `net CO2 = CO2pos - CDRtotal` is 
 ### Next decisive source-locked test
 
 Directly inspect the original World source with a local checksum-verified code path for the eight named variables: net CO2, signed regrowth land flux, enhanced weathering sequestration, biomass CCS, DAC, gross fossil+industry, signed net AFOLU, and separate `Carbon Sequestration|Land Use`. Report public **presence/unit agreement, original-decimal match status, signed flags and a coarse magnitude band** for the *difference* between author's `CO2pos` and separate gross fossil+industry only as a comparison of **unlike system boundaries**, not an expected zero-balance diagnostic. Keep all source numerical observations and computed totals private. Report absent source variables explicitly, never invent zero. Finish reviewing original author model methods before any I3 classification.
+
+## 7. Original-source 2050 ARC24-03 calculation worksheet — prepared and awaiting real execution
+
+The source MD5- and original AR6 World SHA-locked command `arc24-cemics-author-accounting` now implements the **exact author Rmd** `CDRtotal` and `CO2pos` operational formulas from the publicly released source, without inventing extra ledger terms. Before evaluating it, the code checks all seven original Rmd selector/assignment strings, original MIF/Rmd MD5 fingerprints, AR6 World SHA, and the saved ARC24-03 private original-2050 observations. It compares named MIF and AR6 source records by **unique matching source unit**; duplicate same-unit rows are flagged instead of chosen, and missing fields are not imputed as zero.
+
+Inputs named explicitly: reported net `Emissions|CO2`, signed `Emissions|CO2|Land|Land-use Change|Regrowth`, `Carbon Sequestration|Enhanced Weathering`, `Carbon Sequestration|CCS|Biomass`, `Carbon Sequestration|Direct Air Capture`, and the **distinct** `Emissions|CO2|Gross Fossil Fuels and Industry` plus reported net AFOLU, general Land Use sequestration and captured Fossil CCS for semantic context. Only source terms with exact author/AR6 recorded-decimal equality and required `Mt CO2/yr` unit enter the operational calculation. Gross fossil+industry is a **separate boundary comparison**, never treated as an expected closure target.
+
+The coded public report `results/ar6-canonical-gate/arc24_cemics_author_accounting_public.json` contains only series names, source presence/units, source-decimal match status, signs of verified terms/derived measures and a coarse **magnitude band for difference between derived CO2pos and separately reported gross fossil+industry**, if computable. It publishes **no original scenario numerical CO2 observations**. It explicitly labels this an **author operational equation** but NOT verified economy-wide positive-gross or durable, additional nonoverlapping physical CDR. Tests cover synthetically computed four-branch CDR, missing source terms, source tampering, duplicate source rows, missing net/gross equivalence and data non-publication.
+
+New code, tests and CLI are committed but **NOT YET RUN LOCALLY**. A successful execution will be relevant even if it reports `AR6_SERIES_NOT_REPORTED` for one of the newly identified Rmd source variables; in that case, request a source-author MIF-only source scope review rather than silently carrying over absent AR6 fields.
+
+Windows PowerShell:
+
+```powershell
+cd 'E:\New folder (2)\MissionJob\residual-pathways'
+git pull --ff-only
+& .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_author_accounting.py
+if ($LASTEXITCODE -ne 0) { throw 'Author carbon-flow regression tests failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-author-accounting
+if ($LASTEXITCODE -ne 0) { throw 'Original source worksheet failed' }
+$a = Get-Content 'results/ar6-canonical-gate/arc24_cemics_author_accounting_public.json' -Raw | ConvertFrom-Json
+$a.individual_source_terms | Select-Object variable,source_comparison_status,source_value_sign | Format-Table -Wrap -AutoSize
+$a.operational_study_accounting | Format-List
+$a.study_CO2pos_vs_separate_gross_fossil_industry | Format-List
+```
+
+**Study method versus physically closed carbon accounting must remain separate.** In particular, `CO2pos = CO2tot + CDRtotal` is an exact *definition* in this research script; writing its residual as zero is tautological, not external validation. The label `Gross Fossil Fuels and Industry` describes an additional narrower gross-sector indicator with a different boundary. Neither source should be used as a drop-in positive economy-wide emissions ledger. Verified I3 remains zero.
