@@ -111,3 +111,15 @@ A new local-only **`ar6-canonical-select`** command derives a fresh 24-case coho
 The author inspected seven reported 2050 variable signs in two climate-vetted source records, `ARC24-03` (REMIND-MAgPIE CEMICS minimum-CDR) and `ARC24-06` (POLES ENGAGE). **AFOLU is positive in REMIND and negative in POLES, while reported land sequestration is positive in both; REMIND DAC is a recorded zero, not missing.** Prütz et al. (2025), [ESSD doi:10.5194/essd-17-221-2025](https://doi.org/10.5194/essd-17-221-2025), identify AR6 AFOLU as a **net** CO2 variable and land sequestration as a separately reported **gross sink**, highlighting cross-model comparability issues. No gross-emissions or CDR partition has been certified; the original accounting classes remain undetermined.
 
 After `git pull --ff-only`, run `python -m pytest -q tests/test_arc24_sign_screen.py` and `python -m residual_pathways arc24-sign-screen` against the existing local private ARC24 packet to produce a redacted, 24-case sign matrix. All tests are **synthetic**, and the new CLI has not yet been executed against the author's actual locally held packet. See [model-specific sign and semantic review](docs/arc24_source_provenance_and_semantic_triage_20261024.md).
+
+
+### ARC24 actual 24-case sign screen and private aggregate arithmetic follow-up
+
+The author completed the real local 24-case sign screen on 2026-10-24 after **9/9 synthetic regression tests**. **Eight** selected cases have negative signed net AFOLU CO2; **eleven** have no separately reported 2050 land-sequestration value. Neither can be equated to a source-verified gross land-removal measurement, and the purposive selection does not give an ensemble-wide frequency estimate. I3 scientific reviews remain **0**.
+
+The next **arc24-arithmetic** command reads the original locally protected selected 24-case packet and checks the exact raw-decimal relationship for reported CO2 total minus energy/industrial CO2 minus net AFOLU. It generates coded statuses publicly, stores original source values and residuals **only in data/ar6-private**, and never claims physical gross/atmospheric-removal closure:
+
+    python -m pytest -q tests/test_arc24_aggregate_arithmetic.py
+    python -m residual_pathways arc24-arithmetic
+
+This new code has been committed but **has not yet run on the author's actual local data**. For source-specific review limitations and instructions see [ARC24 scientific triage](docs/arc24_source_provenance_and_semantic_triage_20261024.md).
