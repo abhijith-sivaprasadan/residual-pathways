@@ -158,3 +158,82 @@ def test_public_output_not_in_private_area(tmp_path, monkeypatch):
     mif, world, packet, public = fixture(tmp_path, monkeypatch)
     with pytest.raises(CaseAuditError, match="remain in private"):
         cx.crosswalk(mif, world, packet, mif.parent / "leak.json")
+
+
+def test_author_text_legacy_cp1252_does_not_corrupt_source(tmp_path):
+    """Regression for the real author Rmd/README's non-UTF8 source bytes."""
+    path = tmp_path / "legacy.Rmd"
+    original = b"scenario CEMICS_SSP1-1p5C-minCDR\nGross CO2 \xc2 and \x96 BECCS\n"
+    path.write_bytes(original)
+    lines, decoding = cx._read_author_text_lines(path)
+    assert decoding["decoded_as"] == "cp1252"
+    assert decoding["utf8_strict_success"] is False
+    assert "NOT_SOURCE_CERTIFIED" in decoding["encoding_certainty"]
+    assert len(lines) == 2
+    assert cx.SCENARIO in lines[0]
+    assert "BECCS" in lines[1]
+    assert path.read_bytes() == original
+
+
+def test_utf8_author_text_uses_strict_decode(tmp_path):
+    path = tmp_path / "normal.txt"
+    path.write_text("Carbon removals — SSP1\n", encoding="utf-8-sig")
+    lines, decoding = cx._read_author_text_lines(path)
+    assert decoding["decoded_as"] == "utf-8-sig"
+    assert decoding["utf8_strict_success"] is True
+    assert lines[0].endswith("SSP1")
+
+
+def test_legacy_latin1_fallback_explicitly_flagged(tmp_path):
+    path = tmp_path / "latin1.txt"
+    path.write_bytes(b"Gross emissions \x81 SSP1\n")
+    lines, decoding = cx._read_author_text_lines(path)
+    assert decoding["decoded_as"] == "latin-1"
+    assert "NOT_SOURCE_CERTIFIED" in decoding["encoding_certainty"]
+    assert lines[0].startswith("Gross emissions")
+
+
+def test_binary_nul_author_file_rejected(tmp_path):
+    path = tmp_path / "corrupt.txt"
+    path.write_bytes(b"First line\x00second line")
+    with pytest.raises(CaseAuditError, match="NUL"):
+        cx._read_author_text_lines(path)
+
+
+def test_full_crosswalk_supporting_documents_with_cp1252(tmp_path, monkeypatch):
+    mif, world, packet, public = fixture(tmp_path, monkeypatch)
+    docs = mif.parent
+    rmd = docs / "CDRoptions.Rmd"
+    readme = docs / "readme_zenodo.txt"
+    rmd.write_bytes(
+        b"Example author workflow \xc2 : SSP1\n"
+        b"Scenario CEMICS_SSP1-1p5C-minCDR, BECCS, gross emissions\n"
+    )
+    readme.write_bytes(b"CEMICS archive includes DAC \x96 land removals\n")
+    monkeypatch.setattr(cx, "AUTHOR_SUPPORT_MD5", {
+        "authors_rmd": md5(rmd.read_bytes()).hexdigest(),
+        "authors_readme": md5(readme.read_bytes()).hexdigest(),
+    })
+    result = cx.crosswalk(
+        mif, world, packet, public, rmd_path=rmd, readme_path=readme
+    )
+    info = result["author_methodology_code_presence"]
+    assert info["authors_rmd"]["source_md5_verified"] is True
+    assert info["authors_readme"]["source_md5_verified"] is True
+    assert info["authors_rmd"]["decoded_as"] == "cp1252"
+    assert info["authors_rmd"]["exact_scenario_line_numbers"] == [2]
+    assert info["authors_readme"]["decoded_as"] == "cp1252"
+    assert result["scientific_grade"] == "NOT_DETERMINED"
+    assert not result["verified_i3"]
+    serialized = public.read_text(encoding="utf-8")
+    assert "Example author workflow" not in serialized
+    assert "land removals" not in serialized
+
+
+def test_bad_supporting_document_md5_still_fails_closed(tmp_path, monkeypatch):
+    mif, world, packet, public = fixture(tmp_path, monkeypatch)
+    rmd = mif.parent / "CDRoptions.Rmd"
+    rmd.write_bytes(b"Study \xc2 BECCS\n")
+    with pytest.raises(CaseAuditError, match="MD5 mismatch"):
+        cx.crosswalk(mif, world, packet, public, rmd_path=rmd)
+    assert not public.exists()
