@@ -276,3 +276,14 @@ A new MD5/SHA-locked **`arc24-cemics-author-accounting`** local command tests th
     python -m residual_pathways arc24-cemics-author-accounting
 
 Full original line-specific evidence, a complete source-identity caveat and the research next gate are in [ARC24-03 original author carbon flow review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). This does NOT certify anthropogenic additionality, lifecycle net negative emissions, source precision or disjoint physical CDR; independent I3=0.
+
+##### CEMICS author CDR2050 worksheet run: regrowth field-name preprocessing mismatch identified
+
+Actual 2026-10-24 user run of `arc24-cemics-author-accounting` passed **8/8 synthetic tests** and checked the original MIF and World sources. At 2050, source matched Net CO2 (positive), AFOLU (positive), `Carbon Sequestration|Land Use` (positive), biomass CCS (positive), fossil CCS (positive), EW (zero) and DAC (zero). It **did not compute author `CDRtotal` or `CO2pos`**, because original Rmd selector `Emissions|CO2|Land|Land-use Change|Regrowth` was not found under that exact raw field name in the author's MIF. Conversely, separately reported `Gross Fossil Fuels and Industry` is present in the author's archive but **absent from AR6 World under exact name**. Neither absent variable should be silently imputed or equated with land aggregate.
+
+Crucially, the original Rmd has an upstream `data <- deletePlus(data)` transformation (lines 144–145), and public MAgPIE reporting documentation may mark hierarchy branches as `|+|` or `|++|` (e.g. `Emissions|CO2|Land|Land-use Change|+|Regrowth`). **That specific raw-name hypothesis is not yet confirmed in the historical 2021 archive**. A new checksum-locked `arc24-cemics-field-lineage` tool inspects only original Regrowth and gross/land variable *names*, unit presence and hierarchical spelling candidates in author/AR6 source without exposing numeric observations or deriving a new accounting ledger. New tests and real scan remain pending.
+
+    python -m pytest -q tests/test_arc24_cemics_field_lineage.py
+    python -m residual_pathways arc24-cemics-field-lineage
+
+See [ARC24-03 scientific source formula and regrowth name diagnosis](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). Independent gross/atmospheric CDR I3 remains 0.
