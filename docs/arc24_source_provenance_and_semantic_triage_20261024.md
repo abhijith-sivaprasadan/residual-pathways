@@ -46,3 +46,54 @@ Before any I3 upgrade, record: exact primary source and version, gas/geography/y
 - Save source acquisition provenance privately (IIASA portal download record and date; do not publish account identifiers). Record the locally observed World and metadata hashes.
 - When model-specific evidence supports it, run a private 2050 field-by-field extraction for two chosen cases and document allowed semantic mappings; **do not invent source-derived gross/net/removal figures**.
 - Keep ARC24 grade `NOT_DETERMINED`, and PathwaysHub RP-18 `NEEDS_EXTERNAL_REVIEW` until evidence and review are complete.
+
+## 6. Signed 2050 emissions and sequestration review: ARC24-03 vs ARC24-06
+
+**Observed directly from the author's local v1.1 World source**, using the original ARC24 private packet (signs only, no source numbers copied):
+
+| AR6 IAMC variable | ARC24-03: REMIND-MAgPIE 2.1-4.2, CEMICS_SSP1-1p5C-minCDR (C1) | ARC24-06: POLES ENGAGE, EN_NPi2020_400f (C2) |
+| --- | --- | --- |
+| Emissions&#124;CO2 | Positive | Positive |
+| Emissions&#124;CO2&#124;Energy and Industrial Processes | Positive | Positive |
+| Emissions&#124;CO2&#124;AFOLU | **Positive** | **Negative** |
+| Carbon Sequestration&#124;Land Use | Positive | Positive |
+| Carbon Sequestration&#124;CCS&#124;Biomass | Positive | Positive |
+| Carbon Sequestration&#124;CCS&#124;Fossil | Positive | Positive |
+| Carbon Sequestration&#124;Direct Air Capture | **Zero reported** | **Positive reported** |
+
+All seven observations for both cases report **Mt CO2/yr**. The zero reported for REMIND DAC is a real recorded numerical zero in the selected source, **not** a missing observation.
+
+### Peer-reviewed definitional cross-check
+
+Prütz, Fuss and Rogelj (2025), [*Imputation of missing land carbon sequestration data in the AR6 Scenarios Database*](https://doi.org/10.5194/essd-17-221-2025), specifically distinguish:
+
+- AR6 **Emissions&#124;CO2&#124;AFOLU**: reported **net** CO2 flux in agriculture, forestry and other land use, which can be positive or negative.
+- AR6 **Carbon Sequestration&#124;Land Use**: separately reported **gross** CO2 sequestration via land sinks, using positive removals convention. It is not the same observable as the signed net AFOLU balance.
+- The study identifies inconsistent or missing source distinctions between net-negative AFOLU, gross removals and land baselines across some source models; even a reported land-removal variable does **not** establish a fully disjoint, exhaustive accounting identity.
+
+Consequently, **REMIND ARC24-03 has net-positive AFOLU despite positive land sequestration** (emissions remain after the land-sector netting); **POLES ARC24-06 has net-negative AFOLU with positive gross land sequestration** (net land uptake). The signs alone do not reveal gross land-sector emissions, the overlap of land and BECCS sinks, or source-wide physical carbon closure. **Do not subtract the land-sequestration flow a second time from net AFOLU.** AFOLU negative is not a source-faithful estimate of gross removal.
+
+The earlier POLES model description states that energy and industrial emissions are directly modelled whereas agriculture/land emissions use GLOBIOM/G4M soft linkage ([IAMC POLES emissions](https://www.iamcdocumentation.eu/Emissions_-_POLES)). The version-qualified REMIND2.1 paper distinguishes fossil CCS from afforestation, BECCS, DACCS and enhanced weathering, and notes interactions in geological CO2 storage demand ([Baumstark et al., 2021](https://doi.org/10.5194/gmd-14-6571-2021)). These **general model descriptions** still do not certify which individual exported fields overlap or whether the exact ENGAGE and CEMICS scenario versions follow the same carbon bookkeeping.
+
+### Evidence decision
+
+| Check | ARC24-03 | ARC24-06 |
+| --- | --- | --- |
+| Seven candidate fields reported and unit-consistent | **Observed** | **Observed** |
+| AFOLU sign and separate land sequestration distinguished | **Observed, literature interpretation** | **Observed, literature interpretation** |
+| Net-negative AFOLU sign | No | Yes |
+| Complete nonoverlapping gross positive flux inventory | Not demonstrated | Not demonstrated |
+| Complete disjoint atmospheric removal inventory | Not demonstrated | Not demonstrated |
+| Original per-variable rounding/precision documented | Not demonstrated | Not demonstrated |
+| I3 accounting gate | **NOT_DETERMINED** | **NOT_DETERMINED** |
+| Independent model-specific reviewer sign-off | No | No |
+
+**Mandatory next decision:** inspect the source-specific 2050 numerical comparison of total CO2 versus energy/industrial CO2 + net AFOLU privately, and document any residual as *arithmetic only*. Exact mathematical agreement would still not establish a gross/net/CDR identity. Then obtain model/scenario-specific documentation establishing the physical partition and source precision.
+
+### Reproducible, redacted diagnostic added
+
+A source-sign screening CLI, **arc24-sign-screen**, reads the already prepared local **data/ar6-private/canonical_selected24_packet.json** and writes only anonymous case IDs, units, signs and accounting-risk flags to **results/ar6-canonical-gate/arc24_sign_screen_public.json**:
+
+    python -m residual_pathways arc24-sign-screen
+
+It does not emit original Model/Scenario names or any numerical emissions values, does not infer missing values are zero, and never upgrades I1–I3 status. Accompanying synthetic tests cover signed AFOLU, reported-zero DAC, missing variables, bad units, duplicate records and private-path misuse. The synthetic tests must still be executed in the author's current local checkout; **the actual 24-case results have not yet been regenerated by this new CLI**.
