@@ -287,3 +287,17 @@ Crucially, the original Rmd has an upstream `data <- deletePlus(data)` transform
     python -m residual_pathways arc24-cemics-field-lineage
 
 See [ARC24-03 scientific source formula and regrowth name diagnosis](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). Independent gross/atmospheric CDR I3 remains 0.
+
+##### Real CEMICS raw Regrowth source located; 2021 deletePlus preprocessing verified
+
+On 24 October 2026 the author ran the source-locked `arc24-cemics-field-lineage` (7/7 old synthetic tests passed): original Zenodo MIF for the ARC24-03-corresponding `noCDR` case has **exactly one** raw `Emissions|CO2|Land|Land-use Change|+|Regrowth` candidate, absent from AR6 World both with and without the hierarchy marker. This explains why the preceding postprocessed-Rmd selector `...|Land-use Change|Regrowth` had failed. Gross Fossil Fuels and Industry is similarly present in author's source with a single `Mt CO2/yr` record but **absent from the AR6 release**. Land Use sequestration is present in both exports but **is NOT the regrowth variable**.
+
+The [2021 REMIND `deletePlus` implementation](https://rdrr.io/github/pik-piam/remind/src/R/deletePlus.R) directly removes standalone `+|`/`++|` variable hierarchy markers, corroborating the original Strefler Rmd line 145 `data <- deletePlus(data)`. The field-lineage CLI had a harmless **reporting-only `KeyError`** because it printed `hierarchy_marker_candidate_count` rather than the actual JSON field `marker_candidate_count`; its JSON was valid and the print key has now been fixed with a CLI regression test.
+
+**Updated source-author study-only computation:** `arc24-cemics-author-accounting` can now use that **uniquely Rmd-deletePlus-mapped author-only raw regrowth stream** to calculate the original CDRtotal and CO2pos study definitions at 2050, while keeping source-verified AR6/author matching for net CO2, EW, biomass CCS and DAC and permitting only an explicitly named **author-only** Gross Fossil Fuels/Industry comparison. Original scenario numbers remain local; public output contains only signs, variable units, provenance and coarse gap bands. The new patch and regression tests are **committed but not yet locally executed**. No physical gross or durable atmospheric CDR I3 is claimed.
+
+    python -m pytest -q tests/test_arc24_cemics_field_lineage.py tests/test_arc24_cemics_author_accounting.py
+    python -m residual_pathways arc24-cemics-field-lineage
+    python -m residual_pathways arc24-cemics-author-accounting
+
+Source-specific evidence and interpretation boundary: [ARC24-03 original author carbon accounting](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md).
