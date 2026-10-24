@@ -317,3 +317,50 @@ Contemporaneous MAgPIE-related literature, [*Land use change and carbon emission
 - **Independent external I3 review:** **0**, no promotion.
 
 **Stop rule:** Do not rerun the same near-identity or broaden the scope of source-data arithmetic without new independent model/reporting definitions. The next high-ROI work is source-taxonomy investigation of `Emissions|CO2|Gross Fossil Fuels and Industry` and positive land gross fluxes, and how AFOLU net emissions and biomass/land regrowth are combined. A manuscript should report `CO2pos` as **authors' operational positive-side measure**, not certified physical economy-wide gross.
+## 11. Land and gross carbon source name audit — original two-name output is NOT a full land inventory (24 October 2026)
+
+**User's actual printed result** from previous `arc24_cemics_field_lineage_public.json`:
+
+```text
+Emissions|CO2|Gross Fossil Fuels and Industry        author=True, AR6=False, Mt CO2/yr
+Emissions|CO2|Land|Land-use Change|+|Regrowth       author=True, AR6=False, Mt CO2/yr
+```
+
+**Scope correction:** This two-line result is **not a finding that the source MIF only has two gross/land components**. The earlier code populated `context_name_inventory` only for names containing *literal* `regrowth`, `gross fossil fuels` or `land-use change`; the user then applied a second `-match 'Land-use Change|Gross Fossil'` filter. Thus other land/forest/AFOLU variables, and gross source fields whose names do not contain those exact phrases, were not screened at all. It would be invalid to claim there are no other positive land emission variables, or to quantify the previously observed `CO2pos − Gross Fossil Fuels and Industry` gap as land use from this two-line output.
+
+### More comprehensive and still privacy-safe scan now implemented (pending local user run)
+
+`arc24-cemics-field-lineage` continues verifying the original Strefler authors' MIF and Rmd MD5s, AR6 World SHA and exact cohort case ID, but now adds an **expanded emissions-family name inventory** with the following overlapping *search buckets*:
+
+- `co2_land_reporting`: all exact original variable names beginning `Emissions|CO2|Land`.
+- `gross_co2_reporting`: emission variable names with `Gross` in the CO2 reporting hierarchy.
+- `fossil_and_industry_reporting`: CO2 names mentioning fossil fuels/industry or energy and industrial processes.
+- `afolu_or_other_reporting`: CO2 AFOLU, Other or land-use change hierarchy.
+- `land_sequestration_reporting`: land-use or afforestation sequestration variables.
+- `cdr_technology_reporting`: carbon sequestration names of every reported technology.
+- `broad_land_emissions_and_cdr`: wider land, forest, deforestation, regrowth and AFOLU-related CO2 and sequestration identifiers.
+
+For each group, the JSON records every source-variable name (max 180 listed per group, with an explicit truncation flag), original author vs AR6 presence, full original reporting unit names, count of same-unit records and 2050 cell presence, **without numeric carbon observations or reconstructed totals**. Buckets can overlap; nested reporting variable names do **not** certify mutually exclusive sector streams or give permission to sum parent/child categories. The old narrow context section is retained for backward compatibility, so readers must inspect `expanded_emissions_family_inventory` rather than mistake `context_name_inventory` for a general inventory. Regression tests now include off-filter land conversion, gross industry, source-only CCS, overlapping name groups and truncation. The new code/tests are **committed but not yet run on the author's real MIF**.
+
+### Independent methodology evidence (not a historical exact export mapping)
+
+The peer-reviewed [REMIND2.1 2021 model description](https://gmd.copernicus.org/articles/14/6571/2021/index.html), §§2.4.1, 3.2.5, 3.4.1–3.4.3, describes energy/industry emissions, exogenous or MAgPIE-coupled land-use emissions, and four CDR options. This is credible reason to inspect the relevant source reporting hierarchy and document gross land emissions separately from fossil industry emissions. A [2020 REMIND-EU reporting code fork](https://rdrr.io/github/Renato-Rodrigues/REMIND-EU_reporting/src/R/reportEmi.R) separately constructs `Emi|CO2|Gross Fossil Fuels and Industry` from energy/industry terms and a `Land-Use Change` category, but **that fork is not proven to be the exact Strefler 2021 CEMICS author reporting implementation**, and its names use a shorter `Emi` namespace. Treat it as a *testable methodological lead*, not a substitute for the original author model code, an exact gross equation or a physical partition proof.
+
+### Local read-only science audit
+
+```powershell
+cd 'E:\New folder (2)\MissionJob\residual-pathways'
+git pull --ff-only
+& .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_field_lineage.py
+if ($LASTEXITCODE -ne 0) { throw 'Expanded source hierarchy synthetic tests failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-field-lineage
+if ($LASTEXITCODE -ne 0) { throw 'Expanded source hierarchy original scan failed' }
+$l = Get-Content 'results\ar6-canonical-gate\arc24_cemics_field_lineage_public.json' -Raw | ConvertFrom-Json
+$l.expanded_emissions_family_inventory.PSObject.Properties | ForEach-Object {
+    $g = $_.Value
+    Write-Host "`n=== $($_.Name) === (names: $($g.total_distinct_variable_names), truncated: $($g.names_truncated))"
+    $g.reported_fields | Select-Object original_variable_name,author_reported,ar6_reported,author_units | Format-Table -Wrap -AutoSize
+}
+```
+
+**Interpretation stop rule:** do not recalculate a new gross/land total from a variable family listing. Before such arithmetic, locate source-specific reported positive land-flux formulas, sign conventions, net AFOLU relationships, capture source/storage accounting and disjointness. I3 stays at **0**.
