@@ -75,6 +75,7 @@ class FakePlatform:
 
 class FakeScenario:
     solve_count = 0
+    copied_solution_clear_count = 0
     no_cap_level = 159025.828125
     bad_parameter = False
     source_mutations = 0
@@ -112,17 +113,32 @@ class FakeScenario:
 
     def clone(self, *, model, scenario, annotation, keep_solution, platform):
         assert self.name == "emission_bound"
-        assert platform.kind == "isolated" and not keep_solution
+        if platform.kind == "isolated" and keep_solution is False:
+            # Mirror JDBCBackend.clone() v3.11.1's documented guard.
+            raise NotImplementedError(
+                "Cross-platform clone of message_ix.Scenario with `keep_solution=False`"
+            )
+        assert platform.kind == "isolated" and keep_solution is True
         s = FakeScenario(platform, model, scenario, version=1)
         s.parameters = copy.deepcopy(self.parameters)
-        s.solved = False
+        s.solved = True
         return s
 
-    def check_out(self):
-        assert not self.solved
+    def remove_solution(self):
+        assert self.name == CONTROL_NAME and self.platform.kind == "isolated"
+        assert self.solved, "Cannot clear a non-existent solution"
+        FakeScenario.copied_solution_clear_count += 1
+        self.solved = False
 
-    def remove_par(self, name):
+    def check_out(self):
+        assert not self.solved, "Must remove copied solution before checkout"
+        self.checked_out = True
+
+    def remove_par(self, name, key=None):
         assert self.name == CONTROL_NAME and name == "bound_emission"
+        assert getattr(self, "checked_out", False), "Must check out before editing"
+        assert key is not None, "Calling remove_par without key DELETES the parameter definition"
+        assert len(key) == 1 and key == self.parameters[name]
         self.parameters[name] = []
 
     def commit(self, comment):
@@ -156,10 +172,15 @@ def mock_platforms(monkeypatch):
         platforms.append(p)
         return p
     FakeScenario.solve_count = 0
+    FakeScenario.copied_solution_clear_count = 0
     FakeScenario.no_cap_level = 159025.828125
     monkeypatch.setitem(sys.modules, "ixmp", SimpleNamespace(Platform=open_platform))
     monkeypatch.setitem(sys.modules, "message_ix", SimpleNamespace(Scenario=FakeScenario))
     return platforms
+
+
+def journal_cloned_solution_method(directory):
+    return json.loads((directory / "manifest.private.json").read_text())["clone_method"]
 
 
 def test_isolated_control_solves_only_one_scenario(tmp_path, mock_platforms):
@@ -174,7 +195,9 @@ def test_isolated_control_solves_only_one_scenario(tmp_path, mock_platforms):
     assert all(r["complete"] for r in comparison["comparisons"])
     assert all(platform.closed for platform in mock_platforms)
     assert FakeScenario.solve_count == 1
+    assert FakeScenario.copied_solution_clear_count == 1
     assert p.read_bytes() == original_bytes
+    assert journal_cloned_solution_method(out) == "CROSS_PLATFORM_KEEP_SOLUTION_THEN_REMOVE_SOLUTION"
     assert (out / "three_case_comparison.json").is_file()
     journal = json.loads((out / "manifest.private.json").read_text())
     assert journal["licensed_gams_solve_performed"] is True
@@ -185,9 +208,21 @@ def test_isolated_control_solves_only_one_scenario(tmp_path, mock_platforms):
 def test_intended_parameter_deletion_preserves_emissions_factors():
     platform = FakePlatform("source")
     bounded = FakeScenario(platform, MODEL, "emission_bound")
-    c = bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="controlled",
+    with pytest.raises(NotImplementedError, match="Cross-platform clone"):
+        bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="unsupported",
                       keep_solution=False, platform=FakePlatform("isolated"))
-    c.remove_par("bound_emission")
+    c = bounded.clone(model=MODEL, scenario=CONTROL_NAME, annotation="controlled",
+                      keep_solution=True, platform=FakePlatform("isolated"))
+    assert c.has_solution()
+    with pytest.raises(AssertionError, match="Must remove copied solution"):
+        c.check_out()
+    c.remove_solution()
+    assert not c.has_solution()
+    c.check_out()
+    with pytest.raises(AssertionError, match="DELETES the parameter"):
+        c.remove_par("bound_emission")
+    c.remove_par("bound_emission", c.par("bound_emission"))
+    assert bounded.par("bound_emission"), "Source bound must stay unchanged"
     parity = verify_clone_inputs(bounded, c)
     assert parity["control_cap_rows"] == 0
     assert parity["source_cap_rows"] == 1
