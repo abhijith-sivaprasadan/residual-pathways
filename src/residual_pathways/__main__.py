@@ -69,6 +69,10 @@ def main():
     oc.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
     oc.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     oc.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_optional_co2_public.json")
+    oi = sub.add_parser("arc24-poles-other-identity", help="Check if CO2 Other equals the reported total-EIP-net-AFOLU residual in four source-locked POLES cases; no I3")
+    oi.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    oi.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    oi.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_other_identity_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -142,6 +146,14 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-poles-other-identity":
+        from .arc24_poles_other_identity import write_other_comparison
+        result = write_other_comparison(args.world, args.packet, args.output)
+        print("POLES Other hypothesis:", result["status"])
+        print("Exact reported-decimal identity / other statuses:", result["identity_status_counts"])
+        print("Sign matches:", result["sign_matches"], "Sign mismatches:", result["sign_mismatches"])
+        print("Verified I3:", result["verified_i3"])
+        print("Coded results only; unmodified source values remain local.")
     elif args.command == "arc24-poles-optional-co2":
         from .arc24_poles_optional_co2 import write_optional_sectors
         result = write_optional_sectors(args.world, args.packet, args.output)
