@@ -389,3 +389,36 @@ The user pulled commit `3ae0bea` and executed the expanded source-lineage audit 
 ### Scientific next step and decision gate
 
 Compare the original archived values of **(-Regrowth)**, `Carbon Sequestration|Land Use|Afforestation` and parent `Carbon Sequestration|Land Use` at the same World region, units and source years, while keeping exact names and missingness. Report **only equality counts, signs and coarse difference bands** and distinguish (a) parent/child numerical relationship and (b) author-paper `CDRaff` operational formula. A numerical match would support *reported-series correspondence*, but **never** establish physical additionality, storage permanence, nonoverlap, or an all-sector gross balance. Independently seek the model reporting code or author’s 2021 source schema for AFOLU netting and gross fossil+industry definition. No I3 promotion is warranted from source name inventory or source arithmetic alone.
+### Targeted land source-series relationship test now implemented — real archive execution pending
+
+The same checksum-locked `arc24-cemics-field-lineage` CLI has been extended to publish `source_land_relationship_fingerprint`. It compares three **empirical series relationships** across source years 2020–2100, using original author MIF decimal observations **privately** and reporting only status counts:
+
+| Test pairing | Source-backed scientific question |
+| --- | --- |
+| `NEGATED_REGROWTH_VS_REPORTED_AFFORESTATION` | Does the Rmd-defined `CDRaff = −[signed Regrowth emissions]` numerically coincide with the distinct `Carbon Sequestration|Land Use|Afforestation` author series? |
+| `NEGATED_REGROWTH_VS_LAND_USE_AGGREGATE` | Does author Rmd regrowth CDR numerically coincide with the broader reported `Carbon Sequestration|Land Use`? |
+| `AFFORESTATION_VS_LAND_USE_AGGREGATE` | Does the reported land-use afforestation leaf coincide with its source parent land-use aggregate, within the tested scope? |
+
+The code requires an **unambiguous raw plus-marked Regrowth field** in the MD5-locked authors' MIF and the original Rmd `deletePlus(data)` step; the two `Carbon Sequestration|Land Use...` fields must each have a unique `Mt CO2/yr` source record. The code tracks missing years, duplicate/collapsed source names and original author-only vs AR6 name-matched status independently. It reports original source signs, source-version presence, equality and coarse mismatch bands only; it **never publishes raw source CO2 quantities**, reconstructs absent values, or changes I3. Exact numeric equality is **not scientific proof that the three flux names have equivalent anthropogenic additionality, residence times, baseline, upstream impact or physical source boundaries**.
+
+Author and AR6 source evidence already confirms these three variables are present in the original source in distinct names, but the **new comparisons and regression tests are not yet locally run**. The previous 11/11 passing source hierarchy tests did not include this new numerical contrast.
+
+To run:
+
+```powershell
+cd 'E:\New folder (2)\MissionJob\residual-pathways'
+git pull --ff-only
+& .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_field_lineage.py
+if ($LASTEXITCODE -ne 0) { throw 'CEMICS source-land relationship tests failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-field-lineage
+if ($LASTEXITCODE -ne 0) { throw 'CEMICS original-source land relationship scan failed' }
+$l = Get-Content 'results\ar6-canonical-gate\arc24_cemics_field_lineage_public.json' -Raw | ConvertFrom-Json
+$k = $l.source_land_relationship_fingerprint
+$k.original_source_terms | Format-Table -Wrap -AutoSize
+$k.nine_year_comparisons | ForEach-Object {
+    Write-Host "`n$($_.comparison) — compared $($_.observations_compared) of $($_.original_author_world_years_checked)"
+    $_.source_comparison_status_counts | Format-List
+}
+```
+
+The result will decide whether there is an *exact numerical relationship* among original MAgPIE-derived regrowth, afforestation and land sequestration aggregates in this specific SSP1/1.5 °C minimum-CDR original World case. If mismatched, do **not** 'correct' the author's CDRaff by replacing it with the broader land aggregate; instead annotate the definitional difference. In either outcome **I3=0 until a separate audited physical ledger and external review**.
