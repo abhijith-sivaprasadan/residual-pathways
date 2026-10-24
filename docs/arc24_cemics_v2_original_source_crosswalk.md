@@ -68,3 +68,30 @@ The source check is intentionally fail-closed for unfamiliar MIF layouts or mism
 After the real crosswalk, confirm exact study data match and independently read relevant Rmd variable formulas and original model-paper definitions. **If either exact scenario crosswalk or complete nonoverlapping positive/removal sector taxonomy is unavailable, report the corresponding concrete blocker** rather than imputing gross emissions. Only source-authorized physical components, a quantization-bound balance test and independent reviewer can justify subsequent I1/I2/I3 assignment. The selected sample is purposive, not representative of the full AR6 ensemble.
 
 Sources: Strefler et al. (2021) https://doi.org/10.1088/1748-9326/ac0a11 ; original author's dataset https://zenodo.org/records/5103024 ; Climate Analytics methodology https://1p5ndc-pathways.climateanalytics.org/methodology ; PIK MIF data format https://pik-piam.r-universe.dev/mip/doc/mif.html .
+## 5. Actual author file acquisition succeeded; text encoding blocker corrected in code (24 October 2026)
+
+The author's Windows PowerShell run downloaded **all four Zenodo v2 files** and verified **every publisher-listed MD5 checksum**. The original archive is available at `data/ar6-private/cemics-v2` (gitignored). The first synthetic crosswalk suite passed **12/12 tests**. The first actual `arc24-cemics-crosswalk` run then raised `UnicodeDecodeError` at the Rmd/README supporting-source `path.read_text(encoding='utf-8-sig')`. Because the public result file is written only after completing this section, no crosswalk report was created.
+
+Crucially, the exception occurred **after** author MIF MD5 verification, AR6 World source SHA-256 verification, private packet 2050 source checks, and initial MIF/World candidate comparison. Reaching this code point **does not demonstrate** that the exact scenario was present in the author MIF; its outcome was calculated internally but **not emitted** due to the later exception.
+
+### Correction
+
+The source reader now attempts lossless **strict** `utf-8-sig` decoding first, then legacy `cp1252` and `latin-1` only if the preceding decoding failed. Both raw archive files and their MD5 checks remain unchanged. Every supporting-file report records `decoded_as`, `utf8_strict_success`, and `encoding_certainty`, explicitly flagging a legacy byte interpretation as **not certified by the authors**. NUL-containing files or unexpected replacement characters are rejected, rather than silently replacing corrupt data.
+
+New synthetic tests reproduce a non-UTF-8 `0xc2` byte and validate full Rmd/README flow with original bytes and MD5 constraints, UTF-8 behaviour, Latin-1 fallback, binary guard and tampered-MD5 rejection. **These new tests and the corrected real-source command are committed but not yet rerun by the author.**
+
+PowerShell after pull:
+
+    git pull --ff-only
+    & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_crosswalk.py
+    & .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-crosswalk
+    if ($LASTEXITCODE -ne 0) { throw 'CEMICS source crosswalk failed; do not read stale/missing report' }
+    $x = Get-Content 'results/ar6-canonical-gate/arc24_cemics_source_crosswalk_public.json' -Raw | ConvertFrom-Json
+    $x.status
+    $x.archive_exact_model_scenario_row_count
+    $x.archive_exact_world_variable_count
+    $x.overlapping_variable_names
+    $x.overlap_status_counts
+    $x.author_methodology_code_presence | Format-List
+
+No original archive re-download is needed; all four already exist and passed the publisher's checksums. If the corrected run instead reveals scenario absence, different model naming or variable-level discrepancies, report those scientific blockers directly rather than assuming source equivalence or assigning I3.
