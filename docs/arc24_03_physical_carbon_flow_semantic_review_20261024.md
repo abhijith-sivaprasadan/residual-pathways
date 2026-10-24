@@ -364,3 +364,28 @@ $l.expanded_emissions_family_inventory.PSObject.Properties | ForEach-Object {
 ```
 
 **Interpretation stop rule:** do not recalculate a new gross/land total from a variable family listing. Before such arithmetic, locate source-specific reported positive land-flux formulas, sign conventions, net AFOLU relationships, capture source/storage accounting and disjointness. I3 stays at **0**.
+## 12. Real expanded World source-name hierarchy scan: exact categories and implications (24 October 2026)
+
+The user pulled commit `3ae0bea` and executed the expanded source-lineage audit using checksum-verified Strefler v2 MIF and the source-locked AR6 World file. **11/11 synthetic tests passed and the real CLI succeeded.** Each source-name group below was **not truncated**. Reported names are *World scenario export fields*, not necessarily full internal model flow definitions.
+
+| Source name search family | Distinct names | Actual original author/AR6 finding |
+| --- | ---: | --- |
+| `co2_land_reporting` | **1** | Original author **only** `Emissions|CO2|Land|Land-use Change|+|Regrowth` (not separately in AR6) |
+| `gross_co2_reporting` | **1** | Original author **only** `Emissions|CO2|Gross Fossil Fuels and Industry` (not in AR6) |
+| `fossil_and_industry_reporting` | **3** | Shared `Emissions|CO2|Energy and Industrial Processes` and `Emissions|CO2|Energy|Demand|Industry`, plus original-author-only Gross Fossil Fuels and Industry |
+| `afolu_or_other_reporting` | **2** | Shared `Emissions|CO2|AFOLU`; `Emissions|CO2|Other` reported **only by AR6** |
+| `land_sequestration_reporting` | **2** | Both exports report `Carbon Sequestration|Land Use` and **`Carbon Sequestration|Land Use|Afforestation`** |
+
+**Meaning:** Our previous name-index incompleteness has now been corrected for the surveyed families: within this original global scenario export, the gross CO2 subhierarchy contains only gross fossil/industry; there is no other separately labelled gross CO2 output matching the implemented `gross_co2_reporting` predicate. The original source's `Emissions|CO2|Land` hierarchy contains only the negative regrowth term. However, **the absence of other named source rows does NOT demonstrate that gross positive land emissions are zero, that the source has no other uncatalogued carbon paths, or that original AFOLU signed net = -regrowth**. Positive land emissions may be netted into AFOLU, imported from MAgPIE, or unavailable at this IAMC reporting level.
+
+**High-value new observation:** there are THREE distinct land-related original World series to disambiguate: (i) signed negative original-author regrowth flux, which the 2021 Rmd explicitly negates into `CDRaff`; (ii) aggregate `Carbon Sequestration|Land Use` source; and (iii) named `Carbon Sequestration|Land Use|Afforestation` source. The latter two match AR6 originals, whereas regrowth is only in the author archive. Parent vs child IAMC nomenclature **cannot** by itself establish equivalence, disjointness, or whether aggregate includes other land-related removals.
+
+**AR6-only `Emissions|CO2|Other`:** the author archive's missing row is not zero. Prior accounting audits suggest Other may act as a near-zero reported category or balancing residual for some model sets, but no source-author `Other` exists here and we must not reconstruct it as an independent observed source. Only a proven accounting mapping can justify attributing that term physically.
+
+### Model literature — source-level context, not a CEMICS-specific mapping
+
+[Baumstark et al. 2021, REMIND2.1](https://gmd.copernicus.org/articles/14/6571/2021/index.html) §2.4.1 and §3.4.1–3.4.3 describe the integration of MAgPIE land emissions, energy/industry emissions, and four CDR options. In related [MAgPIE-based land-carbon accounting](https://pmc.ncbi.nlm.nih.gov/articles/PMC9427734/) (2022), positive land conversion/forest degradation and negative forest regrowth are explicitly distinct, alongside forest-product carbon storage and decay. These general mechanisms support searching for underlying gross-land components but **cannot supply their absent original 2021 CEMICS IAMC values**.
+
+### Scientific next step and decision gate
+
+Compare the original archived values of **(-Regrowth)**, `Carbon Sequestration|Land Use|Afforestation` and parent `Carbon Sequestration|Land Use` at the same World region, units and source years, while keeping exact names and missingness. Report **only equality counts, signs and coarse difference bands** and distinguish (a) parent/child numerical relationship and (b) author-paper `CDRaff` operational formula. A numerical match would support *reported-series correspondence*, but **never** establish physical additionality, storage permanence, nonoverlap, or an all-sector gross balance. Independently seek the model reporting code or author’s 2021 source schema for AFOLU netting and gross fossil+industry definition. No I3 promotion is warranted from source name inventory or source arithmetic alone.
