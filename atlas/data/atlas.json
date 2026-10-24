@@ -1,0 +1,545 @@
+{
+  "schema": "residualpathways.atlas.public.v1",
+  "date": "2026-10-24",
+  "scope": "World · climate-vetted AR6 2050 coverage + historical CD-LINKS + educational Westeros",
+  "evidence": "SOURCE_BACKED_AGGREGATE_COUNTS_WITH_LIMITATIONS",
+  "provenance": {
+    "coverageSource": "https://zenodo.org/records/20056332",
+    "coverageSha256": "4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977",
+    "coverageStatus": "IIASA-LABELLED_PUBLIC_TEACHING_SUBSET_NOT_VERIFIED_AGAINST_CANONICAL_AR6_WORLD_V1_1",
+    "metadataStatus": "THIRD_PARTY_REDISTRIBUTED_VERSION_NOT_OFFICIAL_HASH_VERIFIED",
+    "metadataSha256": "7d22453bdda52e95cea4df46d362018951dd7114e62f01f5bcea65d6e24a7790",
+    "reference": "https://github.com/abhijith-sivaprasadan/residual-pathways",
+    "protocol": "https://github.com/abhijith-sivaprasadan/residual-pathways/blob/main/docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md"
+  },
+  "totals": {
+    "scenarios": 1202,
+    "worldScenarioPairs": 2298,
+    "series": 693299,
+    "dac": 422,
+    "six": 330,
+    "eipLand": 345,
+    "verifiedI3": 0
+  },
+  "categories": [
+    {
+      "category": "C1",
+      "n": 97,
+      "co2": 97,
+      "dac": 38,
+      "all_six_candidate_presence": 27,
+      "eip_afolu_land_beccs_dac": 30,
+      "eip_afolu_land_beccs_dac_fossilccs": 19
+    },
+    {
+      "category": "C2",
+      "n": 133,
+      "co2": 133,
+      "dac": 32,
+      "all_six_candidate_presence": 17,
+      "eip_afolu_land_beccs_dac": 26,
+      "eip_afolu_land_beccs_dac_fossilccs": 13
+    },
+    {
+      "category": "C3",
+      "n": 311,
+      "co2": 311,
+      "dac": 127,
+      "all_six_candidate_presence": 96,
+      "eip_afolu_land_beccs_dac": 94,
+      "eip_afolu_land_beccs_dac_fossilccs": 66
+    },
+    {
+      "category": "C4",
+      "n": 159,
+      "co2": 159,
+      "dac": 57,
+      "all_six_candidate_presence": 51,
+      "eip_afolu_land_beccs_dac": 56,
+      "eip_afolu_land_beccs_dac_fossilccs": 50
+    },
+    {
+      "category": "C5",
+      "n": 212,
+      "co2": 212,
+      "dac": 87,
+      "all_six_candidate_presence": 73,
+      "eip_afolu_land_beccs_dac": 80,
+      "eip_afolu_land_beccs_dac_fossilccs": 66
+    },
+    {
+      "category": "C6",
+      "n": 97,
+      "co2": 97,
+      "dac": 42,
+      "all_six_candidate_presence": 34,
+      "eip_afolu_land_beccs_dac": 38,
+      "eip_afolu_land_beccs_dac_fossilccs": 30
+    },
+    {
+      "category": "C7",
+      "n": 164,
+      "co2": 164,
+      "dac": 32,
+      "all_six_candidate_presence": 26,
+      "eip_afolu_land_beccs_dac": 20,
+      "eip_afolu_land_beccs_dac_fossilccs": 17
+    },
+    {
+      "category": "C8",
+      "n": 29,
+      "co2": 29,
+      "dac": 7,
+      "all_six_candidate_presence": 6,
+      "eip_afolu_land_beccs_dac": 1,
+      "eip_afolu_land_beccs_dac_fossilccs": 0
+    }
+  ],
+  "variableCounts": {
+    "Emissions|CO2": 1863,
+    "Emissions|CO2|Energy": 1291,
+    "Emissions|CO2|AFOLU": 1779,
+    "Carbon Sequestration|CCS|Fossil": 1444,
+    "Carbon Sequestration|CCS|Biomass": 1646,
+    "Carbon Sequestration|Direct Air Capture": 477,
+    "Emissions|CH4": 1786,
+    "Emissions|N2O": 1789,
+    "Emissions|CO2|Energy and Industrial Processes": 1811,
+    "Carbon Sequestration|Land Use": 904,
+    "Carbon Sequestration|Enhanced Weathering": 201
+  },
+  "units": {
+    "Emissions|CO2": "Mt CO2/yr",
+    "Emissions|CO2|Energy": "Mt CO2/yr",
+    "Emissions|CO2|AFOLU": "Mt CO2/yr",
+    "Carbon Sequestration|CCS|Fossil": "Mt CO2/yr",
+    "Carbon Sequestration|CCS|Biomass": "Mt CO2/yr",
+    "Carbon Sequestration|Direct Air Capture": "Mt CO2/yr",
+    "Emissions|CH4": "Mt CH4/yr",
+    "Emissions|N2O": "kt N2O/yr",
+    "Emissions|CO2|Energy and Industrial Processes": "Mt CO2/yr",
+    "Carbon Sequestration|Land Use": "Mt CO2/yr",
+    "Carbon Sequestration|Enhanced Weathering": "Mt CO2/yr"
+  },
+  "n2o": [
+    {
+      "category": "C1",
+      "reporting": 97,
+      "meanOriginal": 2390.005823,
+      "meanCorrected": 2337.478223,
+      "delta": -52.527601
+    },
+    {
+      "category": "C2",
+      "reporting": 133,
+      "meanOriginal": 2318.673433,
+      "meanCorrected": 2267.713577,
+      "delta": -50.959856
+    },
+    {
+      "category": "C3",
+      "reporting": 311,
+      "meanOriginal": 2415.39895,
+      "meanCorrected": 2362.313258,
+      "delta": -53.085691
+    },
+    {
+      "category": "C4",
+      "reporting": 159,
+      "meanOriginal": 2417.53357,
+      "meanCorrected": 2364.400964,
+      "delta": -53.132606
+    },
+    {
+      "category": "C5",
+      "reporting": 212,
+      "meanOriginal": 2660.697875,
+      "meanCorrected": 2602.220998,
+      "delta": -58.476876
+    },
+    {
+      "category": "C6",
+      "reporting": 97,
+      "meanOriginal": 2906.452598,
+      "meanCorrected": 2842.574519,
+      "delta": -63.878079
+    },
+    {
+      "category": "C7",
+      "reporting": 164,
+      "meanOriginal": 3464.006357,
+      "meanCorrected": 3387.874349,
+      "delta": -76.132008
+    },
+    {
+      "category": "C8",
+      "reporting": 29,
+      "meanOriginal": 3876.158613,
+      "meanCorrected": 3790.968313,
+      "delta": -85.190299
+    }
+  ],
+  "comparison": {
+    "kind": "HISTORICAL_CD_LINKS_TUTORIAL_NET_CO2_NOT_GROSS",
+    "year": 2050,
+    "unit": "Mt CO2/yr",
+    "models": [
+      "MESSAGEix-GLOBIOM 1.0",
+      "REMIND-MAgPIE 1.7-3.0",
+      "IMAGE 3.0.1"
+    ],
+    "scenarios": [
+      "CD-LINKS_INDCi",
+      "CD-LINKS_NPi",
+      "CD-LINKS_NPi2020_1000",
+      "CD-LINKS_NPi2020_1600",
+      "CD-LINKS_NPi2020_400",
+      "CD-LINKS_NoPolicy"
+    ],
+    "rows": [
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_INDCi",
+        "value": 49784.94281
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_INDCi",
+        "value": 46292.8512
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_INDCi",
+        "value": 43695.40886
+      },
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_NPi",
+        "value": 53595.16479
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_NPi",
+        "value": 56121.0939
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_NPi",
+        "value": 49334.01172
+      },
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_NPi2020_1000",
+        "value": 12753.84243
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_NPi2020_1000",
+        "value": 10289.4231
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_NPi2020_1000",
+        "value": 10528.94344
+      },
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_NPi2020_1600",
+        "value": 25181.95619
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_NPi2020_1600",
+        "value": 18635.6956
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_NPi2020_1600",
+        "value": 16377.43522
+      },
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_NPi2020_400",
+        "value": 2737.839477
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_NPi2020_400",
+        "value": 94.5885
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_NPi2020_400",
+        "value": 127.7481359
+      },
+      {
+        "model": "MESSAGEix-GLOBIOM 1.0",
+        "scenario": "CD-LINKS_NoPolicy",
+        "value": 55919.642
+      },
+      {
+        "model": "REMIND-MAgPIE 1.7-3.0",
+        "scenario": "CD-LINKS_NoPolicy",
+        "value": 65153.2663
+      },
+      {
+        "model": "IMAGE 3.0.1",
+        "scenario": "CD-LINKS_NoPolicy",
+        "value": 54471.30176
+      }
+    ]
+  },
+  "innovations": [
+    {
+      "id": "GAP01",
+      "sector": "industry",
+      "title": "Cement process emissions",
+      "mechanism": "Lower clinker ratio, process capture and alternative binders",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-11/",
+      "caution": "Process definitions and no double-counting captured fossil CO2"
+    },
+    {
+      "id": "GAP02",
+      "sector": "industry",
+      "title": "Low-carbon primary steel",
+      "mechanism": "Hydrogen DRI, electrification and energy carriers",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-11/",
+      "caution": "Electricity/H2 supply, scrap availability and asset vintage"
+    },
+    {
+      "id": "GAP03",
+      "sector": "transport",
+      "title": "Hard-to-electrify aviation",
+      "mechanism": "Demand management and alternative aviation fuels",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-10/",
+      "caution": "Life-cycle boundaries and biomass competition"
+    },
+    {
+      "id": "GAP04",
+      "sector": "transport",
+      "title": "Maritime transport fuel switching",
+      "mechanism": "Alternative fuels and fleet turnover",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-10/",
+      "caution": "Upstream energy emissions and bunker fuel boundary"
+    },
+    {
+      "id": "GAP05",
+      "sector": "power",
+      "title": "Grid flexibility and firm low-carbon supply",
+      "mechanism": "Storage, demand response and transmission",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-6/",
+      "caution": "Temporal aggregation may hide flexibility constraints"
+    },
+    {
+      "id": "GAP06",
+      "sector": "carbon_storage",
+      "title": "Point-source fossil CCS infrastructure",
+      "mechanism": "CO2 transport, capture and geological injection",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/",
+      "caution": "Capture is avoided emissions not atmospheric removal"
+    },
+    {
+      "id": "GAP07",
+      "sector": "cdr",
+      "title": "DACCS energy and storage constraints",
+      "mechanism": "Direct air capture with durable sequestration",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/",
+      "caution": "Capture vs stored CO2 and permanence unverified by IAMC name"
+    },
+    {
+      "id": "GAP08",
+      "sector": "cdr",
+      "title": "BECCS and biomass supply",
+      "mechanism": "Biogenic carbon capture and geologic storage",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/",
+      "caution": "Biogenic capture not automatically net durable CDR"
+    },
+    {
+      "id": "GAP09",
+      "sector": "land",
+      "title": "Land-based removals and food competition",
+      "mechanism": "Afforestation, soils and landscape management",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-7/",
+      "caution": "Net AFOLU not interchangeable with gross land removals"
+    },
+    {
+      "id": "GAP10",
+      "sector": "nonco2",
+      "title": "Methane mitigation source attribution",
+      "mechanism": "Energy leaks and agricultural CH4 source management",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-7/",
+      "caution": "Unsplit methane cannot assign fossil AR6 GWP"
+    },
+    {
+      "id": "GAP11",
+      "sector": "nonco2",
+      "title": "Nitrous oxide source control",
+      "mechanism": "Agricultural fertilizer and industrial N2O abatement",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-7/",
+      "caution": "2021 vs corrected 2025 GWP shifts calculated CO2e not emissions"
+    },
+    {
+      "id": "GAP12",
+      "sector": "equity",
+      "title": "Distributional constraints and energy access",
+      "mechanism": "Institutional finance and justice safeguards",
+      "status": "REFERENCE_TOPIC_ONLY_REQUIRES_CASE_REVIEW",
+      "source": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-4/",
+      "caution": "No global gross CO2 estimate can assign distributional causality"
+    }
+  ],
+  "operations": {
+    "source": "https://github.com/abhijith-sivaprasadan/pathways-hub/blob/main/protocols/workstream_v3.json",
+    "milestones": [
+      {
+        "id": "RP-01",
+        "name": "Pinned official public tutorial pilot",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-02",
+        "name": "Verified 2050 CD-LINKS cohort",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-03",
+        "name": "Source-licensed AR6 World and metadata access",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "id": "RP-04",
+        "name": "AR6 model-scenario variable coverage and class I3",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "id": "RP-05",
+        "name": "Gas metric and source precision pilot",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "id": "RP-06",
+        "name": "Synthetic HiGHS controlled intervention",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-07",
+        "name": "MESSAGEix Westeros GAMS baseline and interventions",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-08",
+        "name": "Literature and innovation-gap synthesis",
+        "status": "IN_PROGRESS"
+      },
+      {
+        "id": "PH-01",
+        "name": "Automated synthetic intake and issue register",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "PH-02",
+        "name": "Signed or authenticated human review",
+        "status": "NEEDS_EXTERNAL_REVIEW"
+      },
+      {
+        "id": "PH-03",
+        "name": "Actual external submitter/reviewer exercise",
+        "status": "NEEDS_EXTERNAL_REVIEW"
+      },
+      {
+        "id": "PH-04",
+        "name": "Evidence-constrained briefing from science releases",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-09",
+        "name": "Climate-vetted teaching-source identifiability preflight",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-10",
+        "name": "RP24 source-grounded case selection and automated diagnostics",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-11",
+        "name": "Provisional accounting quantization/materiality gates",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-12",
+        "name": "2030–2100 vetted cohort robustness",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-13",
+        "name": "Non-CO2 2050 source-metric pilot",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-14",
+        "name": "Independent Pyomo/HiGHS synthetic validation",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-15",
+        "name": "Source-linked candidate innovation taxonomy",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-16",
+        "name": "Machine-generated accessible source-scoped policy brief and chart",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-17",
+        "name": "Unreviewed source-grounded v3 working-paper draft",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "RP-18",
+        "name": "24 individual model-specific accounting reviews",
+        "status": "NEEDS_EXTERNAL_REVIEW"
+      },
+      {
+        "id": "PH-05",
+        "name": "Full fictional 3-team correction exercise",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "PH-06",
+        "name": "Board/RACI/handover and governance",
+        "status": "DONE_TESTED"
+      },
+      {
+        "id": "PH-07",
+        "name": "Genuine external independent usability and scientific exchange",
+        "status": "NEEDS_EXTERNAL_REVIEW"
+      }
+    ],
+    "evidence": "AUTHOR_REPORTED_REPOSITORY_STATUS"
+  },
+  "westeros": {
+    "status": "AUTHOR_REPORTED_LOCAL_MESSAGEIX_GAMS_SOLVED_NOT_INDEPENDENTLY_REPRODUCED",
+    "name": "Educational Westeros; not global IAM",
+    "baselineObjective": 159025.828125,
+    "cappedObjective": 191510.796875,
+    "controlObjective": 159025.828125,
+    "cap": 500,
+    "objectiveUnit": "native model objective units",
+    "objectiveDeltaPct": 20.427479694974863,
+    "co2Unit": "Mt CO2 average-annual bound",
+    "note": "Model years 700, 710 and 720 are fictional. Actual GAMS solve shown by author's local transcript."
+  }
+}
