@@ -309,3 +309,14 @@ Source-specific evidence and interpretation boundary: [ARC24-03 original author 
 The separately reported author-only `Emissions|CO2|Gross Fossil Fuels and Industry` is **positive but below derived `CO2pos`** by a nonzero difference of **≥10% of max(1, |CO2pos|, |gross_FI|)**. This is a **different-scope comparison, not a required carbon balance or error**. The author-only gross fossil/industry and signed Regrowth values are absent from the original AR6 World export under their raw/postprocessed names. `Carbon Sequestration|Land Use` is separately present in both sources and was **not substituted** for regrowth; fossil CCS positive but not counted as author study CDR.
 
 The operational calculation's actual provenance and new >10% scope-difference finding are recorded in [original author carbon-flow source review §10](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). No additional pseudo-reconciliation is warranted without original model-specific gross sector and signed net land accounting definitions. **I3=0; no certified physically complete/exclusive positive emissions or net durable atmospheric removal partition.**
+
+##### CEMICS land/gross inventory expanded after overly narrow original two-name grep
+
+The 2026-10-24 user's latest `context_name_inventory` output showed only original author `Emissions|CO2|Gross Fossil Fuels and Industry` and `Emissions|CO2|Land|Land-use Change|+|Regrowth` (both absent in AR6 World). **This does not prove those are the only original land/gross emissions components.** The initial internal context index only selected names containing `regrowth`, `gross fossil fuels`, or `land-use change`, and the PowerShell query filtered that small subset further. No other variable family had been inventoried.
+
+The existing checksum-locked `arc24-cemics-field-lineage` command now additionally inventories actual `Emissions|CO2|Land`, gross CO2, fossil/industry, AFOLU/Other, land sequestration, broader forest-related emissions and CDR technology original variable-name families across the authors' MD5-verified MIF and the AR6 World v1.1 registered World scenario. Reports only names, original units, per-variable record counts and year-2050 presence, with a 180-name/per-group truncation flag. These are **overlapping code-defined name search buckets, not summed disjoint physical categories**. Expanded regression tests are committed but await real local execution.
+
+    python -m pytest -q tests/test_arc24_cemics_field_lineage.py
+    python -m residual_pathways arc24-cemics-field-lineage
+
+Inspect the `expanded_emissions_family_inventory` object in `results/ar6-canonical-gate/arc24_cemics_field_lineage_public.json`. The [source-specific CEMICS carbon-flow review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md) explains why the two-name grep is insufficient and why original reporting-code semantics remain required. Independently validated I3 is still **0**.
