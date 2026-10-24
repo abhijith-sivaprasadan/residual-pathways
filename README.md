@@ -210,3 +210,14 @@ The original CEMICS v2 Zenodo download **succeeded locally** and verified all fo
     python -m residual_pathways arc24-cemics-crosswalk
 
 Only a successful rerun can establish whether the exact author-archive ARC24-03 Model×Scenario×World×2050 source pair exists, what matches AR6 variable by variable, and what scientific semantic gaps remain. See the [CEMICS research crosswalk audit](docs/arc24_cemics_v2_original_source_crosswalk.md).
+
+##### Important source-identity finding: ARC24-03 absent by exact name from authors' MIF
+
+The author reran the repaired original CEMICS crosswalk after **18/18 tests passed**. All four published Zenodo v2 files had verified MD5 checksums and the exact original AR6 World selection remained unchanged, but the author MIF has **zero rows with the exact `CEMICS_SSP1-1p5C-minCDR` scenario identifier**. Consequently, zero exact model/scenario/2050 variables could be compared, and the R Markdown has zero exact-string occurrences. This is a **source-provenance gap, not a software error or evidence of physical non-closure**. The 2021 paper remains valuable for model-family CDR background, but an exact scientific source mapping has not been verified.
+
+A targeted, source-MD5-locked `arc24-cemics-names` diagnostic now reports the authors' actual Model/Scenario labels, normalized textual matches and script line numbers, without exporting any original emissions values. This is a possible alias investigation **only**; a similarly named model run cannot automatically substitute for ARC24-03. The new command and synthetic tests are committed, **not yet run locally**:
+
+    python -m pytest -q tests/test_arc24_cemics_name_inventory.py
+    python -m residual_pathways arc24-cemics-names
+
+See [CEMICS original-source reconciliation and negative result](docs/arc24_cemics_v2_original_source_crosswalk.md). **No source-backed gross positive CO2/removal decomposition has been established; I3=0.**
