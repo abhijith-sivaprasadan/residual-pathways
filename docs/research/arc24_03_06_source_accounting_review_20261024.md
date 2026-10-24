@@ -89,7 +89,7 @@ Five synthetic probe tests passed. The actual `arc24_engage_v2_probe` run confir
 The negative finding could mean a model label variant, changed scenario label, an AR6-only run, or a different ENGAGE release. No one of these is established. New `src/residual_pathways/arc24_engage_v2_identity_inventory.py` scans only `World` case names in the exact 94.56 MB author-held file, verifies its author-observed SHA and the previously selected private ARC24-06 packet, and reports **aggregate counts** for exact-model, exact-scenario, casefold, normalized-punctuation, POLES-family prefix and lexical candidates. Up to 12 candidate source identities are written **only** to ignored `data/ar6-private/engage_v2_candidate_identities_private.json`, without any numeric observations. Do **not** treat lexical similarities or matching prefixes as an author-approved alias or numerical origin.
 
 ~~~powershell
-$py = '.\\.venv-messageix\\Scripts\\python.exe'
+$py = ".\.venv-messageix\Scripts\python.exe"
 & $py -m pytest -q tests/test_arc24_engage_v2_probe.py tests/test_arc24_engage_v2_identity_inventory.py
 if ($LASTEXITCODE -ne 0) { throw 'Identity inventory regression tests failed' }
 & $py -m residual_pathways.arc24_engage_v2_identity_inventory
