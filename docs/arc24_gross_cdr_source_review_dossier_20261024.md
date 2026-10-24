@@ -52,3 +52,10 @@ These terms are generally not automatically disjoint. Even if `net total = sum r
 4. **Only if supported by source mappings**, prepare a closed carbon-flow ledger with physically named process streams and numerical reconciliation in `data/ar6-private`; release no original scenario observations without explicit rights review. Do not promote selected 24-case population frequency or treat four POLES pathways as four independent models.
 
 **Status:** first external model-level source dossier assembled; private source crosswalk, physical completeness and independent review **not done**. The 2021 author archive is a high-value new evidence lead, not a verified ARC24 case mapping.
+## Reproducible Strefler original-source crosswalk now available
+
+The authors' **Zenodo v2** AR6-aligned source manifest, its CC BY 4.0 status, the exact independent CEMICS SSP1 minCDR model/scenario reference, and the original MIF semicolon/trailing-delimiter format have now been independently confirmed. See [dedicated ARC24-03 authors' archive/source crosswalk protocol](arc24_cemics_v2_original_source_crosswalk.md).
+
+Implementation committed: scripts/fetch_cemics_v2.ps1 (downloads four pinned-MD5 public author archive files only into gitignored local ar6-private); src/residual_pathways/arc24_cemics_crosswalk.py (source MD5 + World SHA source locks, exact Model/Scenario/Region/2050 joins, comparison statuses and Rmd/README keyword index); synthetic tests/test_arc24_cemics_crosswalk.py (including semicolon-terminated MIF). The original author files and raw AR6 values are never exported through the GitHub code or the public report.
+
+**Local execution of the new downloader/tests/crosswalk is pending.** Consequently this protocol is not evidence that the authors' MIF exact scenario pair actually matches, that variables are numerically identical, or that source-defined gross/atmospheric-removal terms are disjoint. No scientific I3 grade has been assigned.
