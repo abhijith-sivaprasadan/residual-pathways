@@ -88,6 +88,12 @@ def main():
     ni.add_argument("--mif", default="data/ar6-private/cemics-v2/CDRoptionsAR6_complete.mif")
     ni.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
     ni.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_name_inventory_public.json")
+    fp = sub.add_parser("arc24-cemics-alias-fingerprint", help="Compare archive noCDR/AR6 minCDR using fullCDR positive and swapped negative controls; source SHA/MD5 locked, no I3")
+    fp.add_argument("--mif", default="data/ar6-private/cemics-v2/CDRoptionsAR6_complete.mif")
+    fp.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    fp.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    fp.add_argument("--rmd", default="data/ar6-private/cemics-v2/CDRoptions.Rmd")
+    fp.add_argument("--output", default="results/ar6-canonical-gate/arc24_cemics_alias_fingerprint_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -161,6 +167,18 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-cemics-alias-fingerprint":
+        from .arc24_cemics_alias_fingerprint import write_author_alias_fingerprints
+        result = write_author_alias_fingerprints(
+            args.mif, args.world, args.packet, args.output, rmd=args.rmd)
+        print("CEMICS source alias hypothesis:", result["status"])
+        for item in result["comparisons"]:
+            print(item["comparison"], "shared variables:",
+                  item["shared_variable_names"], "case-year checks:",
+                  item["year_variable_compared"], "exact:",
+                  item["exact_decimal_matches"])
+        print("Alias independently verified:", result["scientific_source_alias_verified"])
+        print("Verified I3:", result["verified_i3"])
     elif args.command == "arc24-cemics-names":
         from .arc24_cemics_name_inventory import inspect_source_names
         result = inspect_source_names(args.mif, args.output, rmd_path=args.rmd)
