@@ -56,7 +56,7 @@ The exact numerical agreement is **strong evidence of a saturated emissions cons
 ## Scope and methodological cautions
 
 - Baseline CO2 is **not a saved emissions output**: the baseline notebook contains no emission factor or `EMISS` accounting. One may construct an *explicitly labeled counterfactual estimate* by applying the same coal factor, but it must not be reported as baseline solver-measured emissions without a controlled emissions-enabled unbounded clone.
-- The economic difference compares two official tutorials, one adding CO2 emissions accounting **and** its cap. A three-scenario experiment (baseline; emissions-enabled but unbounded; emissions-enabled and bounded) would better isolate the causal effect of the cap.
+- The original two-tutorial economic difference initially confounded CO2 bookkeeping with its cap. The **subsequently solved three-case control** (reported below) isolates the cap by holding emissions accounting fixed in both constrained and unconstrained variants.
 - No numerical carbon shadow price is interpreted here. Shadow prices require validated equation-index selection, unit and time normalization, and LP dual checks.
 - Numerical zero such as -3.55e-15 is treated as floating-point noise, not a physical wind decrease.
 - All observations come from the author's reported local educational run, without independent licensed-GAMS execution or scientific peer review. Nothing here measures real AR6 emissions, gross-versus-net accounting, fossil CCS or CDR.
