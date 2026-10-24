@@ -102,11 +102,25 @@ The author supplied terminal evidence of a successful additional **GAMS 54.6.0 /
 | Case | Emissions bookkeeping | 500 MtCO2 cap | Objective (persisted ixmp, native units) |
 | --- | --- | --- | ---: |
 | Baseline | No | No | 159025.828125 |
-| Emissions-only control | Yes | No | ~159025.828125 (inferred from reported objective difference; confirm exact record below) |
+| Emissions-only control | Yes | No | 159025.828125 (directly inspected from saved three-case JSON) |
 | Emissions-constrained | Yes | Yes | 191510.796875 |
 
-The difference **32484.96875**, or **about 20.4275%**, is specifically attributable to adding the emissions cap between the *two emissions-accounting-enabled* cases in this stylized fixed-input model, subject to the runner's source/control input-parameter parity checks and reported objective-equivalence gate. The exact saved control objective and technology rows should be independently inspected in the produced **private** `three_case_comparison.json` before attributing any particular change in dispatch/investment to the control. A shadow price remains unavailable.
+The difference **32484.96875**, or **about 20.4275%**, is specifically attributable to adding the emissions cap between the *two emissions-accounting-enabled* cases in this stylized fixed-input model, subject to the runner's source/control input-parameter parity checks and reported objective-equivalence gate. The author has now separately inspected the **saved three-case JSON**: the control objective equals baseline exactly at saved precision, and all six coal/wind ACT values across 700/710/720 also equal baseline exactly. The full CAP and CAP_NEW rows have not been supplied in the terminal transcript and must still be reviewed separately. A shadow price remains unavailable.
 
 The new control runner produced `results/westeros_control_private/20261024T002431Z_f8428b42/` locally; that folder contains a private HSQLDB and must **never** be committed. No raw GAMS transcript should be published because it contains licence and identity data. Both the solved scenario and research interpretation are educational, author-reported and not independently reproduced.
 
 Next research priority: inspect the **three-case `ACT`, `CAP`, `CAP_NEW` columns** and derive sanitized evidence (including model and input-provenance pins) without adding private identifiers. Thereafter, vary the cap across several controlled levels to build a response curve and validate marginal-cost approximations with finite differences.
+
+## Direct saved-control inspection (2026-10-24)
+
+The author explicitly read the three_case_comparison.json for local control run 20261024T002431Z_f8428b42 and supplied the stored objective and six generation ACT rows.
+
+- Stored objectives: baseline **159025.828125**; CO2-accounting-only control **159025.828125**; capped **191510.796875**.
+- Baseline/control objective difference: **0.0** (reported equivalence tolerance **0.159025828125**, though the actual difference is exactly zero at stored precision).
+- Directly computed constrained-minus-control objective: **32484.96875 native units**, **20.427479694974863%**; source declared attribution to bound only.
+- In every model year (700, 710, 720), **coal_ppl and wind_ppl ACT** are the same in baseline and CO2-accounting-only control, with a control-minus-baseline difference of **0.0** for all six rows.
+- The capped 710/720 cases replace coal with wind one-for-one in GWa: **12.725198100843073** (year 710) and **37.0527978911271** (year 720); at year 700 the small wind difference **−3.55e−15 GWa** is numerical noise.
+
+This validates **both objective and generation-dispatch parity** of baseline and no-cap control, not merely two equal scalar objective values. It does not yet independently establish capacity or investment parity; equal objectives can coexist with multiple optimal decision vectors.
+
+A new [three-scenario derived case-study generator](westeros_three_case_case_study.md) now checks the full 36-row source and produces sanitized research figures and checksum-bound files **without GAMS**. It has been committed but has **not yet been executed on the author's private inputs**. Never publish private ixmp databases, licence identifiers or raw solver logs.
