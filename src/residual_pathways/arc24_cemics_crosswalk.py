@@ -253,7 +253,14 @@ def crosswalk(mif_path, world_path, packet_path, public_path,
     for v in CANDIDATES:
         row = archive_world.get(v)
         ar6 = original_ar6.get(v)
-        status, band = _status(row, ar6)
+        if result_state == "SCENARIO_NOT_LOCATED_IN_AUTHOR_MIF":
+            status, band = "CASE_SCENARIO_ABSENT_FIELDS_NOT_ASSESSED", None
+        elif result_state == "SCENARIO_NAME_MATCH_ONLY_MODEL_MAPPING_UNVERIFIED":
+            status, band = "EXACT_MODEL_UNVERIFIED_FIELDS_NOT_ASSESSED", None
+        elif result_state == "MATCHED_MODEL_SCENARIO_BUT_WORLD_REGION_NOT_FOUND":
+            status, band = "WORLD_REGION_ABSENT_FIELDS_NOT_ASSESSED", None
+        else:
+            status, band = _status(row, ar6)
         candidates.append({"variable": v, "archive_present": row is not None,
                            "ar6_present": ar6 is not None,
                            "archive_unit": row[0] if row else None,
