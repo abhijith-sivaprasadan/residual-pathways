@@ -6,7 +6,7 @@ import json
 import pytest
 from openpyxl import Workbook
 
-from residual_pathways.ar6_canonical_gate import source_gate
+from residual_pathways.ar6_canonical_gate import source_gate, select_canonical_24
 from residual_pathways.case_audit import CaseAuditError, SIX, TOTAL, UNIT
 
 
@@ -128,3 +128,48 @@ def test_source_duplicate_selection_record_fails_closed(tmp_path):
     with pytest.raises(CaseAuditError, match="Duplicate selected"):
         source_gate(world, meta, p, tmp_path/"results"/"public.json",
                     tmp_path/"data"/"ar6-private"/"private.json")
+
+
+def test_canonical_select_without_teaching_packet(tmp_path):
+    world, metadata, packet = inputs(tmp_path)
+    packet.unlink()
+    public_file = tmp_path / "results" / "canonical" / "selected24_public.json"
+    private_file = tmp_path / "data" / "ar6-private" / "canonical_selected24_packet.json"
+    summary = select_canonical_24(world, metadata, public_file, private_file)
+    assert summary["status"] == "CANONICAL_NAMED_LOCAL_COHORT_SELECTED_ORIGIN_UNVERIFIED"
+    assert summary["origin_authentication"] == "NOT_ESTABLISHED_FILENAME_AND_HASH_NOT_PROOF"
+    assert len(summary["cases"]) == 24
+    assert len({r["case_id"] for r in summary["cases"]}) == 24
+    assert sum(r["category"] == "C1" for r in summary["cases"]) == 3
+    assert summary["reviewed_cases"] == 0
+    assert summary["verified_i3_cases"] == 0
+    assert summary["six_variable_complete_cases"] == 0
+    assert summary["source_matched_cohort_count"] == 24
+    assert summary["source_rows_scanned"] == 48
+    assert "MODEL_01" not in public_file.read_text()
+    assert "SCENARIO_01" not in public_file.read_text()
+    assert "10.0" not in public_file.read_text()
+    data = json.loads(private_file.read_text())
+    assert len(data["cases"]) == 24
+    assert any(c["model"] == "MODEL_01" for c in data["cases"])
+    assert all(c["review"]["conclusion"] == "NOT_DETERMINED" for c in data["cases"])
+    assert all(c["review"]["reviewer"] is None for c in data["cases"])
+
+
+def test_canonical_select_rejects_unsafe_output_without_writing(tmp_path):
+    world, metadata, _ = inputs(tmp_path)
+    forbidden = tmp_path / "results" / "private_review.json"
+    with pytest.raises(CaseAuditError, match="Private"):
+        select_canonical_24(world, metadata,
+                            tmp_path / "results" / "public.json", forbidden)
+    assert not forbidden.exists()
+
+
+def test_canonical_select_rejects_teaching_file_renamed_wrongly(tmp_path):
+    world, metadata, _ = inputs(tmp_path)
+    renamed = world.with_name("AR6-demo-data.csv")
+    renamed.write_bytes(world.read_bytes())
+    with pytest.raises(CaseAuditError, match="official filenames"):
+        select_canonical_24(renamed, metadata,
+                            tmp_path / "results" / "public.json",
+                            tmp_path / "data" / "ar6-private" / "private.json")
