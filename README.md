@@ -243,3 +243,11 @@ The updated fingerprint preserves all source rows and uses **one unique common U
     python -m residual_pathways arc24-cemics-alias-fingerprint
 
 Consult [CEMICS source-provenance and duplicate key handling](docs/arc24_cemics_v2_original_source_crosswalk.md). The model-level noCDR/minCDR identity remains unproven and I3=0.
+
+##### ARC24-03 / Strefler author source — controlled numerical crosswalk succeeds
+
+**Original-data result, 24 October 2026:** ten of ten local regression tests passed, and the author-to-AR6 fingerprint successfully compared 517 shared World variables × nine years (4,653 paired recorded-decimal observations) with zero exclusions/ambiguities. Authors' `CEMICS_SSP1-1p5C-fullCDR` equals AR6 versioned `fullCDR` in **4,653/4,653** observations (same-label control). Authors' `CEMICS_SSP1-1p5C-noCDR` equals AR6 `CEMICS_SSP1-1p5C-minCDR` (registered ARC24-03) in **4,653/4,653** observations. Each crossed comparison matches only **1,604/4,653**, separating the trajectories. The author archive reports two multi-unit variables that were paired uniquely with original AR6 source Units; none was excluded.
+
+**Evidence-status change:** The authors' AR6-aligned `noCDR` World emissions/removal outputs are now **numerically established as the original recorded series for ARC24-03's shared World subset**. A written author-approved name change and exact internal version/binary identity are still unverified. *Matching 4,653 outputs is not 4,653 independent physical accounting tests.* Atmospheric removal from biomass, DAC and land, gross fossil/industry emissions and source precision remain under source-semantic review; **I3=0**.
+
+Further work is in [ARC24-03 physical carbon-flow semantic review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md). It provides a bounded local PowerShell method to inspect **original authors' R Markdown formulas** and code references, plus the key questions required to construct an exhaustive nonoverlapping positive-emissions and atmospheric-CDR ledger. The controlled fingerprint is already complete; do not repeat it without new source questions.
