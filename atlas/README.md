@@ -66,3 +66,7 @@ The source-status banner deliberately distinguishes the initial publicly redistr
 4. Reviewed model-specific semantic explainers and fully versioned working paper / policy brief, without fabricating gross or removal totals.
 
 This is a functional v1 atlas, not yet a complete final research paper or independently certified gross/CDR decomposition.
+
+## Optional 2030–2100 coverage bundle
+
+The 2026-10-24 release-gate branch adds a separate four-year, exact-variable presence explorer. It displays only a SHA-256-checked public coverage-only artifact, and remains unavailable until the author's local original-named v1.1 dataset audit produces and clears that artifact. It does not reinterpret unreviewed records as I0 or grant I3 status. See [local canonical release runbook](../docs/ar6_coverage_release_handoff.md).
