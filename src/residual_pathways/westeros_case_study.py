@@ -296,7 +296,7 @@ def report(data):
         "",
         "## Capacity and investment checking",
         "",
-        "Parameter parity was checked by the control solver. After rerunning validation on every saved technology-year row, the baseline/control equivalence is:",
+        "The control runner compared 13 named source/control input parameter tables before the new solve. Rechecking each saved technology-year result now gives baseline/control equivalence as follows:",
     ])
     for key, match in data["baseline_control_parity_by_metric"].items():
         lines.append(f"- {key}: {'matches baseline' if match else 'differs; equal objective need not imply same decision variables'}")
