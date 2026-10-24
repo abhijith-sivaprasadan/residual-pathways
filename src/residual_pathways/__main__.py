@@ -72,6 +72,9 @@ def main():
     capcheck = sub.add_parser("westeros-cap-check", help="Reconcile stored CO2 emissions with duration-weighted bound without a new solve")
     capcheck.add_argument("--manifest", required=True, help="Successful private manifest from saved two-scenario run")
     capcheck.add_argument("--output", default="results/westeros_cap_check")
+    control = sub.add_parser("westeros-no-cap-control", help="Solve one isolated CO2-accounting control without the emissions cap")
+    control.add_argument("--manifest", required=True, help="Successful original private two-scenario manifest")
+    control.add_argument("--output", default="results/westeros_control_private")
     args = parser.parse_args()
     if args.command == "fetch-tutorial":
         dest = Path(args.output)
@@ -109,6 +112,13 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "westeros-no-cap-control":
+        from .westeros_no_cap import run_control
+        result, output_dir = run_control(args.manifest, args.output)
+        print("Control solve status:", result["status"])
+        print("Baseline and control numerically equivalent:", result["baseline_vs_control"]["numerically_equivalent"])
+        print("Isolated cap objective effect (native units):", result["cap_effect"]["difference_native"])
+        print("Private control output:", output_dir)
     elif args.command == "westeros-cap-check":
         from .westeros_cap_audit import audit_saved_run
         result = audit_saved_run(args.manifest, args.output)
