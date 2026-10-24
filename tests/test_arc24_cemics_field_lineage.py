@@ -215,3 +215,73 @@ def test_emissions_family_name_inventory_limit_reports_truncation():
     assert len(land["reported_fields"]) == fl.MAX_NAMES_PER_GROUP
     assert land["names_truncated"]
     assert all(not item["source_2050_value_reported"] for item in land["reported_fields"])
+
+
+
+def test_land_relationships_compare_values_but_not_approve_physical_identity(
+        tmp_path, monkeypatch):
+    args=source_fixture(tmp_path, monkeypatch)
+    mif, world, packet, rmd, output = args
+    # Regrowth = -2.5 in the fixture; negated author study removal is +2.5.
+    with mif.open("a", encoding="utf-8", newline="") as f:
+        w=csv.writer(f, delimiter=";")
+        for field,val in ((fl.LAND,"5.0"),(fl.AFFORESTATION,"2.5")):
+            w.writerow(["REMIND-MAgPIE","CEMICS_SSP1-1p5C-noCDR",
+                        "World",field,"Mt CO2/yr",val,""])
+    with world.open("a", encoding="utf-8", newline="") as f:
+        w=csv.writer(f)
+        for field,val in ((fl.LAND,"5.0"),(fl.AFFORESTATION,"2.5")):
+            w.writerow([cx.MODEL,cx.SCENARIO,"World",field,
+                        "Mt CO2/yr",val])
+    packet_data=json.loads(packet.read_text())
+    packet_data["source_sha256"]=sha_file(world)
+    packet.write_text(json.dumps(packet_data))
+    monkeypatch.setattr(
+        fl,"EXPECTED_ARCHIVE_MD5",md5(mif.read_bytes()).hexdigest())
+    result=fl.inventory(*args)
+    land=result["source_land_relationship_fingerprint"]
+    assert land["verified_i3"]==0
+    assert land["raw_carbon_observations_exported"] is False
+    assert land["disjoint_removal_partition_certified"] is False
+    byterm={x["operational_source_term"]:x
+            for x in land["original_source_terms"]}
+    assert byterm["rmd_regrowth_removal"]["year2050_source_sign"]=="POSITIVE"
+    assert byterm["rmd_regrowth_removal"][
+        "year2050_ar6_crosswalk_status"]=="AR6_NOT_REPORTED_UNDER_SOURCE_NAME"
+    assert byterm["land_use_afforestation"][
+        "year2050_ar6_crosswalk_status"]=="EXACT_REPORTED_DECIMAL_MATCH"
+    results={x["comparison"]:x for x in land["nine_year_comparisons"]}
+    reg_aff=results["NEGATED_REGROWTH_VS_REPORTED_AFFORESTATION"]
+    assert reg_aff["source_comparison_status_counts"]["EXACT_REPORTED_DECIMAL_MATCH"]==1
+    assert reg_aff["source_comparison_status_counts"]["MISSING_SHARED_SOURCE_YEAR_VALUE"]==8
+    assert reg_aff["observations_compared"]==1
+    reg_agg=results["NEGATED_REGROWTH_VS_LAND_USE_AGGREGATE"]
+    assert reg_agg["source_comparison_status_counts"]["NONZERO_AT_LEAST_10_PERCENT"]==1
+    aff_agg=results["AFFORESTATION_VS_LAND_USE_AGGREGATE"]
+    assert aff_agg["source_comparison_status_counts"]["NONZERO_AT_LEAST_10_PERCENT"]==1
+    out=output.read_text()
+    for num in ('"-2.5"','"2.5"','"5.0"'):
+        assert num not in out
+    assert not result["operational_CDRtotal_computed"]
+
+
+def test_multiple_raw_regrowth_alias_candidates_disable_relation(
+        tmp_path, monkeypatch):
+    args=source_fixture(tmp_path,monkeypatch)
+    with args[0].open("a",encoding="utf-8",newline="") as f:
+        w=csv.writer(f,delimiter=";")
+        w.writerow(["REMIND-MAgPIE","CEMICS_SSP1-1p5C-noCDR","World",
+                    "Emissions|CO2|Land|Land-use Change|++|Regrowth",
+                    "Mt CO2/yr","-2.5",""])
+    monkeypatch.setattr(fl,"EXPECTED_ARCHIVE_MD5",
+                        md5(args[0].read_bytes()).hexdigest())
+    result=fl.inventory(*args)
+    land=result["source_land_relationship_fingerprint"]
+    first=land["original_source_terms"][0]
+    assert first["year2050_source_status"]=="AMBIGUOUS_OR_ABSENT_AUTHOR_SOURCE"
+    assert all(
+        c["source_comparison_status_counts"].get(
+            "UNVERIFIED_SOURCE_COMPONENT")==9
+        for c in land["nine_year_comparisons"][:2]
+    )
+    assert land["verified_i3"]==0
