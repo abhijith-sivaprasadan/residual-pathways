@@ -422,3 +422,36 @@ $k.nine_year_comparisons | ForEach-Object {
 ```
 
 The result will decide whether there is an *exact numerical relationship* among original MAgPIE-derived regrowth, afforestation and land sequestration aggregates in this specific SSP1/1.5 °C minimum-CDR original World case. If mismatched, do **not** 'correct' the author's CDRaff by replacing it with the broader land aggregate; instead annotate the definitional difference. In either outcome **I3=0 until a separate audited physical ledger and external review**.
+
+## 13. LAND-REMOVAL SOURCE SERIES ARE NON-SUBSTITUTABLE — actual nine-year results (24 October 2026)
+
+The user executed `arc24-cemics-field-lineage` on the checksum-locked original authors' CEMICS `noCDR` World source after **13/13 updated regression tests passed**. There were **three successful nine-year comparisons; none was missing or ambiguous**. These findings reflect actual original reported decimal source observations and the 2021 Rmd's explicit minus-sign convention, not synthetic fixtures.
+
+| Original author source-to-source pairing | Exact equality in 2020–2100 nine-year sample | Empirical result |
+| --- | ---: | --- |
+| Rmd `CDRaff = -Emissions|CO2|Land|Land-use Change|+|Regrowth` vs `Carbon Sequestration|Land Use|Afforestation` | **0/9** | **9/9 `NONZERO_AT_LEAST_10_PERCENT`** |
+| Rmd `CDRaff` vs `Carbon Sequestration|Land Use` | **0/9** | **9/9 `NONZERO_AT_LEAST_10_PERCENT`** |
+| `Carbon Sequestration|Land Use|Afforestation` vs `Carbon Sequestration|Land Use` | **9/9** | **9/9 exact Decimal equality** |
+
+The difference band is relative to `max(1, |first|, |second|)` in original source units. **This diagnostic does not provide the direction or the absolute magnitude of the differences**, and the nine years are correlated observations of one scenario. All **three 2050 removal-series signs are positive**; the signed raw regrowth-emissions source itself is negative (the Rmd negates it before use). The original author regrowth field is **author-only** in this registered scenario export; the `Land Use` parent and `Land Use|Afforestation` leaf are individually original-author/AR6 source-matched.
+
+### Firm decision on source field reuse
+
+**Do not replace the original author-study `CDRaff` with either AR6 `Carbon Sequestration|Land Use` or `Carbon Sequestration|Land Use|Afforestation` in ARC24-03.** They are empirically different under the same original author source and units at every tested year, so substitution would quantitatively alter the author's **actual** `CDRtotal` formula. The two AR6 land sequestration labels are numerically equivalent **for this scenario/region/nine-year series**; this is a source-data fact, **not proof of physical equivalence, model additivity or additional CDR**, and **never add them together**.
+
+These original series may describe different sources, baselines, model outputs, formatting conventions, regions included by transformations, or definitions of intentional forestation vs broader forest regrowth. **Which explanation is correct has not been demonstrated from these three number comparisons.** In particular, numeric equality of `Land Use` parent and `Land Use|Afforestation` does not prove that the parent consists *only* of afforestation in the model's physical ledger; it establishes that they have equal exported observations in tested scope.
+
+### External reporting-method warning — definitions change across releases
+
+The upstream [IAMconsortium/concordia REMIND-MAgPIE changelog, 2024-04-25](https://github.com/IAMconsortium/concordia/blob/main/CHANGELOG.md#2024-04-25), notes an explicit change in how `CDR Afforestation` was defined: from a negative net land-use-change emissions interpretation to an approach including regrowth of several forest/land classes as well as planted forests. The 2024 protocol also distinguishes positive land conversion/LUC emissions from a separate negative afforestation/regrowth sink. **This source documents later model/reporting-definition evolution, NOT the exact accounting policy in the 2021 Strefler CEMICS output.** It is a reason to avoid treating a modern field manual or a 2024 harmonized label as an authoritative crosswalk to the 2021 source. A detailed original dated REMIND/MAgPIE export implementation must be located before explaining the difference.
+
+### Updated gates and research priority
+
+- **Original author scenario ↔ AR6 numeric provenance:** verified over 517 shared World variables × 9 years (4,653 source observations).
+- **Original Rmd operational `CDRtotal` and `CO2pos`:** reproduced for 2050 using original source-only plus-marked regrowth and four source-verified model series.
+- **Whether author-study regrowth CDR equals published AR6 Land Use or Afforestation:** **DISPROVED as a source-numeric substitution** in all nine tested years; not physically adjudicated.
+- **AR6 `Land Use` parent vs `Land Use|Afforestation`:** exact same reported decimal source series across all nine tested years; not disjoint additive terms.
+- **Gross FFI vs original author operational `CO2pos`:** previous difference ≥10% under different sector boundaries; **not** a failed accounting closure.
+- **Independent physical I3:** still **0**. Do not assign a gross/CDR ledger pass from tautological `net + CDR` arithmetic.
+
+**Highest-value next source investigation:** original 2021-version REMIND-MAgPIE reporting files specifying (1) how `Carbon Sequestration|Land Use` / `|Afforestation` are formed, (2) how the MAgPIE signed regrowth stream includes natural regrowth, policy-driven forestry or baseline nonanthropogenic uptake, and (3) how gross fossil+industry CO2 relates to net AFOLU, positive LUC, BECCS and other sinks. Request authors' method statement if dated code is unavailable. Avoid another speculative balance equation or extra numerical scoring before those definitions are established.
