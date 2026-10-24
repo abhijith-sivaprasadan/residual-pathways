@@ -89,3 +89,7 @@ Use `python -m residual_pathways westeros-analyze --manifest results/messageix_p
 ### Saved emissions-bound reconciliation (no new solve)
 
 The local follow-up extracted CO2 `EMISS` records of **350.569757**, **568.509836**, and **580.920407** for Westeros in 700/710/720, against a `bound_emission` of **500 MtCO2**. The simple annual average is 500, although a duration-weighted reconciliation against the actual ixmp period and category records is still required before labeling the cap verified. The `World` records duplicate Westeros's reported values, and `EMISSION_CONSTRAINT` was empty; neither an independently validated model dual nor a carbon price was obtained. Run the new `westeros-cap-check` diagnostic against the *existing* private run; see [emissions cap audit instructions](docs/westeros_cap_audit.md). The local diagnostic remains unexecuted until the author runs it.
+
+### Isolate the CO2-cap causal effect (one new licensed solve)
+
+`python -m residual_pathways westeros-no-cap-control --manifest results/messageix_private/20261023T230104Z_e182e730/manifest.private.json --output results/westeros_control_private` clones the already-solved emissions-bound case to a **separate local ixmp database**, removes only `bound_emission`, preserves CO2 emissions accounting, and solves one new control. The result compares objectives and ACT/CAP/CAP_NEW for baseline, emissions-bookkeeping-only and emissions-constrained models. **No new control solution has been reported yet**; see [instructions and interpretation criteria](docs/westeros_control_experiment.md).
