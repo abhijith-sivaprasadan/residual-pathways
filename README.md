@@ -174,3 +174,11 @@ The [ENGAGE Netzero Analysis source notebook](https://data.ece.iiasa.ac.at/engag
     python -m residual_pathways arc24-poles-eip-mapping
 
 See [original-data investigation and full caveats](docs/arc24_poles_cluster_investigation_20261024.md).
+
+#### Source-native detailed POLES hierarchy: local run completed
+
+On 2026-10-24 the author ran the original-source-locked `arc24-poles-eip-mapping` command (seven of seven synthetic tests passed). For the **same four POLES ENGAGE case trajectories** in 2030/2040/2050/2060/2070, all 20 expanded-sector comparisons were computable and all yielded **nonzero** source decimal residuals of **less than 0.001%** of the maximum absolute compared emissions term. The separate detailed Energy Demand+Energy Supply+Industrial Processes sum was **not exactly equal to source-reported EIP in 19/20** cases, with one exact equal case. **The sizes of the 19 EIP/detail differences were not fully visible in the user's shared console output**, so no magnitude claim is made for that check.
+
+The [primary ENGAGE Netzero Analysis notebook](https://data.ece.iiasa.ac.at/engage-netzero-analysis/notebooks/1_categorization.html) explicitly constructs CO2 Other as a residual from Total minus AFOLU minus the three detailed CO2 categories. The [AR6 climate-assessment workflow](https://climate-assessment.readthedocs.io/en/latest/general.html) separately documents reclassifying optional CO2 categories into EIP under an alternate input pathway. These are **different data-processing contexts**; the user-observed near-closures are numerically reproducible, but not source-precision certified or a physically disjoint gross-emissions/CDR partition. Verified I3=0.
+
+Conserve analysis effort: summarize the already public EIP/detail residual magnitude bands, then prioritize model-version carbon-flow semantics, BECCS/land overlap and independent review rather than introducing more speculative correction terms. See [POLES investigation](docs/arc24_poles_cluster_investigation_20261024.md).
