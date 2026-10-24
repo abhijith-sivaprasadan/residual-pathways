@@ -57,6 +57,10 @@ def main():
     sign_screen = sub.add_parser("arc24-sign-screen", help="Read-only signs and accounting risk warnings for local 24-case data; no I3 claims")
     sign_screen.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     sign_screen.add_argument("--output", default="results/ar6-canonical-gate/arc24_sign_screen_public.json")
+    aa = sub.add_parser("arc24-arithmetic", help="Check exact published decimal total-CO2=EIP+net-AFOLU arithmetic; private numerical residuals, NO I3")
+    aa.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    aa.add_argument("--public-output", default="results/ar6-canonical-gate/arc24_arithmetic_public.json")
+    aa.add_argument("--private-output", default="data/ar6-private/arc24_arithmetic_private.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -130,6 +134,13 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-arithmetic":
+        from .arc24_aggregate_arithmetic import write_aggregate_screen
+        result = write_aggregate_screen(args.packet, args.public_output, args.private_output)
+        print("ARC24 aggregate diagnostic:", result["status"])
+        print("Arithmetic check statuses:", result["status_counts"])
+        print("Reviewed I3 cases:", result["reviewed_i3_cases"])
+        print("No original scenario values or residual magnitudes shown in public output.")
     elif args.command == "arc24-sign-screen":
         from .arc24_sign_screen import write_sign_report
         result = write_sign_report(args.packet, args.output)
