@@ -12,7 +12,7 @@ import json
 import re
 
 from .arc24_cemics_crosswalk import (
-    CASE_ID, MODEL, SCENARIO, EXPECTED_ARCHIVE_MD5,
+    CASE_ID, MODEL, SCENARIO, EXPECTED_ARCHIVE_MD5, AUTHOR_SUPPORT_MD5,
     _digest, _headered_archive, _read_author_text_lines,
 )
 from .case_audit import CaseAuditError
@@ -65,6 +65,8 @@ def inspect_source_names(mif_path, output_path, *, rmd_path=None):
         rmd_path = Path(rmd_path).resolve()
         if not rmd_path.is_file() or "ar6-private" not in rmd_path.parts:
             raise CaseAuditError("Rmd original source must stay private")
+        if _digest(rmd_path) != AUTHOR_SUPPORT_MD5["authors_rmd"]:
+            raise CaseAuditError("Original Zenodo authors Rmd MD5 mismatch")
         lines, coding = _read_author_text_lines(rmd_path)
         hits = {}
         for name in ("cemics", "ssp1", "mincdr", "fullcdr", "gross", "beccs",
