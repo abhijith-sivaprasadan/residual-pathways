@@ -257,7 +257,7 @@ def test_deleteplus_must_be_in_original_author_code_for_alias(
         tmp_path, monkeypatch):
     args = fixture(tmp_path, monkeypatch, hierarchy_regrowth=True)
     args[3].write_text(
-        args[3].read_text().replace("data <- deletePlus(data)\\n", ""),
+        args[3].read_text().replace("data <- deletePlus(data)\n", ""),
         encoding="utf-8",
     )
     monkeypatch.setattr(
