@@ -60,11 +60,11 @@ def _load_ar6(world, pairs):
             if target not in result:
                 continue
             var = row["Variable"]
-            if var in result[target]:
-                raise CaseAuditError("Duplicate World target scenario/variable")
-            result[target][var] = (row["Unit"], {
+            # Repeated names may differ by source Unit or an extra MIF
+            # dimension. Preserve every row; decide comparability later.
+            result[target].setdefault(var, []).append((row["Unit"], {
                 y:_decimal(row[col]) for y,col in yearcols.items() if col
-            })
+            }))
     return result, available
 
 
@@ -80,14 +80,34 @@ def _load_authors(mif, pairs):
         if target not in result:
             continue
         var = row["Variable"]
-        if var in result[target]:
-            raise CaseAuditError("Duplicate authors' scenario/variable")
         yearcols = {y:_year_name(y, row) for y in SOURCE_YEARS}
         years_found.update(y for y,col in yearcols.items() if col)
-        result[target][var] = (row["Unit"], {
+        result[target].setdefault(var, []).append((row["Unit"], {
             y:_decimal(row[col]) for y,col in yearcols.items() if col
-        })
+        }))
     return result, years_found
+
+
+def _unique_compatible_pair(author_rows, ar6_rows):
+    """Use the one and only jointly reported unit; refuse ambiguous rows.
+
+    With distinct units in the original MIF, comparing the sole matching
+    unit is defensible and logged. Multiple records of the *same* unit remain
+    ambiguous even when their displayed numbers happen to match.
+    """
+    units_a = {item[0] for item in author_rows}
+    units_b = {item[0] for item in ar6_rows}
+    common = units_a & units_b
+    if not common:
+        return None, "NO_SHARED_UNIT"
+    if len(common) != 1:
+        return None, "AMBIGUOUS_MULTIPLE_SHARED_UNITS"
+    common_unit = next(iter(common))
+    a = [row for row in author_rows if row[0] == common_unit]
+    b = [row for row in ar6_rows if row[0] == common_unit]
+    if len(a) != 1 or len(b) != 1:
+        return None, "AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT"
+    return (a[0], b[0]), None
 
 
 def _outcome(one, other):
@@ -143,10 +163,11 @@ def compare_author_aliases(mif_path, world_path, packet_path, public_path,
     if not isinstance(baseline,dict) or not baseline:
         raise CaseAuditError("Selected original AR6 2050 observations absent")
     for name, observation in baseline.items():
-        record = ar6[AR6_MIN].get(name)
-        if (record is None or record[0] != observation.get("unit") or
-                record[1].get(2050) != _decimal(observation.get("raw"))):
-            raise CaseAuditError("Selected ARC24-03 packet 2050 value differs from source World")
+        records = ar6[AR6_MIN].get(name, [])
+        if (len(records) != 1 or
+                records[0][0] != observation.get("unit") or
+                records[0][1].get(2050) != _decimal(observation.get("raw"))):
+            raise CaseAuditError("Selected ARC24-03 packet 2050 value differs from source World or is ambiguous")
     reports = []
     for code, orig, published in PAIRINGS:
         left, right = author[orig], ar6[published]
@@ -154,16 +175,32 @@ def compare_author_aliases(mif_path, world_path, packet_path, public_path,
         counts=Counter()
         by_variable={}
         per_year=Counter()
+        ambiguous_variables=[]
+        multiple_unit_variables=[]
         for variable in overlapping:
-            a_unit,a_values = left[variable]
-            b_unit,b_values = right[variable]
+            a_rows, b_rows = left[variable], right[variable]
+            if len({row[0] for row in a_rows}) > 1:
+                multiple_unit_variables.append(variable)
+            pair, reason = _unique_compatible_pair(a_rows, b_rows)
+            if reason and reason.startswith("AMBIGUOUS"):
+                ambiguous_variables.append(variable)
             for year in years:
-                result = _outcome((a_unit,a_values.get(year)),(b_unit,b_values.get(year)))
+                if reason:
+                    result = reason
+                else:
+                    a_unit,a_values = pair[0]
+                    b_unit,b_values = pair[1]
+                    result = _outcome((a_unit,a_values.get(year)),
+                                      (b_unit,b_values.get(year)))
                 counts[result]+=1
                 per_year[year]+=1
                 if variable in HIGHLIGHT:
                     by_variable.setdefault(variable,Counter())[result]+=1
-        compared=sum(counts.values())
+        attempted=sum(counts.values())
+        excluded = sum(counts[label] for label in (
+            "NO_SHARED_UNIT", "AMBIGUOUS_MULTIPLE_SHARED_UNITS",
+            "AMBIGUOUS_DUPLICATE_ROWS_SAME_UNIT"))
+        compared=attempted-excluded
         exact=counts["EXACT_REPORTED_DECIMAL_MATCH"]
         reports.append({
             "comparison":code, "author_scenario_label":orig,
@@ -174,7 +211,13 @@ def compare_author_aliases(mif_path, world_path, packet_path, public_path,
             "ar6_world_variables":len(right),
             "shared_variable_names":len(overlapping),
             "years":years,
+            "year_variable_attempted":attempted,
             "year_variable_compared":compared,
+            "excluded_from_numerical_comparison":excluded,
+            "author_multi_unit_variable_count":len(multiple_unit_variables),
+            "author_multi_unit_variable_names":multiple_unit_variables[:50],
+            "ambiguous_shared_variable_count":len(ambiguous_variables),
+            "ambiguous_shared_variable_names":ambiguous_variables[:50],
             "exact_decimal_matches":exact,
             "exact_decimal_match_fraction":round(exact/compared,6) if compared else None,
             "status_counts":dict(counts),
@@ -208,6 +251,13 @@ def compare_author_aliases(mif_path, world_path, packet_path, public_path,
         "schema":"residualpathways.arc24.cemics_alias_fingerprint.v1",
         "status":"CEMICS_SOURCE_ALIAS_NUMERIC_TEST_NO_PHYSICAL_INFERENCE",
         "source":"https://zenodo.org/records/5103024",
+        "duplicate_resolution_policy": (
+            "Compare only a uniquely matched Unit row in each source. "
+            "Repeated source variable names with distinct Unit labels are "
+            "preserved. Two or more rows with same matching Unit (or multiple "
+            "shared units) are AMBIGUOUS and excluded from numerical counts. "
+            "No source records are discarded, summed or averaged."
+        ),
         "source_author_mif_md5":EXPECTED_ARCHIVE_MD5,
         "source_ar6_world_sha256":packet["source_sha256"],
         "selected_case_id":CASE_ID,
