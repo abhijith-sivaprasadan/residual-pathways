@@ -65,6 +65,10 @@ def main():
     tl.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
     tl.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
     tl.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_timeline_public.json")
+    oc = sub.add_parser("arc24-poles-optional-co2", help="Screen four POLES AR6 cases for optional Other/Waste/Capture/Product CO2 series; no accounting adjustment")
+    oc.add_argument("--world", default="data/ar6-private/AR6_Scenarios_Database_World_v1.1.csv")
+    oc.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    oc.add_argument("--output", default="results/ar6-canonical-gate/arc24_poles_optional_co2_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -138,6 +142,14 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-poles-optional-co2":
+        from .arc24_poles_optional_co2 import write_optional_sectors
+        result = write_optional_sectors(args.world, args.packet, args.output)
+        print("POLES optional CO2 sector screen:", result["status"])
+        print("Case-years screened:", result["num_case_years"])
+        for name, counts in result["status_by_optional_variable"].items():
+            print(name, counts)
+        print("No optional terms added to EIP; verified I3:", result["verified_i3"])
     elif args.command == "arc24-poles-timeline":
         from .arc24_poles_timeline import write_timeline
         result = write_timeline(args.world, args.packet, args.output)
