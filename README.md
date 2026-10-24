@@ -320,3 +320,14 @@ The existing checksum-locked `arc24-cemics-field-lineage` command now additional
     python -m residual_pathways arc24-cemics-field-lineage
 
 Inspect the `expanded_emissions_family_inventory` object in `results/ar6-canonical-gate/arc24_cemics_field_lineage_public.json`. The [source-specific CEMICS carbon-flow review](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md) explains why the two-name grep is insufficient and why original reporting-code semantics remain required. Independently validated I3 is still **0**.
+
+##### CEMICS original World land-emissions reporting families audited (actual 11-test run)
+
+The author ran the expanded original source name audit on 24 Oct 2026: **11/11 synthetic regression tests passed**, real source-matched scan succeeded, and none of the name-family groups was truncated. Author-only `Emissions|CO2|Land|Land-use Change|+|Regrowth` was the **one** `Emissions|CO2|Land` export field; author-only `Emissions|CO2|Gross Fossil Fuels and Industry` was the **one** named gross-CO2 export field. The original author and AR6 share the net energy/industry, industry demand and AFOLU fields. AR6-only `Emissions|CO2|Other` is **not an observed original author MIF term**, and cannot be imputed zero. Critically, **both author and AR6 have `Carbon Sequestration|Land Use` AND `Carbon Sequestration|Land Use|Afforestation`**, separately from the original author-only signed Regrowth flux. These are source-export name findings; they do not exhaust underlying positive gross land emissions or establish carbon-flow disjointness.
+
+Next bounded provenance test, now coded but NOT YET locally run: `arc24-cemics-field-lineage` includes `source_land_relationship_fingerprint` to contrast original **negative of signed Regrowth vs Land Use|Afforestation vs Land Use aggregate** over the nine tested years. It reports equality/mismatch counts, units, original source signs and absent years **without raw emissions numbers**, and retains `verified_i3=0` regardless of result. Matching a published source series does NOT prove physically additional or durable carbon removal.
+
+    python -m pytest -q tests/test_arc24_cemics_field_lineage.py
+    python -m residual_pathways arc24-cemics-field-lineage
+
+Review the `source_land_relationship_fingerprint` object in the public JSON, and consult [ARC24-03 source flow review §§12–13](docs/arc24_03_physical_carbon_flow_semantic_review_20261024.md).
