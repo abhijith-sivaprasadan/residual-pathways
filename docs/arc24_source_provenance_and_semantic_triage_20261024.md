@@ -137,3 +137,29 @@ Run on Windows PowerShell from the repository:
 The original private numerical observations are not copied to a publicly displayed status or released to GitHub. Do not double subtract gross land-sequestration flows from already net AFOLU emissions, and do not count fossil CCS as atmospheric CDR.
 
 **Scientific gate unchanged:** all 24 I3 statuses remain unverified until exact model-year reporting boundaries, emissions/removal disjointness and original source quantization precision are independently documented.
+
+
+## 8. Actual first aggregate arithmetic results — 24 October 2026
+
+The author executed the private read-only ARC24 arithmetic command against the actual v1.1 source-derived 24-case packet, after **13/13 synthetic regression tests passed**. The CLI reported ARITHMETIC_SCREEN_ONLY_NO_I3:
+
+| Observational calculation outcome (2050) | Source-selected ARC24 cases |
+| --- | ---: |
+| Total selected | 24 |
+| Exact reported-decimal value equality: net total CO2 = EIP CO2 + net AFOLU CO2 | **5** |
+| All required variables present and same-unit, with **nonzero** reported-decimal residual | **14** |
+| One or more source values missing | **5** |
+| Incompatible units among those needed | **0** |
+| Independent scientific reviews verifying a complete gross/removal partition | **0** |
+
+Thus **19/24** could be assessed *arithmetically*, of which only **5/19** were exact at reported-decimal serialization. This is **not** an independent source-precision pass: even a nonzero raw-decimal residual of small magnitude may reflect source rounding, whereas a larger residual might reflect boundary or post-processing differences. Source-declared rounding precision has not been established for these cases. Do not claim 14 physical inconsistencies or 5 scientifically reconciled identities.
+
+Named priority cases:
+- **ARC24-03 — REMIND-MAgPIE 2.1-4.2 / CEMICS minCDR**: source-reported decimal equality; positive signed AFOLU CO2. This checks only the total/EIP/AFOLU aggregate relationship, **not** completeness of positive gross emissions, land sinks or BECCS.
+- **ARC24-06 — POLES ENGAGE / EN_NPi2020_400f**: a nonzero source-reported residual; negative signed AFOLU CO2. Until its residual magnitude, source precision and scenario-specific boundary rules are known, the proper classification is **UNRESOLVED_ARITHMETIC_NONZERO** rather than *physically inconsistent*.
+
+The scientific basis for separating net AFOLU from gross land sequestration is Prütz et al. (2025, DOI 10.5194/essd-17-221-2025), which directly examines missing/inconsistent land-CDR reporting across AR6 models. The IPCC WGIII Chapter 3 text also cautions that sectoral series shown in some figures need not sum to total CO2 (https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-3/). That caveat is **not by itself an explanation** for this specific total/EIP/AFOLU discrepancy, which needs original model-year documentation. General POLES emissions documentation indicates that non-energy AFOLU comes from a soft linkage with GLOBIOM/G4M (https://www.iamcdocumentation.eu/Emissions_-_POLES), but does **not** establish the reporting equation used for this exact ENGAGE scenario.
+
+**Next substantive task, not another I3 automation:** Inspect *local-only* 2050 absolute residual, signed direction, and a dimensionless scale relative to the largest reported term for ARC24-06 and, eventually, the other 13 nonzero cases. Keep primary variable values and numerical residuals in the gitignored private packet. Record independently reviewed model/year-specific total CO2/EIP/AFOLU definitions, missing flows, precision, and whether observed discrepancies persist beyond a documented rounding bound. This comparison remains a net-emissions aggregate audit, not a gross/CDR decomposition. The result should prioritize where expert source review is necessary, not invite unsupported recalibration or arbitrary tolerances.
+
+Actual numeric private output: data/ar6-private/arc24_arithmetic_private.json. Public coded output: results/ar6-canonical-gate/arc24_arithmetic_public.json. Neither has been copied into GitHub. The user has supplied only public safe status counts and two case labels.
