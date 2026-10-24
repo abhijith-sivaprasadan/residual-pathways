@@ -210,3 +210,31 @@ data <- deletePlus(data)
 Current [PIK MAgPIE reporting documentation](https://pik-piam.r-universe.dev/magpie4/doc/manual.html) lists its regrowth hierarchical variable as `Emissions|CO2|Land|Land-use Change|+|Regrowth`, and classifies it as **negative removals from forest regrowth**, distinct from a signed net land-sector flux. **This public documentation may refer to a later version than the 2021 source MIF**. Therefore it is a *hypothesis* that the authors' original source Regrowth line is stored with an extra `|+|`/`|++|` marker that `deletePlus()` strips before the authors' Rmd formula. The actual raw archive field and original `deletePlus` behaviour still need verification. This explains why prior strict crosswalk could show `AUTHOR_SERIES_NOT_REPORTED` without proving that the dataset lacks an operational regrowth flow.
 
 **Scientific next step:** inspect source names for `Regrowth`, `Gross Fossil Fuels and Industry` and `Land Use` in the **same MD5-locked author scenario**, inspect same names in World v1.1 and Rmd pre-processing lines 95–146. Report original names, units, unique source-record counts and candidate hierarchy-only transformations, **no numeric emissions values**. No arithmetic substitution until a *unique* source field maps through the author's preprocessing. Even then label any source-author-only regrowth as NOT directly crosswalked to AR6 if absent in World. Hold I3=0.
+### Targeted, original-source name-lineage test prepared (unrun)
+
+New `arc24-cemics-field-lineage` command is a **source-name-only diagnostic**; it does **not** recompute CDRtotal or make any unverified value substitutions. It verifies the original author MIF and Rmd MD5 fingerprints, AR6 World SHA and registered ARC24-03 source identity, then inventories original MIF-vs-AR6 World `Variable` names and original `Unit` records for:
+
+- `Emissions|CO2|Land|Land-use Change|Regrowth` — exact Rmd postprocessed selector, including candidates with a standalone `|+|` or `|++|` hierarchy marker;
+- `Emissions|CO2|Gross Fossil Fuels and Industry` — original author's separately reported sector-gross variable, known not to exist in AR6 under exact name;
+- `Carbon Sequestration|Land Use` — distinct earlier ARC24 aggregate land-sequestration term that must **not** be silently substituted for regrowth.
+
+The inventory reports exact raw-name availability, unique potential *syntactic* hierarchy-marker candidates, raw source variable names, units and source-record counts, plus surrounding land/gross field names. It explicitly sets `automatic_variable_rename_accepted=false`, `operational_CDRtotal_computed=false`, `verified_i3=0`. Only after author-Rmd preprocessing behaviour and raw source names are linked unambiguously may a *source-author-only* regrowth study calculation proceed; if AR6 lacks the same original variable, the report must say so rather than claiming the author-to-AR6 series matches.
+
+**Original scientific caveat:** `deletePlus(data)` is visibly in the exact original 2021 Rmd, whereas the PIK MAgPIE source-variable hierarchy documentation searched in 2026 can represent `Regrowth` as `...|Land-use Change|+|Regrowth`. This is a plausible explanation, **not yet checked in the user's actual archived 2021 MIF**. The inventory diagnoses that precise question without using a source-numeric fingerprint to choose a convenient record.
+
+Run locally, no downloads:
+
+```powershell
+cd 'E:\New folder (2)\MissionJob\residual-pathways'
+git pull --ff-only
+& .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_arc24_cemics_field_lineage.py
+if ($LASTEXITCODE -ne 0) { throw 'Source lineage tests failed' }
+& .\.venv-messageix\Scripts\python.exe -m residual_pathways arc24-cemics-field-lineage
+if ($LASTEXITCODE -ne 0) { throw 'Original CEMICS field lineage failed' }
+$l = Get-Content 'results\ar6-canonical-gate\arc24_cemics_field_lineage_public.json' -Raw | ConvertFrom-Json
+$l.original_author_fields | Select-Object requested_postprocessed_rmd_name,raw_exact_name_present,marker_candidate_count,hierarchy_marker_candidate_names | Format-List
+$l.original_ar6_fields | Select-Object requested_postprocessed_rmd_name,raw_exact_name_present,marker_candidate_count,hierarchy_marker_candidate_names | Format-List
+$l.context_name_inventory | Where-Object { $_.original_variable_name -match 'Regrowth|Gross Fossil' } | Format-Table -Wrap -AutoSize
+```
+
+To inspect exact Rmd data-loading details also run: `100..146 | % { '{0,4}: {1}' -f $_,$lines[$_-1] }` using the original `$lines` array from prior verified Rmd inspection. The code and tests have been committed but **not yet executed against the user's source**.
