@@ -38,9 +38,9 @@ def row_signatures(cells):
     entries={}
     for (r,c),v in cells.items():
         if r==1: continue
-        label=labels.get(c) if labels else str(c)
-        if label is None:
-            raise SheetReviewError("Data column without a nonblank header")
+        # Non-tabular sheets such as README may lack a header for some columns.
+        # Preserve their coordinate rather than misclassify them as a header name.
+        label=labels.get(c,str(c)) if labels else str(c)
         entries.setdefault(r,[]).append((label,json.dumps(v,ensure_ascii=False)))
     return Counter(json.dumps(sorted(row),ensure_ascii=False) for row in entries.values())
 
