@@ -54,6 +54,9 @@ def main():
     canonical_select.add_argument("--metadata", required=True, help="User-downloaded IIASA metadata v1.1 XLSX")
     canonical_select.add_argument("--public-output", default="results/ar6-canonical-gate/selected24_public.json")
     canonical_select.add_argument("--private-output", default="data/ar6-private/canonical_selected24_packet.json")
+    sign_screen = sub.add_parser("arc24-sign-screen", help="Read-only signs and accounting risk warnings for local 24-case data; no I3 claims")
+    sign_screen.add_argument("--packet", default="data/ar6-private/canonical_selected24_packet.json")
+    sign_screen.add_argument("--output", default="results/ar6-canonical-gate/arc24_sign_screen_public.json")
     robustness = sub.add_parser("cohort-robustness", help="Year/category/model-label reporting fractions")
     robustness.add_argument("--input", required=True)
     robustness.add_argument("--metadata", required=True)
@@ -127,6 +130,13 @@ def main():
         print("Sanitized local-evidence export created (NOT independently attested).")
         print("Artifact SHA-256:", index["artifact_sha256"])
         print("Output:", Path(args.output).resolve())
+    elif args.command == "arc24-sign-screen":
+        from .arc24_sign_screen import write_sign_report
+        result = write_sign_report(args.packet, args.output)
+        print("ARC24 diagnostic:", result["status"])
+        print("Signed net-negative AFOLU cases:", result["negative_afolu_cases"])
+        print("Missing separately reported land sequestration:", result["missing_land_sequestration_cases"])
+        print("Verified I3:", result["verified_i3_cases"])
     elif args.command == "ar6-canonical-select":
         from .ar6_canonical_gate import select_canonical_24
         result = select_canonical_24(args.world, args.metadata,
