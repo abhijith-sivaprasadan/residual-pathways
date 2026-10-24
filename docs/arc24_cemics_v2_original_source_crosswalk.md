@@ -213,3 +213,29 @@ PowerShell:
     $f.comparisons | ForEach-Object { $_.comparison; $_.status_counts | Format-List; $_.ambiguous_shared_variable_names }
 
 If the original archive has meaningful **same-unit** duplicates, this conservative comparison will report those ambiguities rather than resolve them. The next step would be to read the original MIF's additional column structure (and the corresponding project submission mapping), not to force a `noCDR` alias. No data have been altered and all I3 grades remain unverified.
+## 9. CONTROLLED SOURCE NUMERICAL CROSSWALK SUCCEEDED — real source run, 24 October 2026
+
+The author's Windows run of the **checksum-locked** `arc24-cemics-alias-fingerprint` completed successfully after **10/10 synthetic tests passed**. The original author v2 MIF and AR6 World v1.1 were compared over **517 shared original variable names × nine years (2020–2100), or 4,653 source observation pairs for each tested pathway pairing**. The new unit-aware code successfully disambiguated the **two authors' variables reported in more than one Unit** using their uniquely matching AR6 source Unit. Zero records in the reported comparison were ambiguous or excluded. This is a matched recorded-decimal World-data comparison, **not** a statistically independent sample of 4,653 scenario runs.
+
+| Pairing | Exact original-source decimal matches | Other compared values | Source interpretation |
+| --- | ---: | ---: | --- |
+| Authors' `CEMICS_SSP1-1p5C-fullCDR` → AR6 `CEMICS_SSP1-1p5C-fullCDR` (same-label positive control) | **4653/4653 = 100%** | **0** | Two different release-labelled sources reproduce the identical World 517-variable × nine-year fingerprint for the shared fullCDR series |
+| Authors' `CEMICS_SSP1-1p5C-noCDR` → AR6 `CEMICS_SSP1-1p5C-minCDR` (registered ARC24-03) | **4653/4653 = 100%** | **0** | **Numerically established source series correspondence** in the tested scope despite the `noCDR` ↔ `minCDR` label change and AR6 model-version suffix |
+| Authors' `fullCDR` → AR6 `minCDR` (crossed control) | **1604/4653 = 34.4724%** | **3049/4653 = 65.5276%** | Distinguishes the trajectories and rules out the trivial explanation that every scenario's series are identical |
+| Authors' `noCDR` → AR6 `fullCDR` (crossed control) | **1604/4653 = 34.4724%** | **3049/4653 = 65.5276%** | Symmetric crossed control; confirms numerical discrimination of fullCDR versus restricted CDR within these source outputs |
+
+The crossed differences were subdivided as **320** relative 0.001%–0.1%, **416** at 0.1%–1%, **869** at 1%–10%, **1439** at ≥10%, and **5** nonzero <0.001%. Counts total 3,049. Both correctly mapped pairs had **0 excluded comparisons**, **0 ambiguous shared variables**, **2 multi-unit author variables with uniquely compatible source units**, and **100% equality at serialized Decimal precision**.
+
+### Updated interpretation: two different meanings of 'verified'
+
+- **VERIFIED numerically:** the exact data series for this subset of 517 common IAMC variable names at global World region and the nine tested years match across the author v2 archive and the AR6 World v1.1 file, with their original units and decimal strings interpreted via Decimal. The positive control gives an independent same-labelled path across the two exports and the crossed controls discriminate.
+- **NOT established by this test:** a *written* model-developer/IIASA statement that the authors formally renamed `noCDR` to `minCDR`, that the `REMIND-MAgPIE` source model's internal binary/configuration is precisely 2.1-4.2, that every source region/variable/year outside the tested overlap matches, or that input formatting/quantization between files represents actual physical numerical precision.
+- **CRITICALLY NOT established:** a physically complete, exclusive decomposition of gross positive emissions and anthropogenic atmospheric removals. A dataset can reproduce every published NET aggregate and still encode fossil CCS avoidance, biomass-origin capture, afforestation sinks, DACCS and gross/net AFOLU in overlapping system boundaries. External scientific I3 still **0**.
+
+### Research outcome and next step
+
+The author **noCDR** v2 archive is now an empirically supported **case-specific provenance source for the original World records in the tested overlap**. It is appropriate to inspect the authors' original R Markdown and peer-reviewed REMIND/MAgPIE modelling source for those very variables and years, as opposed to treating the study merely as generic model-family background. Avoid claiming author-approved renaming until a written primary source crosswalk is obtained.
+
+Next prioritize carbon-flow **semantics**, not more alias numerical scoring: inspect the original archived Rmd's formulas/selection for 1.5°C SSP1 minimum CDR, source emissions and capture variable names in the 517 shared terms, whether `Carbon Sequestration|Land Use` is gross reforestation uptake already netted in AFOLU, what portion of `Carbon Sequestration|CCS|Biomass` is atmosphere-origin permanently stored, the distinct roles of fossil CCS and DAC, and any enhanced-weathering carbon-flow mapping. The IPCC WGIII Ch12 CDR definition includes deliberate atmosphere removal plus durable storage and expressly excludes fossil point-source CCS (https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/). Do not impose `gross = total + land + biomass CCS + DAC` without documentary evidence against overlap.
+
+**Status:** source numerical mapping **CONFIRMED FOR SCOPE**, formal author-version-label attribution **PENDING**, complete gross-emissions/CDR source taxonomy **NOT_DETERMINED**, independent physical I3=**0**.
