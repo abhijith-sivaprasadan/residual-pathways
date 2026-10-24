@@ -237,3 +237,21 @@ def test_bad_supporting_document_md5_still_fails_closed(tmp_path, monkeypatch):
     with pytest.raises(CaseAuditError, match="MD5 mismatch"):
         cx.crosswalk(mif, world, packet, public, rmd_path=rmd)
     assert not public.exists()
+
+
+def test_entire_scenario_absent_does_not_claim_all_carbon_variables_missing(
+        tmp_path, monkeypatch):
+    mif, world, packet, public = fixture(
+        tmp_path, monkeypatch, model="OTHER MODEL")
+    # Replace the sole author scenario label, preserving the updated MD5.
+    body = mif.read_text()
+    mif.write_text(body.replace(cx.SCENARIO, "different_CEMICS_scenario"))
+    monkeypatch.setattr(
+        cx, "EXPECTED_ARCHIVE_MD5", md5(mif.read_bytes()).hexdigest())
+    result = cx.crosswalk(mif, world, packet, public)
+    assert result["status"] == "SCENARIO_NOT_LOCATED_IN_AUTHOR_MIF"
+    assert all(
+        item["comparison_status"] == "CASE_SCENARIO_ABSENT_FIELDS_NOT_ASSESSED"
+        for item in result["selected_variable_comparisons"]
+    )
+    assert not result["verified_i3"]
