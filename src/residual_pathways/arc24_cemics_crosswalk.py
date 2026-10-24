@@ -68,11 +68,22 @@ def _headered_archive(path):
                 pieces = next(csv.reader([line], delimiter=delimiter))
                 names = [x.strip() for x in pieces]
                 if set(KEYS).issubset(names):
-                    reader = csv.DictReader(
-                        chain([line], handle), delimiter=delimiter)
-                    if len(set(reader.fieldnames or [])) != len(reader.fieldnames or []):
+                    reader = csv.reader(chain([line], handle), delimiter=delimiter)
+                    header = [name.strip() for name in next(reader)]
+                    # REMIND MIF spec permits/requires final delimiters; these
+                    # produce a terminal empty cell after the last column.
+                    if header and header[-1] == "":
+                        header.pop()
+                    if len(set(header)) != len(header):
                         raise CaseAuditError("Archive MIF header has duplicate names")
-                    yield from reader
+                    for fields in reader:
+                        if not fields or len(fields) == 1 and not fields[0].strip():
+                            continue
+                        if len(fields) == len(header) + 1 and fields[-1] == "":
+                            fields.pop()
+                        if len(fields) != len(header):
+                            raise CaseAuditError("Archive MIF row width differs from declared header")
+                        yield dict(zip(header, fields))
                     return
         raise CaseAuditError("Unsupported MIF layout: expected wide IAMC header")
 
