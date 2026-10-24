@@ -140,3 +140,12 @@ A source-locked, local-only scan of **2030, 2040, 2050, 2060, 2070** is now avai
     python -m residual_pathways arc24-poles-timeline
 
 The CLI checks the actual World v1.1 file SHA-256 against the private ARC24 selection packet, crosschecks the selected 2050 source values, and emits public **coded signed percentage bands** only. Original observations, absolute values and model/scenario identities stay in the private source files. The new utility is **committed but not yet locally executed**; cross-year results and physical explanations must not be invented. See [POLES residual investigation](docs/arc24_poles_cluster_investigation_20261024.md).
+
+#### Confirmed POLES 2030–2070 persistence and optional-sector follow-up
+
+The author executed the source-locked POLES timeline CLI on local World v1.1 data (five synthetic tests passed), finding **20/20 nonzero reported-decimal net-CO2 aggregation residuals** across the four selected POLES ENGAGE scenarios in 2030, 2040, 2050, 2060 and 2070. **Three scenarios change residual sign**, and **five case-years have a relative magnitude of at least 10%**, under the registered descriptive denominator. This is not evidence of a faulty model or a source-verified positive-gross/CDR partition. See the [POLES evidence-led investigation](docs/arc24_poles_cluster_investigation_20261024.md).
+
+A new source-locked read-only CLI, **arc24-poles-optional-co2**, checks whether these four original POLES cases report the four additional CO2 sectors recognized by the AR6 WGIII climate assessment workflow (Other, Waste, Other Capture and Removal, Product Use), and outputs only code/variable presence and signs. No unverified sector summation is performed. The new tests **have not yet been run locally**:
+
+    python -m pytest -q tests/test_arc24_poles_optional_co2.py
+    python -m residual_pathways arc24-poles-optional-co2
