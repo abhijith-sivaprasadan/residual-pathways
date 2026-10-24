@@ -22,3 +22,7 @@
 #coverage-release-panel{margin:18px 0}
 #coverage-release-status{overflow-wrap:anywhere}
 #coverage-release-panel .bar-row{margin:7px 0}
+
+/* Source attribution remains visibly linked in the scientific methods section. */
+.source-citation{text-decoration:underline;text-underline-offset:2px;color:#2367bc;overflow-wrap:anywhere}
+.source-citation:hover{color:#174f97}

@@ -54,6 +54,6 @@ The last command creates two local outputs: atlas/data/coverage_release.json and
 4. Commit both outputs together, create an immutable release tag, then test an actual PathwaysHub hash-verified handoff and browser rendering.
 5. Run the Atlas locally using: python -m http.server 8765 --directory atlas . Visit http://localhost:8765/#coverage .
 
-Until the candidate release has been generated and reviewed, the Atlas continues to show its separate 2050 public snapshot and the four-year display remains unavailable. This is deliberate.
+The author has now reported a successful **local** four-year candidate build (1,202 matched, 352 records, checksum `489a07276556fdb63774297fbb79fe78ed04ffec831ce05a22d4a338629168ba`) and passed six localhost browser checks. This does **not** mean the file has been committed, publicly deployed, reviewed for release rights or empirically accepted by PathwaysHub. See [publication readiness audit](ar6_coverage_publication_audit_20261024.md). Until the reviewed candidate is published, the public Atlas continues to show the separate 2050 snapshot and the four-year public explorer remains unavailable.
 
 **Scientific status:** zero independently verified I3 cases; REVIEW_PENDING is not the same as insufficient data (I0). Presence counts cannot establish a physically exhaustive, nonoverlapping gross/CDR partition. Equal weighting by exact model names is **not** independent model-family weighting.

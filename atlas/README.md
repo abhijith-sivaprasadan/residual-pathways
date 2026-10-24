@@ -67,6 +67,10 @@ The source-status banner deliberately distinguishes the initial publicly redistr
 
 This is a functional v1 atlas, not yet a complete final research paper or independently certified gross/CDR decomposition.
 
+## AR6 attribution and provenance
+
+Coverage graphics and tables are independently derived from the **AR6 Scenarios Database v1.1**: Byers, E., Krey, V., Kriegler, E., Riahi, K., Schaeffer, R., et al. (2022), Integrated Assessment Modeling Consortium & IIASA, [DOI 10.5281/zenodo.7197970](https://doi.org/10.5281/zenodo.7197970). Source copyright remains with contributing institutions and modelling teams. This project changes the source into category-level reporting-presence counts and fractions, not original scenario observations. The [AR6-specific adapted CC BY 4.0 legal code](https://data.ene.iiasa.ac.at/ar6/static/License/Legal.html) restricts substantial raw-data redistribution; it is **not** an unrestricted CC BY 4.0 source data license. Independent project, no IIASA/IPCC endorsement. Author-reported source hashes are not independent publisher authentication. See the [publication readiness audit](../docs/ar6_coverage_publication_audit_20261024.md).
+
 ## Optional 2030–2100 coverage bundle
 
 The 2026-10-24 release-gate branch adds a separate four-year, exact-variable presence explorer. It displays only a SHA-256-checked public coverage-only artifact, and remains unavailable until the author's local original-named v1.1 dataset audit produces and clears that artifact. It does not reinterpret unreviewed records as I0 or grant I3 status. See [local canonical release runbook](../docs/ar6_coverage_release_handoff.md).
