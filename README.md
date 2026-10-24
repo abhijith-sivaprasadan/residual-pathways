@@ -130,3 +130,13 @@ This new code has been committed but **has not yet run on the author's actual lo
 The author locally classified the 2050 reported net-CO2 aggregate residual for all 24 source-selected cases using a *descriptive* ratio to the largest reported term. Of the **14 nonzero** residual cases, **9** are below 0.001%, **one** falls between 0.001% and 0.1%, and **four** fall between 1% and 10%. **All four** of the larger residuals occur in **POLES ENGAGE** (ARC24-06/09/12/21 across categories C2/C3/C4/C7), with two positive and two negative residuals. There are also five exact and five missing-data cases.
 
 A common model-specific emission-scope or reporting-convention explanation is a **hypothesis**, not proof of a model error. IAMC variable hierarchy does not require additivity; source precision and ENGAGE-version-specific mappings need primary documentation. The purposive ARC24 selection cannot estimate full AR6 ensemble frequencies. See the [POLES-focused scientific investigation and falsification plan](docs/arc24_poles_cluster_investigation_20261024.md). All 24 gross/net/CDR accounting grades remain NOT_DETERMINED; verified I3=0.
+
+
+#### Four POLES cases: temporal falsification prepared
+
+A source-locked, local-only scan of **2030, 2040, 2050, 2060, 2070** is now available to check whether the four POLES ENGAGE 2050 residuals occur in other years. Run the synthetic tests and the real-input CLI from the repo:
+
+    python -m pytest -q tests/test_arc24_poles_timeline.py
+    python -m residual_pathways arc24-poles-timeline
+
+The CLI checks the actual World v1.1 file SHA-256 against the private ARC24 selection packet, crosschecks the selected 2050 source values, and emits public **coded signed percentage bands** only. Original observations, absolute values and model/scenario identities stay in the private source files. The new utility is **committed but not yet locally executed**; cross-year results and physical explanations must not be invented. See [POLES residual investigation](docs/arc24_poles_cluster_investigation_20261024.md).
