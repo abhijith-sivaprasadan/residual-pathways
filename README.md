@@ -123,3 +123,10 @@ The next **arc24-arithmetic** command reads the original locally protected selec
     python -m residual_pathways arc24-arithmetic
 
 This new code has been committed but **has not yet run on the author's actual local data**. For source-specific review limitations and instructions see [ARC24 scientific triage](docs/arc24_source_provenance_and_semantic_triage_20261024.md).
+
+
+### ARC24 POLES ENGAGE residual cluster — targeted source review
+
+The author locally classified the 2050 reported net-CO2 aggregate residual for all 24 source-selected cases using a *descriptive* ratio to the largest reported term. Of the **14 nonzero** residual cases, **9** are below 0.001%, **one** falls between 0.001% and 0.1%, and **four** fall between 1% and 10%. **All four** of the larger residuals occur in **POLES ENGAGE** (ARC24-06/09/12/21 across categories C2/C3/C4/C7), with two positive and two negative residuals. There are also five exact and five missing-data cases.
+
+A common model-specific emission-scope or reporting-convention explanation is a **hypothesis**, not proof of a model error. IAMC variable hierarchy does not require additivity; source precision and ENGAGE-version-specific mappings need primary documentation. The purposive ARC24 selection cannot estimate full AR6 ensemble frequencies. See the [POLES-focused scientific investigation and falsification plan](docs/arc24_poles_cluster_investigation_20261024.md). All 24 gross/net/CDR accounting grades remain NOT_DETERMINED; verified I3=0.
