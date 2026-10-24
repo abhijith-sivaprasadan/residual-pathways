@@ -1,6 +1,6 @@
 # Canonical AR6 metadata + four-year Atlas coverage handoff
 
-This branch prepares a candidate, coverage-only, non-I3 scientific release. The two required original-named World/metadata v1.1 files remain on the author's Windows computer, not in GitHub. File matching cannot authenticate the IIASA acquisition route.
+The merged implementation prepares a candidate, coverage-only, non-I3 scientific release. The two required original-named World/metadata v1.1 files remain on the author's Windows computer, not in GitHub. File matching cannot authenticate the IIASA acquisition route.
 
 Previously locally reported SHA-256:
 - World CSV: 4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977
@@ -13,8 +13,8 @@ From your current clone:
 
 ~~~powershell
 cd 'E:\New folder (2)\MissionJob\residual-pathways'
-git fetch origin
-git switch research/ar6-coverage-release-gates-20261024
+git switch main
+git pull --ff-only
 & .\.venv-messageix\Scripts\python.exe -m pip install -e '.[metadata]'
 & .\.venv-messageix\Scripts\python.exe -m pytest -q tests/test_metadata_concordance.py tests/test_coverage_release.py
 ~~~
