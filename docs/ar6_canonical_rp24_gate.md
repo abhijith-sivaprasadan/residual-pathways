@@ -73,7 +73,7 @@ The purposive 24-case sample is not statistically representative. The canonical 
 ## Gate status
 
 - Official source/acquisition route: verified through public IIASA and Zenodo pages.
-- Actual v1.1 source files: **author reported local acquisition, 2026-10-24**. The hashes exist in the generated local report, but remain to be shared/compared and attributed to the portal receipt.
+- Actual v1.1 source files: **author reported local acquisition, 2026-10-24**. World SHA-256 `4cf39b6b0d968e25ed389318acb1674f92146f977e9db4bfb7970f048ff73977` (identical to the earlier teaching-labelled World CSV); new metadata SHA-256 `fd1bc32db8463769e18f0560ced603a49598c12e1abfa06787ff763c55f06716` (different from prior third-party XLSX). The portal receipt and a sheet-level metadata equivalence check remain open.
 - RP24 teaching-data preflight: **complete**, 24 cases; seven with all six reported candidates.
 - Canonical comparison implementation and regression fixtures: **committed**, not yet exercised against the actual canonical files.
 - Semantic and source-precision reviews: **not started**, zero verified I3.
